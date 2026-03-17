@@ -56,7 +56,7 @@ export function PpiHubSection() {
     return (
       <div className="animate-fade-in">
         <div className="p-4 border-b border-pb-border">
-          <button type="button" onClick={() => setView('dashboard')} className="text-pb-primary-bright text-sm font-semibold flex items-center gap-1">
+          <button type="button" onClick={() => setView('dashboard')} className="text-pb-purple text-sm font-semibold flex items-center gap-1">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Dashboard
           </button>
@@ -70,7 +70,7 @@ export function PpiHubSection() {
     return (
       <div className="animate-fade-in">
         <div className="p-4 border-b border-pb-border">
-          <button type="button" onClick={() => setView('dashboard')} className="text-pb-primary-bright text-sm font-semibold flex items-center gap-1">
+          <button type="button" onClick={() => setView('dashboard')} className="text-pb-purple text-sm font-semibold flex items-center gap-1">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Dashboard
           </button>
@@ -102,7 +102,7 @@ export function PpiHubSection() {
             {/* Overall gauge */}
             <div className="relative w-14 h-14">
               <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-                <circle cx="50" cy="50" r="42" fill="none" stroke="#16152e" strokeWidth="8" />
+                <circle cx="50" cy="50" r="42" fill="none" stroke="#21262D" strokeWidth="8" />
                 <circle
                   cx="50" cy="50" r="42" fill="none"
                   stroke={GRADE_COLORS[gpi.grade]}
@@ -152,7 +152,7 @@ export function PpiHubSection() {
             <select
               value={compareTeam}
               onChange={(e) => setCompareTeam(e.target.value)}
-              className="bg-pb-surface border border-pb-border rounded-md px-3 py-1.5 text-[11px] text-pb-text focus:outline-none focus:border-pb-primary"
+              className="bg-pb-surface border border-pb-border rounded-md px-3 py-1.5 text-[11px] text-pb-text focus:outline-none focus:border-pb-purple"
             >
               {PRO_TEAMS.map((t) => (
                 <option key={t.id} value={t.id}>vs {t.name}</option>
@@ -165,7 +165,7 @@ export function PpiHubSection() {
               labels={spiderLabels}
               values={spiderValues}
               compareValues={proSpider}
-              color="#5b4dc7"
+              color="#A371F7"
               compareColor={proTeam.color}
               size={300}
               iconLabels={true}
@@ -191,11 +191,11 @@ export function PpiHubSection() {
         {/* Right: Skill to Focus + Breakdown bars (Mobalytics style) */}
         <div className="space-y-4">
           {/* Skill to Focus card */}
-          <div className="card-gaming p-4 border-l-2 border-pb-primary glow-purple">
+          <div className="card-gaming p-4 border-l-2 border-pb-purple glow-purple">
             <span className="section-header">Skill to Focus</span>
             <div className="flex items-center gap-3 mt-3">
-              <div className="w-10 h-10 rounded-lg bg-pb-primary/20 flex items-center justify-center">
-                <svg className="w-5 h-5 text-pb-primary-bright" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <div className="w-10 h-10 rounded-lg bg-pb-purple/20 flex items-center justify-center">
+                <svg className="w-5 h-5 text-pb-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                   <path d={weakMeta.icon} />
                 </svg>
               </div>
@@ -207,13 +207,13 @@ export function PpiHubSection() {
             {/* You vs Pro comparison */}
             <div className="mt-3 flex items-center gap-4">
               <div>
-                <span className="text-2xl font-black text-pb-primary-bright">{weakest[1].toFixed(1)}</span>
+                <span className="text-2xl font-black text-pb-purple">{weakest[1].toFixed(1)}</span>
                 <span className="text-[10px] text-pb-text-muted ml-1">vs</span>
                 <span className="text-sm font-bold text-pb-red ml-1">{(proSpider[entries.indexOf(weakest)] ?? 0).toFixed(1)}</span>
               </div>
               <div className="flex-1 space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[9px] text-pb-primary-bright w-6">You</span>
+                  <span className="text-[9px] text-pb-purple w-6">You</span>
                   <div className="compare-bar-track flex-1"><div className="compare-bar-you" style={{ width: `${weakest[1]}%` }} /></div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -239,13 +239,13 @@ export function PpiHubSection() {
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="flex items-baseline gap-1">
-                    <span className="text-xl font-black text-pb-primary-bright">{value.toFixed(1)}</span>
+                    <span className="text-xl font-black text-pb-purple">{value.toFixed(1)}</span>
                     <span className="text-[10px] text-pb-text-muted">vs</span>
                     <span className="text-sm font-bold text-pb-red">{proVal.toFixed(1)}</span>
                   </div>
                   <div className="flex-1 space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-[8px] text-pb-primary-bright w-4">You</span>
+                      <span className="text-[8px] text-pb-purple w-4">You</span>
                       <div className="compare-bar-track flex-1"><div className="compare-bar-you" style={{ width: `${value}%` }} /></div>
                     </div>
                     <div className="flex items-center gap-2">

@@ -4,9 +4,11 @@ import type { Action } from './actions'
 import { createEmptyPlayerStats } from '../types/player'
 import { createEmptyTeamStats, type PointData } from '../types/point'
 import { getLevelFromXp } from '../types/challenges'
+import { computeSessionStats } from '../types/session'
 
 export function appReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
+    // ─── Team management ───
     case 'SET_TEAM_NAME':
       return { ...state, teamName: action.name }
 
@@ -31,6 +33,7 @@ export function appReducer(state: AppState, action: Action): AppState {
         roster: state.roster.map((p) => (p.id === action.playerId ? { ...p, position: action.position } : p)),
       }
 
+    // ─── Point tracking (legacy) ───
     case 'ADD_POINT': {
       const newPoint = {
         id: nanoid(),
@@ -111,6 +114,7 @@ export function appReducer(state: AppState, action: Action): AppState {
         points: state.points.filter((p) => !p.isDummyData),
       }
 
+    // ─── UI & Profile ───
     case 'SET_LANGUAGE':
       return { ...state, language: action.lang }
 
@@ -120,7 +124,7 @@ export function appReducer(state: AppState, action: Action): AppState {
     case 'SET_ACTIVE_SECTION':
       return { ...state, activeSection: action.section as AppState['activeSection'] }
 
-    // Onboarding
+    // ─── Onboarding ───
     case 'SET_ONBOARDING':
       return { ...state, onboarding: { ...state.onboarding, ...action.data } }
 
@@ -135,7 +139,154 @@ export function appReducer(state: AppState, action: Action): AppState {
         },
       }
 
-    // Challenges
+    // ─── PPI System ───
+    case 'SET_PPI_SCORES':
+      return { ...state, ppiScores: action.scores }
+
+    case 'UPDATE_PPI_AXIS':
+      return {
+        ...state,
+        ppiScores: { ...state.ppiScores, [action.axis]: Math.max(0, Math.min(100, action.value)) },
+      }
+
+    case 'SET_PPI_ESTIMATED':
+      return { ...state, ppiEstimated: action.estimated }
+
+    case 'SNAPSHOT_PPI':
+      return {
+        ...state,
+        ppiHistory: [
+          ...state.ppiHistory,
+          { date: new Date().toISOString().split('T')[0], scores: { ...state.ppiScores } },
+        ],
+      }
+
+    // ─── Session logging ───
+    case 'START_SESSION':
+      return {
+        ...state,
+        sessions: [...state.sessions, action.session],
+        activeSessionId: action.session.id,
+      }
+
+    case 'LOG_POINT': {
+      return {
+        ...state,
+        sessions: state.sessions.map((s) =>
+          s.id === action.sessionId
+            ? { ...s, points: [...s.points, action.point] }
+            : s
+        ),
+      }
+    }
+
+    case 'END_SESSION': {
+      const session = state.sessions.find((s) => s.id === action.sessionId)
+      if (!session) return state
+      const completed = computeSessionStats({ ...session, isComplete: true })
+      const summary = {
+        id: completed.id,
+        date: completed.date,
+        type: completed.type,
+        totalPoints: completed.totalPoints,
+        winRate: completed.totalPoints > 0 ? completed.wins / completed.totalPoints : 0,
+        eliminations: completed.eliminations,
+        deaths: completed.deaths,
+        focusArea: completed.focusArea,
+        focusVerdict: 'flat' as const,
+        xpEarned: completed.type === 'tournament' ? 500 : 200,
+      }
+      return {
+        ...state,
+        sessions: state.sessions.map((s) => s.id === action.sessionId ? completed : s),
+        activeSessionId: null,
+        sessionSummaries: [...state.sessionSummaries, summary],
+      }
+    }
+
+    case 'UPDATE_SESSION_NOTES':
+      return {
+        ...state,
+        sessions: state.sessions.map((s) =>
+          s.id === action.sessionId ? { ...s, notes: action.notes } : s
+        ),
+      }
+
+    // ─── Drills ───
+    case 'COMPLETE_DRILL':
+      return {
+        ...state,
+        drillResults: [...state.drillResults, action.result],
+        completedDrillIds: [...new Set([...state.completedDrillIds, action.result.drillId])],
+      }
+
+    // ─── Achievements ───
+    case 'UNLOCK_ACHIEVEMENT':
+      return {
+        ...state,
+        achievements: state.achievements.map((a) =>
+          a.id === action.achievementId
+            ? { ...a, unlocked: true, unlockedDate: new Date().toISOString().split('T')[0], progress: 100 }
+            : a
+        ),
+      }
+
+    case 'UPDATE_ACHIEVEMENT_PROGRESS':
+      return {
+        ...state,
+        achievements: state.achievements.map((a) =>
+          a.id === action.achievementId ? { ...a, progress: Math.min(100, action.progress) } : a
+        ),
+      }
+
+    // ─── Layout Planner ───
+    case 'SAVE_BREAKOUT_PLAN':
+      return {
+        ...state,
+        breakoutPlans: [...state.breakoutPlans.filter(p => p.id !== action.plan.id), action.plan],
+      }
+
+    case 'DELETE_BREAKOUT_PLAN':
+      return {
+        ...state,
+        breakoutPlans: state.breakoutPlans.filter((p) => p.id !== action.planId),
+      }
+
+    case 'SAVE_SCOUTING_NOTE':
+      return {
+        ...state,
+        scoutingNotes: [
+          ...state.scoutingNotes.filter(n => n.id !== action.note.id),
+          action.note,
+        ],
+      }
+
+    // ─── Focus System ───
+    case 'SET_FOCUS_AXIS':
+      return { ...state, todaysFocusAxis: action.axis, focusCardDismissed: false }
+
+    case 'DISMISS_FOCUS_CARD':
+      return { ...state, focusCardDismissed: true }
+
+    // ─── Streak ───
+    case 'RECORD_ACTIVITY': {
+      const today = new Date().toISOString().split('T')[0]
+      if (state.lastActivityDate === today) return state
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
+      const twoDaysAgo = new Date(Date.now() - 2 * 86400000).toISOString().split('T')[0]
+      const isConsecutive = state.lastActivityDate === yesterday || state.lastActivityDate === twoDaysAgo
+      return {
+        ...state,
+        trainingStreak: isConsecutive ? state.trainingStreak + 1 : 1,
+        lastActivityDate: today,
+      }
+    }
+
+    case 'USE_STREAK_FREEZE':
+      if (!state.streakFreezeAvailable) return state
+      return { ...state, streakFreezeAvailable: false }
+
+    // ─── Challenges & Gamification ───
     case 'UPDATE_CHALLENGE_PROGRESS':
       return {
         ...state,
@@ -235,7 +386,7 @@ export function appReducer(state: AppState, action: Action): AppState {
         },
       }
 
-    // Persona
+    // ─── Persona ───
     case 'EQUIP_ITEM':
       return {
         ...state,

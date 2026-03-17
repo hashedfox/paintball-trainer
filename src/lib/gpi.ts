@@ -54,9 +54,9 @@ export function computeGpi(stats: TeamAggregate): GpiResult {
 }
 
 export const GRADE_COLORS: Record<LetterGrade, string> = {
-  S: '#f0b232',
-  A: '#49b4a0',
-  B: '#5b8def',
-  C: '#e8914f',
-  D: '#e05d6f',
+  S: '#E3B341',
+  A: '#39D353',
+  B: '#58A6FF',
+  C: '#F0883E',
+  D: '#F85149',
 }

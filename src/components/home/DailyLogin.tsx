@@ -14,10 +14,14 @@ export function DailyLogin() {
   const days = Array.from({ length: 7 }, (_, i) => i + 1)
 
   return (
-    <div className="card-gaming p-4">
+    <div className="bg-[#161B22] rounded-xl border border-pb-border p-4">
       <div className="flex items-center justify-between mb-3">
-        <span className="section-header">Daily Streak</span>
-        <span className="text-pb-primary-bright font-bold text-[12px]">{streak} day{streak !== 1 ? 's' : ''}</span>
+        <span className="font-display text-sm font-bold text-pb-text uppercase tracking-wider">
+          Daily Streak
+        </span>
+        <span className="font-stat text-xs font-bold text-pb-green">
+          {streak} day{streak !== 1 ? 's' : ''}
+        </span>
       </div>
       <div className="flex gap-1.5">
         {days.map((day) => (
@@ -25,8 +29,8 @@ export function DailyLogin() {
             key={day}
             className={`flex-1 aspect-square rounded-md flex items-center justify-center text-[10px] font-bold transition-all ${
               day <= streak
-                ? 'bg-pb-primary/20 text-pb-primary-bright border border-pb-primary/40'
-                : 'bg-pb-surface text-pb-text-muted border border-pb-border'
+                ? 'bg-pb-green/15 text-pb-green border border-pb-green/30'
+                : 'bg-[#21262D] text-pb-text-muted border border-pb-border'
             }`}
           >
             {day <= streak ? (

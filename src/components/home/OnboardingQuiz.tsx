@@ -3,6 +3,7 @@ import { useAppState, useDispatch } from '../../store/context'
 import { SKILL_LEVELS, SKILL_AREAS, FOCUS_AREAS, COMPETITIONS } from '../../types/onboarding'
 import { POSITIONS, POSITION_LABELS, type Position } from '../../types/player'
 import type { SkillLevel, SkillArea, FocusArea } from '../../types/onboarding'
+import { createEstimatedPPI, getWeakestAxis } from '../../types/ppi'
 
 interface Props {
   onComplete: () => void
@@ -41,6 +42,17 @@ export function OnboardingQuiz({ onComplete }: Props) {
     if (step < steps.length - 1) {
       setStep(step + 1)
     } else {
+      // Generate estimated PPI based on division + experience
+      const divisionMap: Record<SkillLevel, string> = {
+        beginner: 'D5', intermediate: 'D4', advanced: 'D3', competitive: 'D2'
+      }
+      const estimatedPPI = createEstimatedPPI(
+        divisionMap[onboarding.currentLevel] || 'D4',
+        onboarding.weeklyTrainingHours
+      )
+      dispatch({ type: 'SET_PPI_SCORES', scores: estimatedPPI })
+      dispatch({ type: 'SET_PPI_ESTIMATED', estimated: true })
+      dispatch({ type: 'SET_FOCUS_AXIS', axis: getWeakestAxis(estimatedPPI) })
       dispatch({ type: 'COMPLETE_ONBOARDING' })
       dispatch({ type: 'RECORD_LOGIN' })
       onComplete()
@@ -65,7 +77,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
         {/* Progress bar */}
         <div className="flex gap-1 mb-8">
           {steps.map((_, i) => (
-            <div key={i} className={`h-[3px] flex-1 rounded-full transition-colors ${i <= step ? 'bg-pb-primary' : 'bg-pb-border'}`} />
+            <div key={i} className={`h-[3px] flex-1 rounded-full transition-colors ${i <= step ? 'bg-pb-green' : 'bg-pb-border'}`} />
           ))}
         </div>
 
@@ -79,7 +91,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
               value={onboarding.playerName}
               onChange={(e) => dispatch({ type: 'SET_ONBOARDING', data: { playerName: e.target.value } })}
               placeholder="Enter your player name"
-              className="w-full bg-pb-surface border border-pb-border rounded-lg px-4 py-3 text-white placeholder-pb-text-muted focus:outline-none focus:border-pb-primary text-base"
+              className="w-full bg-pb-surface border border-pb-border rounded-lg px-4 py-3 text-white placeholder-pb-text-muted focus:outline-none focus:border-pb-green text-base"
               autoFocus
             />
           )}
@@ -91,7 +103,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
               onClick={() => dispatch({ type: 'SET_ONBOARDING', data: { currentLevel: level.value as SkillLevel } })}
               className={`w-full text-left p-4 rounded-lg border transition-all ${
                 onboarding.currentLevel === level.value
-                  ? 'border-pb-primary bg-pb-primary/10'
+                  ? 'border-pb-green bg-pb-green/10'
                   : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
               }`}
             >
@@ -107,7 +119,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
               onClick={() => dispatch({ type: 'SET_ONBOARDING', data: { primaryPosition: pos as Position } })}
               className={`w-full text-left p-4 rounded-lg border transition-all ${
                 onboarding.primaryPosition === pos
-                  ? 'border-pb-primary bg-pb-primary/10'
+                  ? 'border-pb-green bg-pb-green/10'
                   : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
               }`}
             >
@@ -125,7 +137,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
                   onClick={() => toggleSkillArea(area.value)}
                   className={`w-full text-left p-3 rounded-lg border transition-all ${
                     onboarding.skillAreas.includes(area.value)
-                      ? 'border-pb-primary bg-pb-primary/10'
+                      ? 'border-pb-green bg-pb-green/10'
                       : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
                   }`}
                 >
@@ -147,7 +159,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
                     onClick={() => toggleFocusArea(area.value)}
                     className={`text-left p-3 rounded-lg border transition-all ${
                       onboarding.focusAreas.includes(area.value)
-                        ? 'border-pb-primary bg-pb-primary/10'
+                        ? 'border-pb-green bg-pb-green/10'
                         : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
                     }`}
                   >
@@ -165,7 +177,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
               onClick={() => dispatch({ type: 'SET_ONBOARDING', data: { competition: comp } })}
               className={`w-full text-left p-3 rounded-lg border transition-all ${
                 onboarding.competition === comp
-                  ? 'border-pb-primary bg-pb-primary/10'
+                  ? 'border-pb-green bg-pb-green/10'
                   : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
               }`}
             >
@@ -176,14 +188,14 @@ export function OnboardingQuiz({ onComplete }: Props) {
           {step === 6 && (
             <div>
               <div className="text-center mb-4">
-                <span className="text-4xl font-black text-pb-primary-bright">{onboarding.weeklyTrainingHours}</span>
+                <span className="text-4xl font-black text-pb-green">{onboarding.weeklyTrainingHours}</span>
                 <span className="text-sm text-pb-text-dim ml-2">hours / week</span>
               </div>
               <input
                 type="range" min="1" max="20"
                 value={onboarding.weeklyTrainingHours}
                 onChange={(e) => dispatch({ type: 'SET_ONBOARDING', data: { weeklyTrainingHours: parseInt(e.target.value) } })}
-                className="w-full accent-[#5b4dc7]"
+                className="w-full accent-[#39D353]"
               />
               <div className="flex justify-between text-[9px] text-pb-text-muted mt-1">
                 <span>1 hr</span><span>20 hrs</span>

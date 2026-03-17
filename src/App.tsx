@@ -10,6 +10,11 @@ import { PersonaSection } from './components/persona/PersonaSection'
 import { ProTeamsSection } from './components/pro-teams/ProTeamsSection'
 import { TierListSection } from './components/tier-list/TierListSection'
 import { GuidesSection } from './components/guides/GuidesSection'
+import { SessionLoggerSection } from './components/session-logger/SessionLoggerSection'
+import { SessionReportSection } from './components/session-report/SessionReportSection'
+import { LayoutPlannerSection } from './components/layout-planner/LayoutPlannerSection'
+import { DrillsSection } from './components/drills/DrillsSection'
+import { AchievementsSection } from './components/achievements/AchievementsSection'
 
 function AppContent() {
   const state = useAppState()
@@ -30,6 +35,11 @@ function AppContent() {
       case 'pro-teams': return <ProTeamsSection />
       case 'tier-list': return <TierListSection />
       case 'guides': return <GuidesSection />
+      case 'session-logger': return <SessionLoggerSection />
+      case 'session-report': return <SessionReportSection />
+      case 'layout-planner': return <LayoutPlannerSection />
+      case 'drills': return <DrillsSection />
+      case 'achievements': return <AchievementsSection />
       default: return <HomeSection />
     }
   }
@@ -43,6 +53,7 @@ function AppContent() {
         level={state.challengesState.level}
         xp={state.challengesState.xp}
         coins={state.challengesState.coins}
+        streak={state.trainingStreak}
       />
 
       {/* Main content */}

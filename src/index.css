@@ -1,43 +1,69 @@
 @import "tailwindcss";
 
 @theme {
-  /* Mobalytics deep purple-navy palette (from screenshots) */
-  --color-pb-dark: #0f0e24;
-  --color-pb-darker: #0b0a1e;
-  --color-pb-card: #1d1b3a;
-  --color-pb-card-hover: #252349;
-  --color-pb-surface: #16152e;
-  --color-pb-border: #2a2850;
-  --color-pb-border-light: #3a3768;
+  /* ─── Background ─── */
+  --color-pb-dark: #0D1117;
+  --color-pb-darker: #090D13;
+  --color-pb-card: #161B22;
+  --color-pb-card-hover: #1C2129;
+  --color-pb-surface: #21262D;
+  --color-pb-elevated: #282E36;
 
-  /* Primary purple accent (Mobalytics signature) */
-  --color-pb-primary: #5b4dc7;
-  --color-pb-primary-bright: #7c6fe0;
-  --color-pb-primary-dim: #4a3db5;
+  /* ─── Primary accent: Electric green ─── */
+  --color-pb-green: #39D353;
+  --color-pb-green-dim: #2EA043;
+  --color-pb-green-glow: #39D35340;
 
-  /* Accent colors — matching Mobalytics tag/pill colors */
-  --color-pb-amber: #f0b232;
-  --color-pb-green: #49b4a0;
-  --color-pb-red: #e05d6f;
-  --color-pb-blue: #5b8def;
-  --color-pb-purple: #a855f7;
-  --color-pb-gold: #f0b232;
-  --color-pb-cyan: #4ecdc4;
-  --color-pb-orange: #e8914f;
-  --color-pb-pink: #e05d9e;
-  --color-pb-teal: #49b4a0;
-  --color-pb-lime: #8bd346;
+  /* ─── Secondary accents ─── */
+  --color-pb-red: #F85149;
+  --color-pb-red-dim: #DA3633;
+  --color-pb-amber: #E3B341;
+  --color-pb-amber-dim: #C49624;
+  --color-pb-purple: #A371F7;
+  --color-pb-purple-dim: #8957E5;
+  --color-pb-blue: #58A6FF;
+  --color-pb-blue-dim: #388BFD;
+  --color-pb-cyan: #56D4DD;
+  --color-pb-orange: #F0883E;
+  --color-pb-pink: #F778BA;
 
-  /* Text */
-  --color-pb-text: #e0dff5;
-  --color-pb-text-dim: #9896b8;
-  --color-pb-text-muted: #6b698a;
+  /* ─── Text ─── */
+  --color-pb-text: #E6EDF3;
+  --color-pb-text-dim: #8B949E;
+  --color-pb-text-muted: #484F58;
 
-  /* Rarity colors */
-  --color-rarity-common: #9896b8;
-  --color-rarity-rare: #5b8def;
-  --color-rarity-epic: #a855f7;
-  --color-rarity-legendary: #f0b232;
+  /* ─── Borders ─── */
+  --color-pb-border: #30363D;
+  --color-pb-border-light: #3D444D;
+
+  /* ─── PPI chart accent (purple fill) ─── */
+  --color-pb-ppi: #A371F7;
+  --color-pb-ppi-fill: #A371F725;
+  --color-pb-ppi-dim: #A371F780;
+
+  /* ─── Backward compat aliases ─── */
+  --color-pb-primary: #A371F7;
+  --color-pb-primary-bright: #BC8CFF;
+  --color-pb-primary-dim: #8957E5;
+  --color-pb-neon: #39D353;
+  --color-pb-gold: #E3B341;
+  --color-pb-teal: #56D4DD;
+  --color-pb-lime: #39D353;
+
+  /* ─── Rarity / Grade colors ─── */
+  --color-rarity-common: #8B949E;
+  --color-rarity-rare: #58A6FF;
+  --color-rarity-epic: #A371F7;
+  --color-rarity-legendary: #E3B341;
+
+  /* ─── Division colors ─── */
+  --color-div-d5: #8B949E;
+  --color-div-d4: #58A6FF;
+  --color-div-d3: #A371F7;
+  --color-div-d2: #E3B341;
+  --color-div-d1: #F0883E;
+  --color-div-semi: #F85149;
+  --color-div-pro: #39D353;
 }
 
 html, body, #root {
@@ -46,190 +72,256 @@ html, body, #root {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #0f0e24;
-  color: #e0dff5;
+  font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #0D1117;
+  color: #E6EDF3;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar — thin purple */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: #0b0a1e; }
-::-webkit-scrollbar-thumb { background: #2a2850; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #3a3768; }
+/* ═══════════════ TYPOGRAPHY ═══════════════ */
+.font-display {
+  font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+  font-weight: 700;
+}
 
-/* ───── CARD SYSTEM ───── */
+.font-stat {
+  font-family: 'JetBrains Mono', 'Barlow', monospace;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══════════════ SCROLLBAR ═══════════════ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #090D13; }
+::-webkit-scrollbar-thumb { background: #30363D; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3D444D; }
+
+/* ═══════════════ CARD SYSTEM ═══════════════ */
 .card-gaming {
-  background: #1d1b3a;
-  border: 1px solid #2a2850;
-  border-radius: 8px;
+  background: #161B22;
+  border: 1px solid #30363D;
+  border-radius: 12px;
+  transition: border-color 0.15s;
 }
 .card-gaming:hover {
-  border-color: #3a3768;
+  border-color: #3D444D;
 }
 
-/* Mobalytics-style inner panel (lighter than card) */
 .panel-inner {
-  background: #232148;
-  border-radius: 6px;
+  background: #21262D;
+  border-radius: 8px;
 }
 
-/* ───── SECTION HEADER (ALL CAPS like Mobalytics) ───── */
+/* ═══════════════ SECTION HEADERS ═══════════════ */
 .section-header {
+  font-family: 'Barlow', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #9896b8;
+  color: #8B949E;
 }
 
-/* ───── TAG PILLS (colored like Mobalytics) ───── */
+/* ═══════════════ TAG PILLS ═══════════════ */
 .tag-pill {
   display: inline-flex;
   align-items: center;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 10px;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 11px;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.6;
 }
-.tag-pink   { background: #e05d9e20; color: #e05d9e; }
-.tag-green  { background: #49b4a020; color: #49b4a0; }
-.tag-blue   { background: #5b8def20; color: #5b8def; }
-.tag-orange { background: #e8914f20; color: #e8914f; }
-.tag-gold   { background: #f0b23220; color: #f0b232; }
-.tag-purple { background: #a855f720; color: #a855f7; }
-.tag-red    { background: #e05d6f20; color: #e05d6f; }
-.tag-lime   { background: #8bd34620; color: #8bd346; }
-.tag-teal   { background: #4ecdc420; color: #4ecdc4; }
+.tag-green  { background: #39D35318; color: #39D353; }
+.tag-red    { background: #F8514918; color: #F85149; }
+.tag-amber  { background: #E3B34118; color: #E3B341; }
+.tag-purple { background: #A371F718; color: #A371F7; }
+.tag-blue   { background: #58A6FF18; color: #58A6FF; }
+.tag-orange { background: #F0883E18; color: #F0883E; }
+.tag-pink   { background: #F778BA18; color: #F778BA; }
+.tag-cyan   { background: #56D4DD18; color: #56D4DD; }
+.tag-gold   { background: #E3B34118; color: #E3B341; }
+.tag-lime   { background: #39D35318; color: #39D353; }
+.tag-teal   { background: #56D4DD18; color: #56D4DD; }
 
-/* ───── BUTTONS ───── */
+/* ═══════════════ BUTTONS ═══════════════ */
 .btn-primary {
-  background: #5b4dc7;
-  color: #fff;
+  background: #39D353;
+  color: #0D1117;
+  font-family: 'Barlow', sans-serif;
   font-weight: 700;
-  font-size: 13px;
-  padding: 8px 20px;
-  border-radius: 6px;
-  transition: background 0.15s;
+  font-size: 14px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  min-height: 48px;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
-.btn-primary:hover { background: #6d5ed9; }
+.btn-primary:hover { background: #2EA043; box-shadow: 0 0 20px #39D35330; }
+.btn-primary:active { transform: scale(0.98); }
 
 .btn-secondary {
-  background: #232148;
-  color: #9896b8;
-  font-weight: 600;
-  font-size: 12px;
-  padding: 6px 14px;
-  border-radius: 6px;
-  border: 1px solid #2a2850;
-  transition: all 0.15s;
-}
-.btn-secondary:hover { color: #e0dff5; border-color: #3a3768; }
-
-/* ───── PILL TABS (top of sections) ───── */
-.pill-tab {
-  padding: 6px 16px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #9896b8;
   background: transparent;
-  border: 1px solid #2a2850;
+  color: #E6EDF3;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid #30363D;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.btn-secondary:hover { color: #fff; border-color: #3D444D; background: #21262D; }
+
+.btn-danger {
+  background: #F85149;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  min-height: 48px;
   transition: all 0.15s;
 }
-.pill-tab:hover { color: #e0dff5; border-color: #3a3768; }
+.btn-danger:hover { background: #DA3633; }
+
+/* ═══════════════ PILL TABS ═══════════════ */
+.pill-tab {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8B949E;
+  background: transparent;
+  border: 1px solid #30363D;
+  transition: all 0.15s;
+}
+.pill-tab:hover { color: #E6EDF3; border-color: #3D444D; }
 .pill-tab-active {
-  background: #5b4dc7;
-  color: #fff;
-  border-color: #5b4dc7;
+  background: #39D353;
+  color: #0D1117;
+  border-color: #39D353;
+  font-weight: 700;
 }
 
-/* ───── LEVEL / XP ───── */
+/* ═══════════════ LEVEL / XP / COINS ═══════════════ */
 .level-badge {
-  background: linear-gradient(135deg, #5b4dc7, #7c6fe0);
+  background: linear-gradient(135deg, #A371F7, #8957E5);
   color: #fff;
-  font-weight: 800;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
   border-radius: 6px;
-  padding: 3px 10px;
-  font-size: 11px;
+  padding: 3px 12px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .xp-bar-track {
-  background: #16152e;
-  border-radius: 4px;
+  background: #21262D;
+  border-radius: 6px;
   height: 8px;
   overflow: hidden;
 }
 .xp-bar-fill {
-  background: linear-gradient(90deg, #5b4dc7, #7c6fe0);
+  background: linear-gradient(90deg, #A371F7, #8957E5);
   height: 100%;
-  border-radius: 4px;
-  transition: width 0.5s ease;
+  border-radius: 6px;
+  transition: width 0.6s ease;
 }
 
 .coin-badge {
-  background: linear-gradient(135deg, #f0b232, #e8914f);
-  color: #0f0e24;
+  background: linear-gradient(135deg, #E3B341, #F0883E);
+  color: #0D1117;
   border-radius: 12px;
-  padding: 2px 10px;
+  padding: 2px 12px;
   font-weight: 700;
   font-size: 11px;
 }
 
-/* ───── COMPARISON BARS (Mobalytics GPI style) ───── */
+/* ═══════════════ STAT CARDS ═══════════════ */
+.stat-card {
+  background: #21262D;
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+.stat-card-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  color: #E6EDF3;
+}
+.stat-card-label {
+  font-size: 10px;
+  color: #8B949E;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+/* ═══════════════ COMPARISON BARS ═══════════════ */
 .compare-bar-track {
   height: 6px;
   border-radius: 3px;
-  background: #16152e;
+  background: #21262D;
   overflow: hidden;
 }
 .compare-bar-you {
   height: 100%;
   border-radius: 3px;
-  background: #5b4dc7;
+  background: #A371F7;
   transition: width 0.5s;
 }
 .compare-bar-pro {
   height: 100%;
   border-radius: 3px;
-  background: #e05d6f;
+  background: #F85149;
   transition: width 0.5s;
 }
 
-/* ───── STAT CARD (like Mobalytics metric boxes) ───── */
-.stat-card {
-  background: #16152e;
-  border-radius: 8px;
-  padding: 12px;
-  text-align: center;
+/* ═══════════════ GLOW EFFECTS ═══════════════ */
+.glow-green {
+  box-shadow: 0 0 20px rgba(57, 211, 83, 0.2), 0 0 60px rgba(57, 211, 83, 0.05);
 }
-.stat-card-value {
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 1;
-}
-.stat-card-label {
-  font-size: 10px;
-  color: #6b698a;
-  margin-top: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* ───── GLOW ───── */
 .glow-purple {
-  box-shadow: 0 0 20px rgba(91, 77, 199, 0.2), 0 0 60px rgba(91, 77, 199, 0.05);
+  box-shadow: 0 0 20px rgba(163, 113, 247, 0.2), 0 0 60px rgba(163, 113, 247, 0.05);
+}
+.glow-amber {
+  box-shadow: 0 0 20px rgba(227, 179, 65, 0.2), 0 0 60px rgba(227, 179, 65, 0.05);
+}
+.glow-red {
+  box-shadow: 0 0 20px rgba(248, 81, 73, 0.2), 0 0 60px rgba(248, 81, 73, 0.05);
 }
 .glow-gold {
-  box-shadow: 0 0 20px rgba(240, 178, 50, 0.2), 0 0 60px rgba(240, 178, 50, 0.05);
+  box-shadow: 0 0 20px rgba(227, 179, 65, 0.25), 0 0 60px rgba(227, 179, 65, 0.08);
 }
 
-/* ───── ANIMATIONS ───── */
+/* ═══════════════ STREAK FLAME ═══════════════ */
+@keyframes flame-flicker {
+  0%, 100% { transform: scaleY(1) scaleX(1); }
+  25% { transform: scaleY(1.05) scaleX(0.97); }
+  50% { transform: scaleY(0.96) scaleX(1.03); }
+  75% { transform: scaleY(1.04) scaleX(0.98); }
+}
+.flame-active {
+  animation: flame-flicker 2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* ═══════════════ ANIMATIONS ═══════════════ */
 @keyframes slide-up {
-  from { transform: translateY(100%); opacity: 0; }
+  from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 .animate-slide-up { animation: slide-up 0.25s ease-out; }
@@ -238,53 +330,261 @@ body {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in { animation: fade-in 0.25s ease-out; }
+.animate-fade-in { animation: fade-in 0.3s ease-out; }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 10px rgba(91, 77, 199, 0.2); }
-  50% { box-shadow: 0 0 25px rgba(91, 77, 199, 0.4); }
+  0%, 100% { box-shadow: 0 0 10px rgba(57, 211, 83, 0.15); }
+  50% { box-shadow: 0 0 25px rgba(57, 211, 83, 0.35); }
 }
 .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 
-/* ───── GRADES ───── */
-.grade-s { color: #f0b232; }
-.grade-a { color: #49b4a0; }
-.grade-b { color: #5b8def; }
-.grade-c { color: #e8914f; }
-.grade-d { color: #e05d6f; }
+@keyframes pulse-axis {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-pulse-axis { animation: pulse-axis 1.5s ease-in-out 2; }
 
-/* ───── NAV ───── */
+@keyframes draw-polygon {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.animate-draw-polygon {
+  animation: draw-polygon 0.6s ease-out;
+  transform-origin: center;
+}
+
+@keyframes splatter-burst {
+  0% { transform: scale(0); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 0; }
+}
+.animate-splatter { animation: splatter-burst 2s ease-out forwards; }
+
+@keyframes heatmap-dot {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-heatmap-dot { animation: heatmap-dot 0.3s ease-out forwards; }
+
+@keyframes slide-horizontal {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.animate-slide-in { animation: slide-horizontal 0.25s ease-out; }
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-count-up { animation: count-up 0.4s ease-out; }
+
+/* ═══════════════ GRADES ═══════════════ */
+.grade-s { color: #E3B341; }
+.grade-a { color: #39D353; }
+.grade-b { color: #58A6FF; }
+.grade-c { color: #F0883E; }
+.grade-d { color: #F85149; }
+
+/* ═══════════════ NAVIGATION ═══════════════ */
 .nav-active { position: relative; }
 .nav-active::after {
   content: '';
   position: absolute;
   bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 20px; height: 2px;
-  background: #5b4dc7;
+  width: 24px; height: 2px;
+  background: #39D353;
   border-radius: 1px;
 }
 
-::selection { background: rgba(91, 77, 199, 0.3); color: #e0dff5; }
+/* ═══════════════ SELECTION ═══════════════ */
+::selection { background: rgba(57, 211, 83, 0.3); color: #E6EDF3; }
 
-/* ───── PERSONA EQUIPMENT ───── */
+/* ═══════════════ PERSONA / EQUIPMENT ═══════════════ */
 .persona-slot {
-  border: 2px dashed #2a2850;
-  border-radius: 8px;
+  border: 2px dashed #30363D;
+  border-radius: 10px;
   transition: all 0.2s;
 }
-.persona-slot:hover { border-color: #5b4dc7; background: rgba(91, 77, 199, 0.05); }
-.persona-slot.equipped { border-style: solid; border-color: #5b4dc7; }
+.persona-slot:hover { border-color: #A371F7; background: rgba(163, 113, 247, 0.05); }
+.persona-slot.equipped { border-style: solid; border-color: #A371F7; }
 
-/* ───── CHALLENGE CARD ───── */
+/* ═══════════════ CHALLENGE CARD ═══════════════ */
 .challenge-card {
-  background: #1d1b3a;
-  border: 1px solid #2a2850;
-  border-radius: 8px;
+  background: #161B22;
+  border: 1px solid #30363D;
+  border-radius: 12px;
   transition: all 0.2s;
 }
-.challenge-card:hover { border-color: #3a3768; transform: translateY(-1px); }
-.challenge-card.completed { border-color: #49b4a0; opacity: 0.7; }
+.challenge-card:hover { border-color: #3D444D; transform: translateY(-1px); }
+.challenge-card.completed { border-color: #39D353; opacity: 0.7; }
 
-/* ───── RESPONSIVE ───── */
+/* ═══════════════ WIN/LOSS BUTTONS (2-TAP LOGGER) ═══════════════ */
+.win-btn {
+  background: linear-gradient(135deg, #39D353, #2EA043);
+  color: #0D1117;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  min-height: 120px;
+  border-radius: 16px;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.win-btn:hover { box-shadow: 0 0 30px rgba(57, 211, 83, 0.3); }
+.win-btn:active { transform: scale(0.97); }
+
+.loss-btn {
+  background: linear-gradient(135deg, #F85149, #DA3633);
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  min-height: 120px;
+  border-radius: 16px;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.loss-btn:hover { box-shadow: 0 0 30px rgba(248, 81, 73, 0.3); }
+.loss-btn:active { transform: scale(0.97); }
+
+/* ═══════════════ VERDICT CARDS ═══════════════ */
+.verdict-improved {
+  background: linear-gradient(135deg, #161B22, #0D2818);
+  border: 1px solid #39D35340;
+}
+.verdict-needs-work {
+  background: linear-gradient(135deg, #161B22, #2D1B1B);
+  border: 1px solid #E3B34140;
+}
+
+/* ═══════════════ HEATMAP BUNKERS ═══════════════ */
+.bunker-neutral { fill: #30363D; }
+.bunker-danger { fill: #F85149; }
+.bunker-safe { fill: #39D353; }
+.bunker-warm { fill: #E3B341; }
+
+/* ═══════════════ DIVISION LADDER ═══════════════ */
+.division-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* ═══════════════ FOCUS CARD ═══════════════ */
+.focus-card {
+  background: linear-gradient(135deg, #161B22 0%, #1B2430 100%);
+  border: 1px solid #30363D;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.focus-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #39D353, #A371F7);
+}
+
+/* ═══════════════ SESSION CARD ═══════════════ */
+.session-card {
+  background: #161B22;
+  border: 1px solid #30363D;
+  border-radius: 10px;
+  transition: all 0.15s;
+}
+.session-card:hover {
+  border-color: #3D444D;
+  background: #1C2129;
+}
+
+/* ═══════════════ ACHIEVEMENT BADGE ═══════════════ */
+.achievement-badge {
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.2s;
+  position: relative;
+}
+.achievement-locked {
+  background: #161B22;
+  border: 1px solid #30363D;
+  opacity: 0.5;
+  filter: grayscale(0.8);
+}
+.achievement-unlocked {
+  background: #161B22;
+  border: 1px solid #3D444D;
+}
+.achievement-unlocked:hover { transform: translateY(-2px); }
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
 @media (max-width: 768px) { .sidebar-desktop { display: none; } }
 @media (min-width: 769px) { .nav-mobile { display: none; } }
+
+/* ═══════════════ FIELD LAYOUT ═══════════════ */
+.field-bunker {
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.field-bunker:hover { filter: brightness(1.3); }
+.field-bunker-selected { filter: brightness(1.5); stroke: #39D353; stroke-width: 2; }
+
+/* ═══════════════ DRILL TIMER ═══════════════ */
+.drill-timer {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 48px;
+  font-weight: 700;
+  color: #E6EDF3;
+  text-shadow: 0 0 20px rgba(57, 211, 83, 0.3);
+}
+
+/* ═══════════════ SPLATTER TEXTURE (subtle on celebrations) ═══════════════ */
+.splatter-bg {
+  background-image: radial-gradient(circle at 20% 30%, rgba(57, 211, 83, 0.08) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(163, 113, 247, 0.06) 0%, transparent 50%),
+                    radial-gradient(circle at 50% 50%, rgba(248, 81, 73, 0.04) 0%, transparent 40%);
+}
+
+/* ═══════════════ QUICK START BUTTONS ═══════════════ */
+.quick-start-btn {
+  background: #161B22;
+  border: 1px solid #30363D;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.2s;
+  flex: 1;
+  min-width: 100px;
+}
+.quick-start-btn:hover {
+  border-color: #39D353;
+  background: #1C2129;
+  box-shadow: 0 0 20px rgba(57, 211, 83, 0.1);
+}
+
+/* ═══════════════ SEASON TIMELINE ═══════════════ */
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: all 0.15s;
+}
+.timeline-dot:hover { transform: scale(1.5); }
+.timeline-flag {
+  background: #21262D;
+  border: 1px solid #30363D;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
