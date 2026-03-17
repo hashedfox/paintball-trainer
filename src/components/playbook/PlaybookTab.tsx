@@ -196,7 +196,7 @@ export function PlaybookTab() {
               type="button"
               onClick={() => setLayoutIdx(i)}
               className={`flex-1 py-2 px-2 rounded-lg text-xs font-bold transition-all ${
-                i === layoutIdx ? 'bg-pb-amber text-black' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                i === layoutIdx ? 'bg-[#D4A843] text-black' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
               }`}
             >
               {l.name}
@@ -206,7 +206,7 @@ export function PlaybookTab() {
       </div>
 
       {/* Description */}
-      <div className="bg-pb-card rounded-xl border border-pb-border p-4">
+      <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4">
         <h3 className="text-sm font-bold text-white mb-2">{layout.name}</h3>
         <p className="text-xs text-slate-400">{layout.description}</p>
       </div>
@@ -226,7 +226,7 @@ export function PlaybookTab() {
       </div>
 
       {/* Pro reference */}
-      <div className="bg-pb-card rounded-xl border border-pb-border p-4">
+      <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4">
         <h3 className="text-sm font-bold text-white mb-2">{t('playbook.proRef')}</h3>
         <p className="text-xs text-slate-400 leading-relaxed">{layout.proReference}</p>
       </div>

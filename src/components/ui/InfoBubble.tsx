@@ -21,7 +21,7 @@ export function InfoBubble({ kpi }: Props) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-600 text-[10px] text-slate-300 hover:bg-pb-amber hover:text-black cursor-pointer ml-1 shrink-0"
+        className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-600 text-[10px] text-slate-300 hover:bg-[#D4A843] hover:text-black cursor-pointer ml-1 shrink-0"
       >
         ?
       </button>
@@ -36,12 +36,12 @@ export function InfoBubble({ kpi }: Props) {
             <div className="absolute inset-0 bg-black/60" />
             {/* Modal */}
             <div
-              className="relative w-full max-w-lg mx-4 mb-4 bg-pb-card rounded-2xl border border-pb-border overflow-hidden animate-slide-up"
+              className="relative w-full max-w-lg mx-4 mb-4 bg-[#1A1F35] rounded-2xl border border-white/[0.08] overflow-hidden animate-slide-up"
               style={{ zIndex: 10000, maxHeight: '80vh' }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-center justify-between px-4 py-3 border-b border-pb-border">
+              <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.08]">
                 <span className="text-lg">
                   {kpi.emoji} {getKpiField(kpi, 'name', lang)}
                 </span>
@@ -71,7 +71,7 @@ export function InfoBubble({ kpi }: Props) {
 function Section({ title, text }: { title: string; text: string }) {
   return (
     <div>
-      <h4 className="text-xs font-bold text-pb-amber uppercase tracking-wider mb-1">{title}</h4>
+      <h4 className="text-xs font-bold text-[#D4A843] uppercase tracking-wider mb-1">{title}</h4>
       <p className="text-sm text-slate-300 leading-relaxed">{text}</p>
     </div>
   )

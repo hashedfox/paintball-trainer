@@ -27,7 +27,7 @@ export function PlayerCard({ player, stats, pointId, defaultExpanded = false }: 
   }
 
   return (
-    <div className="bg-pb-card rounded-xl border border-pb-border overflow-hidden">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] overflow-hidden">
       {/* Header — tap to expand */}
       <button
         type="button"
@@ -35,7 +35,7 @@ export function PlayerCard({ player, stats, pointId, defaultExpanded = false }: 
         className="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-700/50 transition-colors"
       >
         <div className="flex items-center gap-2">
-          <span className="text-pb-amber font-bold text-sm">{POSITION_LABELS[player.position]}</span>
+          <span className="text-[#D4A843] font-bold text-sm">{POSITION_LABELS[player.position]}</span>
           <span className="text-white font-medium">{player.name}</span>
         </div>
         <div className="flex items-center gap-2 text-xs">
@@ -47,7 +47,7 @@ export function PlayerCard({ player, stats, pointId, defaultExpanded = false }: 
 
       {/* Expanded stats */}
       {expanded && (
-        <div className="px-4 pb-4 space-y-3 border-t border-pb-border pt-3">
+        <div className="px-4 pb-4 space-y-3 border-t border-white/[0.08] pt-3">
           {/* Boolean toggles */}
           <div className="grid grid-cols-2 gap-2">
             <Toggle
@@ -83,7 +83,7 @@ export function PlayerCard({ player, stats, pointId, defaultExpanded = false }: 
                     type="button"
                     onClick={() => update('commsRating', n)}
                     className={`flex-1 py-1 rounded text-xs font-bold ${
-                      n <= stats.commsRating ? 'bg-pb-amber text-black' : 'bg-slate-700 text-slate-500'
+                      n <= stats.commsRating ? 'bg-[#D4A843] text-black' : 'bg-slate-700 text-slate-500'
                     }`}
                   >
                     {n}
@@ -132,7 +132,7 @@ function NumInput({ label, kpi, value, onChange }: { label: string; kpi: any; va
         min={0}
         value={value}
         onChange={(e) => onChange(Math.max(0, Number(e.target.value) || 0))}
-        className="w-full bg-slate-700 rounded-lg px-2 py-1.5 text-sm text-white border border-pb-border focus:border-pb-amber outline-none"
+        className="w-full bg-slate-700 rounded-lg px-2 py-1.5 text-sm text-white border border-white/[0.08] focus:border-[#D4A843] outline-none"
       />
     </div>
   )
@@ -149,7 +149,7 @@ function TextInput({ label, kpi, value, onChange, placeholder }: { label: string
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-slate-700 rounded-lg px-2 py-1.5 text-sm text-white border border-pb-border focus:border-pb-amber outline-none"
+        className="w-full bg-slate-700 rounded-lg px-2 py-1.5 text-sm text-white border border-white/[0.08] focus:border-[#D4A843] outline-none"
       />
     </div>
   )

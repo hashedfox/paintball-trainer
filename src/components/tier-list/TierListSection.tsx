@@ -139,13 +139,13 @@ export function TierListSection() {
   })
 
   const advantageColor = (v: string) =>
-    v === 'strong' ? 'text-pb-green' : v === 'weak' ? 'text-pb-red' : 'text-pb-text-dim'
+    v === 'strong' ? 'text-[#2DD4A8]' : v === 'weak' ? 'text-[#EF4444]' : 'text-[#94A3B8]'
 
   return (
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
         <h2 className="text-xl font-extrabold text-white">Field Tier List</h2>
-        <p className="text-xs text-pb-text-dim">Recent competition field layouts ranked and analyzed.</p>
+        <p className="text-xs text-[#94A3B8]">Recent competition field layouts ranked and analyzed.</p>
       </div>
 
       {/* Filters */}
@@ -158,8 +158,8 @@ export function TierListSection() {
               onClick={() => setFilterTier(tier)}
               className={`px-3 py-1 rounded-full text-[10px] font-medium transition-all ${
                 filterTier === tier
-                  ? 'text-pb-darker'
-                  : 'bg-pb-surface text-pb-text-dim border border-pb-border'
+                  ? 'text-[#070B14]'
+                  : 'bg-[#111827] text-[#94A3B8] border border-white/[0.08]'
               }`}
               style={filterTier === tier ? { background: tier === 'all' ? '#00ff88' : TIER_COLORS[tier] } : {}}
             >
@@ -170,7 +170,7 @@ export function TierListSection() {
         <select
           value={filterYear}
           onChange={(e) => setFilterYear(e.target.value)}
-          className="bg-pb-surface border border-pb-border rounded-lg px-3 py-1 text-[10px] text-white focus:outline-none focus:border-pb-primary"
+          className="bg-[#111827] border border-white/[0.08] rounded-lg px-3 py-1 text-[10px] text-white focus:outline-none focus:border-[#7C5BF0]"
         >
           <option value="all">All Years</option>
           <option value="2025">2025</option>
@@ -199,9 +199,9 @@ export function TierListSection() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <h4 className="text-sm font-bold text-white">{l.name}</h4>
-                  <span className="text-[9px] px-2 py-0.5 bg-pb-surface rounded-full text-pb-text-muted">{l.competition}</span>
+                  <span className="text-[9px] px-2 py-0.5 bg-[#111827] rounded-full text-[#64748B]">{l.competition}</span>
                 </div>
-                <p className="text-[10px] text-pb-text-dim mt-1">{l.description}</p>
+                <p className="text-[10px] text-[#94A3B8] mt-1">{l.description}</p>
                 <div className="flex gap-4 mt-2">
                   <span className="text-[9px]">
                     Snake: <span className={`font-bold ${advantageColor(l.snakeAdvantage)}`}>{l.snakeAdvantage}</span>
@@ -210,7 +210,7 @@ export function TierListSection() {
                     Doritto: <span className={`font-bold ${advantageColor(l.dorittoAdvantage)}`}>{l.dorittoAdvantage}</span>
                   </span>
                   <span className="text-[9px]">
-                    Centre: <span className="font-bold text-pb-blue">{l.centrePlay}</span>
+                    Centre: <span className="font-bold text-[#4A7BF7]">{l.centrePlay}</span>
                   </span>
                 </div>
               </div>
@@ -226,34 +226,34 @@ export function TierListSection() {
 
           <div className="grid grid-cols-2 gap-3 mb-4">
             <div className="panel-inner rounded-lg p-3">
-              <span className="text-[9px] text-pb-text-muted uppercase tracking-wider">Bunkers</span>
+              <span className="text-[9px] text-[#64748B] uppercase tracking-wider">Bunkers</span>
               <div className="text-lg font-bold text-white">{layout.bunkerCount}</div>
             </div>
             <div className="panel-inner rounded-lg p-3">
-              <span className="text-[9px] text-pb-text-muted uppercase tracking-wider">Year</span>
+              <span className="text-[9px] text-[#64748B] uppercase tracking-wider">Year</span>
               <div className="text-lg font-bold text-white">{layout.year}</div>
             </div>
           </div>
 
           <div className="panel-inner rounded-lg p-3 mb-4">
-            <span className="text-[9px] text-pb-text-muted uppercase tracking-wider">Notable Feature</span>
-            <p className="text-xs text-pb-primary-bright mt-1">{layout.notableFeature}</p>
+            <span className="text-[9px] text-[#64748B] uppercase tracking-wider">Notable Feature</span>
+            <p className="text-xs text-[#9B7CF7] mt-1">{layout.notableFeature}</p>
           </div>
 
           {/* Position breakdown */}
           <div className="space-y-2">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">Position Analysis</h4>
             <div className="flex items-center justify-between p-2 panel-inner rounded-lg">
-              <span className="text-[10px] text-pb-text-dim">Snake Side</span>
+              <span className="text-[10px] text-[#94A3B8]">Snake Side</span>
               <span className={`text-[10px] font-bold ${advantageColor(layout.snakeAdvantage)}`}>{layout.snakeAdvantage}</span>
             </div>
             <div className="flex items-center justify-between p-2 panel-inner rounded-lg">
-              <span className="text-[10px] text-pb-text-dim">Doritto Side</span>
+              <span className="text-[10px] text-[#94A3B8]">Doritto Side</span>
               <span className={`text-[10px] font-bold ${advantageColor(layout.dorittoAdvantage)}`}>{layout.dorittoAdvantage}</span>
             </div>
             <div className="flex items-center justify-between p-2 panel-inner rounded-lg">
-              <span className="text-[10px] text-pb-text-dim">Centre Play Style</span>
-              <span className="text-[10px] font-bold text-pb-blue">{layout.centrePlay}</span>
+              <span className="text-[10px] text-[#94A3B8]">Centre Play Style</span>
+              <span className="text-[10px] font-bold text-[#4A7BF7]">{layout.centrePlay}</span>
             </div>
           </div>
 
@@ -262,7 +262,7 @@ export function TierListSection() {
               href="https://www.gunzup.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[10px] text-pb-primary-bright hover:text-pb-primary-dim transition-colors"
+              className="text-[10px] text-[#9B7CF7] hover:text-[#6344C4] transition-colors"
             >
               View more field designs on GunzUp.com →
             </a>
@@ -278,14 +278,14 @@ export function TierListSection() {
           rel="noopener noreferrer"
           className="flex items-center gap-3"
         >
-          <div className="w-10 h-10 bg-pb-primary/10 rounded-lg flex items-center justify-center">
-            <svg className="w-5 h-5 text-pb-primary-bright" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="w-10 h-10 bg-[#7C5BF0]/10 rounded-lg flex items-center justify-center">
+            <svg className="w-5 h-5 text-[#9B7CF7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </div>
           <div>
             <span className="text-sm font-bold text-white">GunzUp.com</span>
-            <p className="text-[10px] text-pb-text-dim">Browse field layout designs and create your own</p>
+            <p className="text-[10px] text-[#94A3B8]">Browse field layout designs and create your own</p>
           </div>
         </a>
       </div>

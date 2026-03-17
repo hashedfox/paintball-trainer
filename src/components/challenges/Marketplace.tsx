@@ -46,7 +46,7 @@ export function Marketplace() {
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
         <h2 className="text-xl font-extrabold text-white mb-1">Equipment Shop</h2>
-        <p className="text-xs text-pb-text-dim">Spend your earned coins on equipment for your persona.</p>
+        <p className="text-xs text-[#94A3B8]">Spend your earned coins on equipment for your persona.</p>
       </div>
 
       {/* Filter */}
@@ -58,8 +58,8 @@ export function Marketplace() {
             onClick={() => setFilter(f.id)}
             className={`px-3 py-1 rounded-full text-[10px] font-medium whitespace-nowrap transition-all ${
               filter === f.id
-                ? 'bg-pb-primary text-pb-darker'
-                : 'bg-pb-surface text-pb-text-dim border border-pb-border'
+                ? 'bg-[#7C5BF0] text-[#070B14]'
+                : 'bg-[#111827] text-[#94A3B8] border border-white/[0.08]'
             }`}
           >
             {f.label}
@@ -87,8 +87,8 @@ export function Marketplace() {
               </div>
 
               <h4 className="text-xs font-bold text-white text-center truncate">{item.name}</h4>
-              {item.brand && <p className="text-[9px] text-pb-text-muted text-center">{item.brand}</p>}
-              <p className="text-[9px] text-pb-text-dim text-center mt-1 line-clamp-2">{item.description}</p>
+              {item.brand && <p className="text-[9px] text-[#64748B] text-center">{item.brand}</p>}
+              <p className="text-[9px] text-[#94A3B8] text-center mt-1 line-clamp-2">{item.description}</p>
 
               {/* Rarity tag */}
               <div className="flex justify-center mt-2">
@@ -107,8 +107,8 @@ export function Marketplace() {
                 disabled={!canAfford}
                 className={`w-full mt-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${
                   canAfford
-                    ? 'bg-pb-amber/20 text-pb-amber border border-pb-amber/30 hover:bg-pb-amber/30'
-                    : 'bg-pb-surface text-pb-text-muted cursor-not-allowed'
+                    ? 'bg-[#D4A843]/20 text-[#D4A843] border border-[#D4A843]/30 hover:bg-[#D4A843]/30'
+                    : 'bg-[#111827] text-[#64748B] cursor-not-allowed'
                 }`}
               >
                 {price} coins
@@ -120,7 +120,7 @@ export function Marketplace() {
 
       {filtered.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-pb-text-muted text-sm">
+          <p className="text-[#64748B] text-sm">
             {filter === 'all' ? 'You own everything! Nice collection.' : 'No items in this category.'}
           </p>
         </div>

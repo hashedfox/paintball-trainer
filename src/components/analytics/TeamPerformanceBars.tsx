@@ -21,7 +21,7 @@ export function TeamPerformanceBars({ teamStats }: Props) {
   ]
 
   return (
-    <div className="bg-pb-card rounded-xl border border-pb-border p-4">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4">
       <h3 className="text-sm font-bold text-white mb-3">{t('analytics.teamPerf')}</h3>
       <div className="space-y-3">
         {bars.map((b) => (

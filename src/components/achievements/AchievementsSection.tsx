@@ -10,8 +10,8 @@ const LEVEL_XP = [0, 500, 1000, 1500, 2000, 3000, 4000, 5000, 7500, 10000]
 const BADGE_TIER_COLORS: Record<string, string> = {
   bronze: '#CD7F32',
   silver: '#C0C0C0',
-  gold: '#E3B341',
-  diamond: '#58A6FF',
+  gold: '#D4A843',
+  diamond: '#4A7BF7',
 }
 
 const CATEGORY_FILTERS: { label: string; value: BadgeCategory | 'all' }[] = [
@@ -139,17 +139,17 @@ export function AchievementsSection() {
     <div className="p-4 md:p-6 space-y-6 animate-fade-in">
       {/* Toast */}
       {showShareToast && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-lg bg-[#39D353] text-[#0D1117] font-bold text-sm shadow-lg shadow-[#39D353]/30 animate-fade-in">
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-lg bg-[#2DD4A8] text-[#0A0E1A] font-bold text-sm shadow-lg shadow-[#2DD4A8]/30 animate-fade-in">
           Rank card copied! Ready to share.
         </div>
       )}
 
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-extrabold text-[#E6EDF3]">Achievement Wall</h2>
-        <div className="flex items-center gap-2 text-[11px] text-[#8B949E]">
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#21262D] border border-[#30363D]">
-            <span className="text-[#A371F7] font-bold">{unlockedCount}</span>
+        <h2 className="text-lg font-extrabold text-[#F1F5F9]">Achievement Wall</h2>
+        <div className="flex items-center gap-2 text-[11px] text-[#94A3B8]">
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#2A3050] border border-[rgba(148, 163, 184, 0.08)]">
+            <span className="text-[#7C5BF0] font-bold">{unlockedCount}</span>
             <span>/</span>
             <span>{totalCount}</span>
             <span>unlocked</span>
@@ -160,23 +160,23 @@ export function AchievementsSection() {
       {/* ═══════════════════════════════════════════════════════════════
           1. DIVISION PROGRESSION TRACKER (Hero)
          ═══════════════════════════════════════════════════════════════ */}
-      <div className="rounded-xl bg-[#161B22] border border-[#30363D] p-5 relative overflow-hidden">
+      <div className="rounded-xl bg-[#1A1F35] border border-[rgba(148, 163, 184, 0.08)] p-5 relative overflow-hidden">
         {/* Ambient glow behind current division */}
         <div
           className="absolute inset-0 opacity-10 pointer-events-none"
           style={{
-            background: `radial-gradient(ellipse at 50% 40%, ${currentDivisionInfo?.color || '#A371F7'}80 0%, transparent 70%)`,
+            background: `radial-gradient(ellipse at 50% 40%, ${currentDivisionInfo?.color || '#7C5BF0'}80 0%, transparent 70%)`,
           }}
         />
 
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-[13px] font-bold uppercase tracking-wider text-[#8B949E]">Division Ladder</h3>
+            <h3 className="text-[13px] font-bold uppercase tracking-wider text-[#94A3B8]">Division Ladder</h3>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-[#8B949E]">Composite PPI</span>
+              <span className="text-[11px] text-[#94A3B8]">Composite PPI</span>
               <span
                 className="text-2xl font-black tabular-nums"
-                style={{ color: currentDivisionInfo?.color || '#A371F7' }}
+                style={{ color: currentDivisionInfo?.color || '#7C5BF0' }}
               >
                 {compositeScore}
               </span>
@@ -193,7 +193,7 @@ export function AchievementsSection() {
                   key={div.id}
                   className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-300
                     ${isCurrent
-                      ? 'bg-[#21262D] border border-[#30363D] shadow-lg'
+                      ? 'bg-[#2A3050] border border-[rgba(148, 163, 184, 0.08)] shadow-lg'
                       : isPast
                         ? 'opacity-60'
                         : 'opacity-40'
@@ -209,7 +209,7 @@ export function AchievementsSection() {
                     ) : (
                       <div
                         className="w-2 h-2 rounded-full"
-                        style={{ backgroundColor: isPast ? div.color : '#484F58' }}
+                        style={{ backgroundColor: isPast ? div.color : '#64748B' }}
                       />
                     )}
                   </div>
@@ -230,17 +230,17 @@ export function AchievementsSection() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span
-                        className={`text-[13px] font-bold ${isCurrent ? '' : 'text-[#8B949E]'}`}
+                        className={`text-[13px] font-bold ${isCurrent ? '' : 'text-[#94A3B8]'}`}
                         style={isCurrent ? { color: div.color } : {}}
                       >
                         {div.name}
                       </span>
-                      <span className="text-[9px] text-[#484F58] tabular-nums">
+                      <span className="text-[9px] text-[#64748B] tabular-nums">
                         PPI {div.minPPI}–{div.maxPPI}
                       </span>
                     </div>
                     {isCurrent && (
-                      <p className="text-[10px] text-[#8B949E] mt-0.5">{div.description}</p>
+                      <p className="text-[10px] text-[#94A3B8] mt-0.5">{div.description}</p>
                     )}
                   </div>
                 </div>
@@ -250,35 +250,35 @@ export function AchievementsSection() {
 
           {/* Progress bar to next division */}
           {nextDiv && (
-            <div className="bg-[#0D1117] rounded-lg p-3 border border-[#30363D]">
+            <div className="bg-[#0A0E1A] rounded-lg p-3 border border-[rgba(148, 163, 184, 0.08)]">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] text-[#8B949E]">
+                <span className="text-[11px] text-[#94A3B8]">
                   Progress to <span className="font-bold" style={{ color: nextDiv.color }}>{nextDiv.name}</span>
                 </span>
                 <span className="text-[11px] font-bold tabular-nums" style={{ color: currentDivisionInfo?.color }}>
                   {compositeScore} / {nextDiv.minPPI} PPI
                 </span>
               </div>
-              <div className="h-2.5 rounded-full bg-[#21262D] overflow-hidden">
+              <div className="h-2.5 rounded-full bg-[#2A3050] overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-700"
                   style={{
                     width: `${divProgressPercent}%`,
-                    background: `linear-gradient(90deg, ${currentDivisionInfo?.color || '#A371F7'}, ${nextDiv.color})`,
-                    boxShadow: `0 0 8px ${currentDivisionInfo?.color || '#A371F7'}60`,
+                    background: `linear-gradient(90deg, ${currentDivisionInfo?.color || '#7C5BF0'}, ${nextDiv.color})`,
+                    boxShadow: `0 0 8px ${currentDivisionInfo?.color || '#7C5BF0'}60`,
                   }}
                 />
               </div>
               <div className="flex justify-between mt-1">
-                <span className="text-[9px] text-[#484F58]">{currentDivisionInfo?.shortName}</span>
-                <span className="text-[9px] text-[#484F58]">{nextDiv.shortName}</span>
+                <span className="text-[9px] text-[#64748B]">{currentDivisionInfo?.shortName}</span>
+                <span className="text-[9px] text-[#64748B]">{nextDiv.shortName}</span>
               </div>
             </div>
           )}
           {!nextDiv && (
-            <div className="bg-[#0D1117] rounded-lg p-3 border border-[#30363D] text-center">
-              <span className="text-[13px] font-bold text-[#39D353]">Maximum Division Reached</span>
-              <p className="text-[10px] text-[#8B949E] mt-1">You are at the professional level.</p>
+            <div className="bg-[#0A0E1A] rounded-lg p-3 border border-[rgba(148, 163, 184, 0.08)] text-center">
+              <span className="text-[13px] font-bold text-[#2DD4A8]">Maximum Division Reached</span>
+              <p className="text-[10px] text-[#94A3B8] mt-1">You are at the professional level.</p>
             </div>
           )}
         </div>
@@ -287,8 +287,8 @@ export function AchievementsSection() {
       {/* ═══════════════════════════════════════════════════════════════
           2. ACHIEVEMENT BADGE WALL
          ═══════════════════════════════════════════════════════════════ */}
-      <div className="rounded-xl bg-[#161B22] border border-[#30363D] p-5">
-        <h3 className="text-[13px] font-bold uppercase tracking-wider text-[#8B949E] mb-3">Trophy Case</h3>
+      <div className="rounded-xl bg-[#1A1F35] border border-[rgba(148, 163, 184, 0.08)] p-5">
+        <h3 className="text-[13px] font-bold uppercase tracking-wider text-[#94A3B8] mb-3">Trophy Case</h3>
 
         {/* Category filter pills */}
         <div className="flex flex-wrap gap-1.5 mb-4">
@@ -299,8 +299,8 @@ export function AchievementsSection() {
               onClick={() => setBadgeFilter(cat.value)}
               className={`px-3 py-1 rounded-full text-[11px] font-semibold transition-all duration-200
                 ${badgeFilter === cat.value
-                  ? 'bg-[#A371F7] text-white shadow-md shadow-[#A371F7]/20'
-                  : 'bg-[#21262D] text-[#8B949E] border border-[#30363D] hover:border-[#484F58] hover:text-[#E6EDF3]'
+                  ? 'bg-[#7C5BF0] text-white shadow-md shadow-[#7C5BF0]/20'
+                  : 'bg-[#2A3050] text-[#94A3B8] border border-[rgba(148, 163, 184, 0.08)] hover:border-[#64748B] hover:text-[#F1F5F9]'
                 }`}
             >
               {cat.label}
@@ -318,11 +318,11 @@ export function AchievementsSection() {
                 key={badge.id}
                 className={`relative rounded-xl p-3 text-center transition-all duration-300 cursor-pointer
                   ${badge.unlocked
-                    ? 'bg-[#21262D] hover:bg-[#282E36]'
-                    : 'bg-[#0D1117] opacity-50 grayscale'
+                    ? 'bg-[#2A3050] hover:bg-[#2A3050]'
+                    : 'bg-[#0A0E1A] opacity-50 grayscale'
                   }`}
                 style={{
-                  border: `2px solid ${badge.unlocked ? tierColor + '60' : '#30363D'}`,
+                  border: `2px solid ${badge.unlocked ? tierColor + '60' : 'rgba(148, 163, 184, 0.08)'}`,
                   boxShadow: badge.unlocked && isHovered
                     ? `0 0 16px ${tierColor}30, inset 0 0 12px ${tierColor}08`
                     : 'none',
@@ -344,12 +344,12 @@ export function AchievementsSection() {
                 </div>
 
                 {/* Name */}
-                <div className="text-[10px] font-bold text-[#E6EDF3] leading-tight mb-1.5 line-clamp-2 min-h-[24px]">
+                <div className="text-[10px] font-bold text-[#F1F5F9] leading-tight mb-1.5 line-clamp-2 min-h-[24px]">
                   {badge.unlocked ? badge.name : '???'}
                 </div>
 
                 {/* Mini progress bar */}
-                <div className="h-1 rounded-full bg-[#0D1117] overflow-hidden">
+                <div className="h-1 rounded-full bg-[#0A0E1A] overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{
@@ -361,9 +361,9 @@ export function AchievementsSection() {
 
                 {/* Hover tooltip */}
                 {isHovered && badge.unlocked && (
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-44 p-2.5 rounded-lg bg-[#0D1117] border border-[#30363D] shadow-xl z-20 text-left">
-                    <div className="text-[11px] font-bold text-[#E6EDF3] mb-0.5">{badge.name}</div>
-                    <div className="text-[9px] text-[#8B949E] mb-1">{badge.description}</div>
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-44 p-2.5 rounded-lg bg-[#0A0E1A] border border-[rgba(148, 163, 184, 0.08)] shadow-xl z-20 text-left">
+                    <div className="text-[11px] font-bold text-[#F1F5F9] mb-0.5">{badge.name}</div>
+                    <div className="text-[9px] text-[#94A3B8] mb-1">{badge.description}</div>
                     <div className="flex items-center justify-between">
                       <span
                         className="text-[9px] font-bold uppercase"
@@ -371,15 +371,15 @@ export function AchievementsSection() {
                       >
                         {badge.tier}
                       </span>
-                      <span className="text-[9px] text-[#484F58]">{badge.progress}%</span>
+                      <span className="text-[9px] text-[#64748B]">{badge.progress}%</span>
                     </div>
                     {badge.unlockedDate && (
-                      <div className="text-[8px] text-[#484F58] mt-1">
+                      <div className="text-[8px] text-[#64748B] mt-1">
                         Unlocked {new Date(badge.unlockedDate).toLocaleDateString()}
                       </div>
                     )}
                     {/* Tooltip arrow */}
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-[#0D1117] border-r border-b border-[#30363D] rotate-45 -mt-1" />
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-[#0A0E1A] border-r border-b border-[rgba(148, 163, 184, 0.08)] rotate-45 -mt-1" />
                   </div>
                 )}
               </div>
@@ -388,7 +388,7 @@ export function AchievementsSection() {
         </div>
 
         {filteredBadges.length === 0 && (
-          <div className="text-center py-8 text-[#484F58] text-sm">
+          <div className="text-center py-8 text-[#64748B] text-sm">
             No badges in this category yet.
           </div>
         )}
@@ -397,21 +397,21 @@ export function AchievementsSection() {
       {/* ═══════════════════════════════════════════════════════════════
           3. SHAREABLE RANK-UP CARD
          ═══════════════════════════════════════════════════════════════ */}
-      <div className="rounded-xl overflow-hidden border border-[#30363D]">
+      <div className="rounded-xl overflow-hidden border border-[rgba(148, 163, 184, 0.08)]">
         <div
           className="splatter-bg relative p-5"
           style={{
-            background: 'linear-gradient(135deg, #0D1117 0%, #161B22 40%, #1a0e2e 100%)',
+            background: 'linear-gradient(135deg, #0A0E1A 0%, #1A1F35 40%, #1a0e2e 100%)',
           }}
         >
           {/* Texture overlay */}
           <div
             className="absolute inset-0 opacity-[0.04] pointer-events-none"
             style={{
-              backgroundImage: `radial-gradient(circle at 20% 30%, #A371F7 1px, transparent 1px),
-                                radial-gradient(circle at 60% 70%, #39D353 1px, transparent 1px),
-                                radial-gradient(circle at 80% 20%, #F85149 1px, transparent 1px),
-                                radial-gradient(circle at 40% 80%, #E3B341 1px, transparent 1px)`,
+              backgroundImage: `radial-gradient(circle at 20% 30%, #7C5BF0 1px, transparent 1px),
+                                radial-gradient(circle at 60% 70%, #2DD4A8 1px, transparent 1px),
+                                radial-gradient(circle at 80% 20%, #EF4444 1px, transparent 1px),
+                                radial-gradient(circle at 40% 80%, #D4A843 1px, transparent 1px)`,
               backgroundSize: '60px 60px, 80px 80px, 50px 50px, 70px 70px',
             }}
           />
@@ -420,11 +420,11 @@ export function AchievementsSection() {
             {/* Branding */}
             <div className="flex items-center justify-between mb-4">
               <div>
-                <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#A371F7]">
+                <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#7C5BF0]">
                   PPI — Paintball Performance Index
                 </div>
-                <div className="text-[22px] font-black text-[#E6EDF3] leading-tight mt-1"
-                  style={{ textShadow: `0 0 30px ${currentDivisionInfo?.color || '#A371F7'}40` }}
+                <div className="text-[22px] font-black text-[#F1F5F9] leading-tight mt-1"
+                  style={{ textShadow: `0 0 30px ${currentDivisionInfo?.color || '#7C5BF0'}40` }}
                 >
                   RANK CARD
                 </div>
@@ -446,25 +446,25 @@ export function AchievementsSection() {
             <div className="flex items-center justify-center gap-3 mb-4">
               {prevPPI && (
                 <div className="flex-1 max-w-[160px]">
-                  <div className="text-[9px] text-center text-[#484F58] uppercase tracking-wider mb-1 font-bold">Before</div>
+                  <div className="text-[9px] text-center text-[#64748B] uppercase tracking-wider mb-1 font-bold">Before</div>
                   <SpiderChart
                     labels={PPI_AXES.map(a => PPI_LABELS[a])}
                     values={PPI_AXES.map(a => prevPPI[a])}
-                    color="#484F58"
+                    color="#64748B"
                     size={140}
                   />
                 </div>
               )}
               <div className={`${prevPPI ? 'flex-1 max-w-[160px]' : ''}`}>
                 <div className="text-[9px] text-center uppercase tracking-wider mb-1 font-bold"
-                  style={{ color: currentDivisionInfo?.color || '#A371F7' }}
+                  style={{ color: currentDivisionInfo?.color || '#7C5BF0' }}
                 >
                   {prevPPI ? 'Current' : 'Your PPI'}
                 </div>
                 <SpiderChart
                   labels={PPI_AXES.map(a => PPI_LABELS[a])}
                   values={PPI_AXES.map(a => ppiScores[a])}
-                  color={currentDivisionInfo?.color || '#A371F7'}
+                  color={currentDivisionInfo?.color || '#7C5BF0'}
                   size={prevPPI ? 140 : 200}
                 />
               </div>
@@ -472,21 +472,21 @@ export function AchievementsSection() {
 
             {/* Key stats row */}
             <div className="grid grid-cols-3 gap-2 mb-4">
-              <div className="bg-[#0D1117]/60 rounded-lg p-2.5 text-center border border-[#30363D]/50">
-                <div className="text-[9px] uppercase tracking-wider text-[#8B949E] font-bold">Division</div>
+              <div className="bg-[#0A0E1A]/60 rounded-lg p-2.5 text-center border border-[rgba(148, 163, 184, 0.08)]/50">
+                <div className="text-[9px] uppercase tracking-wider text-[#94A3B8] font-bold">Division</div>
                 <div className="text-[15px] font-black mt-0.5" style={{ color: currentDivisionInfo?.color }}>
                   {currentDivision}
                 </div>
               </div>
-              <div className="bg-[#0D1117]/60 rounded-lg p-2.5 text-center border border-[#30363D]/50">
-                <div className="text-[9px] uppercase tracking-wider text-[#8B949E] font-bold">Composite</div>
-                <div className="text-[15px] font-black text-[#A371F7] mt-0.5">
+              <div className="bg-[#0A0E1A]/60 rounded-lg p-2.5 text-center border border-[rgba(148, 163, 184, 0.08)]/50">
+                <div className="text-[9px] uppercase tracking-wider text-[#94A3B8] font-bold">Composite</div>
+                <div className="text-[15px] font-black text-[#7C5BF0] mt-0.5">
                   {compositeScore}
                 </div>
               </div>
-              <div className="bg-[#0D1117]/60 rounded-lg p-2.5 text-center border border-[#30363D]/50">
-                <div className="text-[9px] uppercase tracking-wider text-[#8B949E] font-bold">Best Axis</div>
-                <div className="text-[15px] font-black text-[#39D353] mt-0.5 truncate">
+              <div className="bg-[#0A0E1A]/60 rounded-lg p-2.5 text-center border border-[rgba(148, 163, 184, 0.08)]/50">
+                <div className="text-[9px] uppercase tracking-wider text-[#94A3B8] font-bold">Best Axis</div>
+                <div className="text-[15px] font-black text-[#2DD4A8] mt-0.5 truncate">
                   {getBestAxis(ppiScores)}
                 </div>
               </div>
@@ -496,10 +496,10 @@ export function AchievementsSection() {
             <button
               type="button"
               onClick={handleShare}
-              className="w-full py-2.5 rounded-lg font-bold text-[13px] text-[#0D1117] transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
+              className="w-full py-2.5 rounded-lg font-bold text-[13px] text-[#0A0E1A] transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
               style={{
-                background: `linear-gradient(135deg, ${currentDivisionInfo?.color || '#A371F7'}, #39D353)`,
-                boxShadow: `0 0 20px ${currentDivisionInfo?.color || '#A371F7'}30`,
+                background: `linear-gradient(135deg, ${currentDivisionInfo?.color || '#7C5BF0'}, #2DD4A8)`,
+                boxShadow: `0 0 20px ${currentDivisionInfo?.color || '#7C5BF0'}30`,
               }}
             >
               <span className="flex items-center justify-center gap-2">
@@ -516,8 +516,8 @@ export function AchievementsSection() {
       {/* ═══════════════════════════════════════════════════════════════
           4. LEVEL & XP PROGRESS
          ═══════════════════════════════════════════════════════════════ */}
-      <div className="rounded-xl bg-[#161B22] border border-[#30363D] p-5">
-        <h3 className="text-[13px] font-bold uppercase tracking-wider text-[#8B949E] mb-4">Level & XP</h3>
+      <div className="rounded-xl bg-[#1A1F35] border border-[rgba(148, 163, 184, 0.08)] p-5">
+        <h3 className="text-[13px] font-bold uppercase tracking-wider text-[#94A3B8] mb-4">Level & XP</h3>
 
         <div className="flex items-center gap-4 mb-4">
           {/* Level badge */}
@@ -525,49 +525,49 @@ export function AchievementsSection() {
             <div
               className="w-16 h-16 rounded-2xl flex flex-col items-center justify-center"
               style={{
-                background: `linear-gradient(135deg, #A371F720, #A371F708)`,
-                border: '2px solid #A371F740',
-                boxShadow: '0 0 24px #A371F720',
+                background: `linear-gradient(135deg, #7C5BF020, #7C5BF008)`,
+                border: '2px solid #7C5BF040',
+                boxShadow: '0 0 24px #7C5BF020',
               }}
             >
-              <span className="text-2xl font-black text-[#A371F7] leading-none">{level}</span>
-              <span className="text-[7px] font-bold text-[#8B949E] uppercase tracking-wider mt-0.5">Level</span>
+              <span className="text-2xl font-black text-[#7C5BF0] leading-none">{level}</span>
+              <span className="text-[7px] font-bold text-[#94A3B8] uppercase tracking-wider mt-0.5">Level</span>
             </div>
           </div>
 
           {/* Level info */}
           <div className="flex-1">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[14px] font-extrabold text-[#E6EDF3]">{levelTitle}</span>
+              <span className="text-[14px] font-extrabold text-[#F1F5F9]">{levelTitle}</span>
               {level < LEVEL_TITLES.length && (
-                <span className="text-[10px] text-[#484F58]">
-                  Next: <span className="text-[#8B949E]">{nextLevelTitle}</span>
+                <span className="text-[10px] text-[#64748B]">
+                  Next: <span className="text-[#94A3B8]">{nextLevelTitle}</span>
                 </span>
               )}
             </div>
 
             {/* XP bar */}
-            <div className="h-3 rounded-full bg-[#0D1117] overflow-hidden border border-[#30363D]">
+            <div className="h-3 rounded-full bg-[#0A0E1A] overflow-hidden border border-[rgba(148, 163, 184, 0.08)]">
               <div
                 className="h-full rounded-full transition-all duration-700"
                 style={{
                   width: `${xpProgress}%`,
-                  background: 'linear-gradient(90deg, #A371F7, #58A6FF)',
-                  boxShadow: '0 0 8px #A371F760',
+                  background: 'linear-gradient(90deg, #7C5BF0, #4A7BF7)',
+                  boxShadow: '0 0 8px #7C5BF060',
                 }}
               />
             </div>
 
             <div className="flex items-center justify-between mt-1">
-              <span className="text-[10px] text-[#484F58] tabular-nums">{xpInLevel} / {xpNeeded} XP</span>
-              <span className="text-[10px] text-[#484F58] tabular-nums">Total: {xp} XP</span>
+              <span className="text-[10px] text-[#64748B] tabular-nums">{xpInLevel} / {xpNeeded} XP</span>
+              <span className="text-[10px] text-[#64748B] tabular-nums">Total: {xp} XP</span>
             </div>
           </div>
         </div>
 
         {/* Level rewards preview — show upcoming milestones */}
-        <div className="bg-[#0D1117] rounded-lg p-3 border border-[#30363D]">
-          <div className="text-[10px] font-bold text-[#8B949E] uppercase tracking-wider mb-2">Level Rewards</div>
+        <div className="bg-[#0A0E1A] rounded-lg p-3 border border-[rgba(148, 163, 184, 0.08)]">
+          <div className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-wider mb-2">Level Rewards</div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {LEVEL_TITLES.slice(level - 1, level + 3).map((title, i) => {
               const lvl = level + i
@@ -575,21 +575,21 @@ export function AchievementsSection() {
               return (
                 <div
                   key={title + lvl}
-                  className={`rounded-lg p-2 text-center ${isCurrentLevel ? 'bg-[#A371F7]/10 border border-[#A371F7]/30' : 'bg-[#161B22] border border-[#30363D]'}`}
+                  className={`rounded-lg p-2 text-center ${isCurrentLevel ? 'bg-[#7C5BF0]/10 border border-[#7C5BF0]/30' : 'bg-[#1A1F35] border border-[rgba(148, 163, 184, 0.08)]'}`}
                 >
-                  <div className={`text-[10px] font-black ${isCurrentLevel ? 'text-[#A371F7]' : 'text-[#484F58]'}`}>
+                  <div className={`text-[10px] font-black ${isCurrentLevel ? 'text-[#7C5BF0]' : 'text-[#64748B]'}`}>
                     Lv.{lvl}
                   </div>
-                  <div className={`text-[9px] font-bold mt-0.5 ${isCurrentLevel ? 'text-[#E6EDF3]' : 'text-[#8B949E]'}`}>
+                  <div className={`text-[9px] font-bold mt-0.5 ${isCurrentLevel ? 'text-[#F1F5F9]' : 'text-[#94A3B8]'}`}>
                     {title}
                   </div>
                   {!isCurrentLevel && (
-                    <div className="text-[8px] text-[#484F58] mt-0.5">
+                    <div className="text-[8px] text-[#64748B] mt-0.5">
                       {LEVEL_XP[lvl - 1] ? `${LEVEL_XP[lvl - 1]} XP` : 'Max'}
                     </div>
                   )}
                   {isCurrentLevel && (
-                    <div className="text-[8px] text-[#A371F7] mt-0.5 font-bold">Current</div>
+                    <div className="text-[8px] text-[#7C5BF0] mt-0.5 font-bold">Current</div>
                   )}
                 </div>
               )
@@ -601,11 +601,11 @@ export function AchievementsSection() {
       {/* ═══════════════════════════════════════════════════════════════
           5. STREAK DISPLAY
          ═══════════════════════════════════════════════════════════════ */}
-      <div className="rounded-xl bg-[#161B22] border border-[#30363D] p-5">
+      <div className="rounded-xl bg-[#1A1F35] border border-[rgba(148, 163, 184, 0.08)] p-5">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-[13px] font-bold uppercase tracking-wider text-[#8B949E]">Training Streak</h3>
+          <h3 className="text-[13px] font-bold uppercase tracking-wider text-[#94A3B8]">Training Streak</h3>
           {streakFreezeAvailable && (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#58A6FF]/15 border border-[#58A6FF]/30 text-[10px] font-bold text-[#58A6FF]">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#4A7BF7]/15 border border-[#4A7BF7]/30 text-[10px] font-bold text-[#4A7BF7]">
               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.789l1.599.799L9 4.323V3a1 1 0 011-1z" />
               </svg>
@@ -621,23 +621,23 @@ export function AchievementsSection() {
               className={`w-20 h-20 rounded-2xl flex flex-col items-center justify-center ${trainingStreak > 0 ? 'flame-active' : ''}`}
               style={{
                 background: trainingStreak > 0
-                  ? 'linear-gradient(135deg, #F8514920, #F0883E20, #E3B34120)'
-                  : '#21262D',
-                border: `2px solid ${trainingStreak > 0 ? '#F0883E50' : '#30363D'}`,
-                boxShadow: trainingStreak > 0 ? '0 0 30px #F0883E25' : 'none',
+                  ? 'linear-gradient(135deg, #EF444420, #F59E0B20, #D4A84320)'
+                  : '#2A3050',
+                border: `2px solid ${trainingStreak > 0 ? '#F59E0B50' : 'rgba(148, 163, 184, 0.08)'}`,
+                boxShadow: trainingStreak > 0 ? '0 0 30px #F59E0B25' : 'none',
               }}
             >
               <span className="text-3xl leading-none mb-0.5">
                 {trainingStreak > 0 ? '\uD83D\uDD25' : '\u2744\uFE0F'}
               </span>
-              <span className={`text-lg font-black leading-none ${trainingStreak > 0 ? 'text-[#F0883E]' : 'text-[#484F58]'}`}>
+              <span className={`text-lg font-black leading-none ${trainingStreak > 0 ? 'text-[#F59E0B]' : 'text-[#64748B]'}`}>
                 {trainingStreak}
               </span>
             </div>
           </div>
 
           <div className="flex-1">
-            <div className="text-[16px] font-extrabold text-[#E6EDF3]">
+            <div className="text-[16px] font-extrabold text-[#F1F5F9]">
               {trainingStreak === 0
                 ? 'Start Your Streak'
                 : trainingStreak === 1
@@ -645,7 +645,7 @@ export function AchievementsSection() {
                   : `${trainingStreak} Day Streak`
               }
             </div>
-            <p className="text-[11px] text-[#8B949E] mt-0.5">
+            <p className="text-[11px] text-[#94A3B8] mt-0.5">
               {trainingStreak === 0
                 ? 'Log a training session to begin.'
                 : `Keep training daily to maintain your streak.`
@@ -662,7 +662,7 @@ export function AchievementsSection() {
                     className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold transition-all
                       ${achieved
                         ? 'border'
-                        : 'bg-[#0D1117] text-[#484F58] border border-[#30363D]'
+                        : 'bg-[#0A0E1A] text-[#64748B] border border-[rgba(148, 163, 184, 0.08)]'
                       }`}
                     style={achieved ? {
                       color: BADGE_TIER_COLORS[ms.tier],
@@ -684,8 +684,8 @@ export function AchievementsSection() {
         </div>
 
         {/* Heatmap calendar — last 30 days */}
-        <div className="bg-[#0D1117] rounded-lg p-3 border border-[#30363D]">
-          <div className="text-[10px] font-bold text-[#8B949E] uppercase tracking-wider mb-2">Last 30 Days</div>
+        <div className="bg-[#0A0E1A] rounded-lg p-3 border border-[rgba(148, 163, 184, 0.08)]">
+          <div className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-wider mb-2">Last 30 Days</div>
           <div className="grid grid-cols-10 gap-1">
             {heatmapDays.map((active, i) => {
               const dayDate = new Date()
@@ -694,9 +694,9 @@ export function AchievementsSection() {
               return (
                 <div
                   key={i}
-                  className={`aspect-square rounded-sm transition-colors ${isToday ? 'ring-1 ring-[#E6EDF3]/30' : ''}`}
+                  className={`aspect-square rounded-sm transition-colors ${isToday ? 'ring-1 ring-[#F1F5F9]/30' : ''}`}
                   style={{
-                    backgroundColor: active ? '#39D353' : '#21262D',
+                    backgroundColor: active ? '#2DD4A8' : '#2A3050',
                     opacity: active ? (0.4 + (i / 29) * 0.6) : 1,
                   }}
                   title={`${dayDate.toLocaleDateString()} — ${active ? 'Active' : 'Inactive'}`}
@@ -705,16 +705,16 @@ export function AchievementsSection() {
             })}
           </div>
           <div className="flex items-center justify-between mt-2">
-            <span className="text-[8px] text-[#484F58]">30 days ago</span>
+            <span className="text-[8px] text-[#64748B]">30 days ago</span>
             <div className="flex items-center gap-1">
-              <span className="text-[8px] text-[#484F58]">Less</span>
-              <div className="w-2 h-2 rounded-sm bg-[#21262D]" />
-              <div className="w-2 h-2 rounded-sm bg-[#39D353]/40" />
-              <div className="w-2 h-2 rounded-sm bg-[#39D353]/70" />
-              <div className="w-2 h-2 rounded-sm bg-[#39D353]" />
-              <span className="text-[8px] text-[#484F58]">More</span>
+              <span className="text-[8px] text-[#64748B]">Less</span>
+              <div className="w-2 h-2 rounded-sm bg-[#2A3050]" />
+              <div className="w-2 h-2 rounded-sm bg-[#2DD4A8]/40" />
+              <div className="w-2 h-2 rounded-sm bg-[#2DD4A8]/70" />
+              <div className="w-2 h-2 rounded-sm bg-[#2DD4A8]" />
+              <span className="text-[8px] text-[#64748B]">More</span>
             </div>
-            <span className="text-[8px] text-[#484F58]">Today</span>
+            <span className="text-[8px] text-[#64748B]">Today</span>
           </div>
         </div>
       </div>

@@ -18,18 +18,18 @@ import { nanoid } from 'nanoid'
 // ─── Constants ──────────────────────────────────────────────────────────────
 
 const AXIS_COLORS: Record<PPIAxis, string> = {
-  snapShooting: '#F85149',
-  movement: '#58A6FF',
-  fieldIQ: '#A371F7',
-  communication: '#56D4DD',
-  gunSkills: '#F0883E',
-  fitness: '#39D353',
+  snapShooting: '#EF4444',
+  movement: '#4A7BF7',
+  fieldIQ: '#7C5BF0',
+  communication: '#2DD4A8',
+  gunSkills: '#F59E0B',
+  fitness: '#2DD4A8',
 }
 
 const DIFFICULTY_COLORS: Record<string, { bg: string; text: string }> = {
-  easy: { bg: 'rgba(57,211,83,0.15)', text: '#39D353' },
-  medium: { bg: 'rgba(227,179,65,0.15)', text: '#E3B341' },
-  hard: { bg: 'rgba(248,81,73,0.15)', text: '#F85149' },
+  easy: { bg: 'rgba(57,211,83,0.15)', text: '#2DD4A8' },
+  medium: { bg: 'rgba(227,179,65,0.15)', text: '#D4A843' },
+  hard: { bg: 'rgba(248,81,73,0.15)', text: '#EF4444' },
 }
 
 type DrillView = 'library' | 'drill-active' | 'drill-summary'
@@ -257,13 +257,13 @@ export function DrillsSection() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-extrabold text-white">Solo Drill Mode</h2>
-          <p className="text-[12px] text-pb-text-dim mt-0.5">Train between practice days</p>
+          <p className="text-[12px] text-[#94A3B8] mt-0.5">Train between practice days</p>
         </div>
         {state.trainingStreak > 0 && (
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
             style={{ background: 'rgba(227,179,65,0.12)', border: '1px solid rgba(227,179,65,0.25)' }}>
             <span className="flame-active text-lg">🔥</span>
-            <span className="text-[13px] font-bold" style={{ color: '#E3B341' }}>{state.trainingStreak} day streak</span>
+            <span className="text-[13px] font-bold" style={{ color: '#D4A843' }}>{state.trainingStreak} day streak</span>
           </div>
         )}
       </div>
@@ -276,7 +276,7 @@ export function DrillsSection() {
           />
           <div className="relative">
             <div className="flex items-center gap-2 mb-3">
-              <span className="section-header" style={{ color: '#39D353' }}>TODAY&apos;S FOCUS</span>
+              <span className="section-header" style={{ color: '#2DD4A8' }}>TODAY&apos;S FOCUS</span>
               <span className="tag-pill tag-purple text-[10px]">
                 {PPI_LABELS[todaysDrill.ppiAxis]}
               </span>
@@ -288,9 +288,9 @@ export function DrillsSection() {
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-[16px] font-bold text-white">{todaysDrill.name}</h3>
-                <p className="text-[12px] text-pb-text-dim mt-1 leading-relaxed">{todaysDrill.description}</p>
+                <p className="text-[12px] text-[#94A3B8] mt-1 leading-relaxed">{todaysDrill.description}</p>
                 <div className="flex items-center gap-3 mt-2">
-                  <span className="text-[11px] text-pb-text-muted flex items-center gap-1">
+                  <span className="text-[11px] text-[#64748B] flex items-center gap-1">
                     <ClockIcon /> {todaysDrill.estimatedMinutes} min
                   </span>
                   <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full"
@@ -363,10 +363,10 @@ export function DrillsSection() {
                   {drill.icon}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-[14px] font-bold text-white group-hover:text-pb-green transition-colors">
+                  <h4 className="text-[14px] font-bold text-white group-hover:text-[#2DD4A8] transition-colors">
                     {drill.name}
                   </h4>
-                  <p className="text-[11px] text-pb-text-dim mt-0.5 line-clamp-2 leading-relaxed">
+                  <p className="text-[11px] text-[#94A3B8] mt-0.5 line-clamp-2 leading-relaxed">
                     {drill.description}
                   </p>
                   <div className="flex items-center gap-2 mt-2 flex-wrap">
@@ -377,7 +377,7 @@ export function DrillsSection() {
                       }}>
                       {drill.difficulty.charAt(0).toUpperCase() + drill.difficulty.slice(1)}
                     </span>
-                    <span className="text-[10px] text-pb-text-muted flex items-center gap-1">
+                    <span className="text-[10px] text-[#64748B] flex items-center gap-1">
                       <ClockIcon size={10} /> {drill.estimatedMinutes}m
                     </span>
                     <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
@@ -389,7 +389,7 @@ export function DrillsSection() {
                     </span>
                   </div>
                   {best !== null && (
-                    <div className="mt-2 text-[11px] font-stat" style={{ color: '#39D353' }}>
+                    <div className="mt-2 text-[11px] font-stat" style={{ color: '#2DD4A8' }}>
                       Best: {best}
                     </div>
                   )}
@@ -552,7 +552,7 @@ function SnapTrainer({
       {/* Header */}
       <div className="flex items-center justify-between">
         <button type="button" onClick={onBack}
-          className="text-pb-text-dim text-[12px] font-semibold flex items-center gap-1 hover:text-white transition-colors">
+          className="text-[#94A3B8] text-[12px] font-semibold flex items-center gap-1 hover:text-white transition-colors">
           <ChevronLeftIcon /> Back
         </button>
         <span className="tag-pill" style={{
@@ -567,7 +567,7 @@ function SnapTrainer({
       <div className="text-center">
         <span className="text-3xl">{drill.icon}</span>
         <h2 className="text-xl font-extrabold text-white mt-2">{drill.name}</h2>
-        <p className="text-[12px] text-pb-text-dim mt-1">{drill.description}</p>
+        <p className="text-[12px] text-[#94A3B8] mt-1">{drill.description}</p>
       </div>
 
       {/* Timer & Stats Bar */}
@@ -575,27 +575,27 @@ function SnapTrainer({
         <div className="flex items-center justify-between">
           <div className="text-center flex-1">
             <div className="drill-timer">{formatTime(timer)}</div>
-            <div className="text-[10px] text-pb-text-muted uppercase tracking-wider mt-1">Time</div>
+            <div className="text-[10px] text-[#64748B] uppercase tracking-wider mt-1">Time</div>
           </div>
-          <div className="w-px h-12 bg-pb-border" />
+          <div className="w-px h-12 bg-white/[0.08]" />
           <div className="text-center flex-1">
             <div className="font-stat text-2xl text-white">{reps}/{TOTAL_REPS}</div>
-            <div className="text-[10px] text-pb-text-muted uppercase tracking-wider mt-1">Reps</div>
+            <div className="text-[10px] text-[#64748B] uppercase tracking-wider mt-1">Reps</div>
           </div>
-          <div className="w-px h-12 bg-pb-border" />
+          <div className="w-px h-12 bg-white/[0.08]" />
           <div className="text-center flex-1">
-            <div className="font-stat text-2xl" style={{ color: '#39D353' }}>
+            <div className="font-stat text-2xl" style={{ color: '#2DD4A8' }}>
               {reactionTimes.length > 0
                 ? `${Math.round(reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length)}ms`
                 : '--'}
             </div>
-            <div className="text-[10px] text-pb-text-muted uppercase tracking-wider mt-1">Avg React</div>
+            <div className="text-[10px] text-[#64748B] uppercase tracking-wider mt-1">Avg React</div>
           </div>
         </div>
         {bestScore !== null && (
-          <div className="text-center mt-3 pt-3 border-t border-pb-border">
-            <span className="text-[11px] text-pb-text-dim">Personal Best: </span>
-            <span className="font-stat text-[13px] text-pb-amber">{bestScore}</span>
+          <div className="text-center mt-3 pt-3 border-t border-white/[0.08]">
+            <span className="text-[11px] text-[#94A3B8]">Personal Best: </span>
+            <span className="font-stat text-[13px] text-[#D4A843]">{bestScore}</span>
           </div>
         )}
       </div>
@@ -609,24 +609,24 @@ function SnapTrainer({
         {/* Grid lines */}
         <div className="absolute inset-0 opacity-10">
           {[20, 40, 60, 80].map((p) => (
-            <div key={`v${p}`} className="absolute top-0 bottom-0 w-px bg-pb-text-muted" style={{ left: `${p}%` }} />
+            <div key={`v${p}`} className="absolute top-0 bottom-0 w-px bg-[#64748B]" style={{ left: `${p}%` }} />
           ))}
           {[25, 50, 75].map((p) => (
-            <div key={`h${p}`} className="absolute left-0 right-0 h-px bg-pb-text-muted" style={{ top: `${p}%` }} />
+            <div key={`h${p}`} className="absolute left-0 right-0 h-px bg-[#64748B]" style={{ top: `${p}%` }} />
           ))}
         </div>
 
         {/* Center line */}
-        <div className="absolute top-0 bottom-0 w-px left-1/2 bg-pb-border opacity-40" />
+        <div className="absolute top-0 bottom-0 w-px left-1/2 bg-white/[0.08] opacity-40" />
 
         {/* Side labels */}
-        <div className="absolute top-2 left-3 text-[10px] font-semibold text-pb-text-muted uppercase tracking-wider">Left</div>
-        <div className="absolute top-2 right-3 text-[10px] font-semibold text-pb-text-muted uppercase tracking-wider">Right</div>
+        <div className="absolute top-2 left-3 text-[10px] font-semibold text-[#64748B] uppercase tracking-wider">Left</div>
+        <div className="absolute top-2 right-3 text-[10px] font-semibold text-[#64748B] uppercase tracking-wider">Right</div>
 
         {/* Ready / Countdown overlay */}
         {phase === 'ready' && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-pb-dark/60 z-10">
-            <p className="text-[14px] text-pb-text-dim mb-4">Tap targets as fast as you can</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0A0E1A]/60 z-10">
+            <p className="text-[14px] text-[#94A3B8] mb-4">Tap targets as fast as you can</p>
             <button
               type="button"
               onClick={() => { setPhase('countdown'); setCountdown(3) }}
@@ -638,8 +638,8 @@ function SnapTrainer({
         )}
 
         {phase === 'countdown' && (
-          <div className="absolute inset-0 flex items-center justify-center bg-pb-dark/70 z-10">
-            <div className="text-7xl font-display animate-count-up" style={{ color: '#39D353', textShadow: '0 0 40px rgba(57,211,83,0.5)' }}>
+          <div className="absolute inset-0 flex items-center justify-center bg-[#0A0E1A]/70 z-10">
+            <div className="text-7xl font-display animate-count-up" style={{ color: '#2DD4A8', textShadow: '0 0 40px rgba(57,211,83,0.5)' }}>
               {countdown}
             </div>
           </div>
@@ -654,7 +654,7 @@ function SnapTrainer({
             style={{
               left: `${activeTarget.x}%`,
               top: `${activeTarget.y}%`,
-              background: 'radial-gradient(circle, #F85149 30%, #F8514950 70%)',
+              background: 'radial-gradient(circle, #EF4444 30%, #EF444450 70%)',
               boxShadow: '0 0 30px rgba(248,81,73,0.5), 0 0 60px rgba(248,81,73,0.2)',
               animation: 'pulse-glow-target 0.8s ease-in-out infinite',
             }}
@@ -672,7 +672,7 @@ function SnapTrainer({
             style={{
               left: `${t.x}%`,
               top: `${t.y}%`,
-              background: '#39D353',
+              background: '#2DD4A8',
             }}
           />
         ))}
@@ -680,17 +680,17 @@ function SnapTrainer({
         {/* Balance indicator */}
         {phase === 'active' && reps > 0 && (
           <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
-            <span className="text-[9px] text-pb-text-muted">L:{leftHits}</span>
-            <div className="flex-1 h-1.5 rounded-full overflow-hidden bg-pb-surface">
+            <span className="text-[9px] text-[#64748B]">L:{leftHits}</span>
+            <div className="flex-1 h-1.5 rounded-full overflow-hidden bg-[#111827]">
               <div
                 className="h-full rounded-full transition-all"
                 style={{
                   width: `${(leftHits / Math.max(leftHits + rightHits, 1)) * 100}%`,
-                  background: '#58A6FF',
+                  background: '#4A7BF7',
                 }}
               />
             </div>
-            <span className="text-[9px] text-pb-text-muted">R:{rightHits}</span>
+            <span className="text-[9px] text-[#64748B]">R:{rightHits}</span>
           </div>
         )}
       </div>
@@ -699,8 +699,8 @@ function SnapTrainer({
       {phase === 'active' && reps > 0 && (
         <div className="card-gaming p-3">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-[11px] text-pb-text-dim">Accuracy</span>
-            <span className="font-stat text-[12px]" style={{ color: '#39D353' }}>
+            <span className="text-[11px] text-[#94A3B8]">Accuracy</span>
+            <span className="font-stat text-[12px]" style={{ color: '#2DD4A8' }}>
               {Math.round(((leftHits + rightHits) / reps) * 100)}%
             </span>
           </div>
@@ -709,7 +709,7 @@ function SnapTrainer({
               className="h-full rounded-full transition-all"
               style={{
                 width: `${((leftHits + rightHits) / reps) * 100}%`,
-                background: 'linear-gradient(90deg, #39D353, #2EA043)',
+                background: 'linear-gradient(90deg, #2DD4A8, #1FA882)',
               }}
             />
           </div>
@@ -841,7 +841,7 @@ function LayoutQuiz({
       {/* Header */}
       <div className="flex items-center justify-between">
         <button type="button" onClick={onBack}
-          className="text-pb-text-dim text-[12px] font-semibold flex items-center gap-1 hover:text-white transition-colors">
+          className="text-[#94A3B8] text-[12px] font-semibold flex items-center gap-1 hover:text-white transition-colors">
           <ChevronLeftIcon /> Back
         </button>
         <span className="tag-pill tag-purple">{PPI_LABELS[drill.ppiAxis]}</span>
@@ -856,8 +856,8 @@ function LayoutQuiz({
       {phase === 'preview' && (
         <div className="space-y-3">
           <div className="text-center">
-            <span className="text-[13px] text-pb-text-dim">Memorize the bunker positions!</span>
-            <div className="drill-timer mt-2" style={{ color: '#E3B341' }}>{previewTimer}</div>
+            <span className="text-[13px] text-[#94A3B8]">Memorize the bunker positions!</span>
+            <div className="drill-timer mt-2" style={{ color: '#D4A843' }}>{previewTimer}</div>
           </div>
           <FieldDisplay bunkers={bunkers} showLabels placements={[]} />
         </div>
@@ -867,8 +867,8 @@ function LayoutQuiz({
       {phase === 'countdown' && (
         <div className="card-gaming flex items-center justify-center" style={{ height: 300 }}>
           <div className="text-center">
-            <div className="text-5xl font-display animate-count-up" style={{ color: '#F85149' }}>GO!</div>
-            <p className="text-[12px] text-pb-text-dim mt-2">Tap where the bunkers were</p>
+            <div className="text-5xl font-display animate-count-up" style={{ color: '#EF4444' }}>GO!</div>
+            <p className="text-[12px] text-[#94A3B8] mt-2">Tap where the bunkers were</p>
           </div>
         </div>
       )}
@@ -877,8 +877,8 @@ function LayoutQuiz({
       {phase === 'quiz' && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="font-stat text-[14px] text-pb-text-dim">{quizTimer}s</span>
-            <span className="text-[12px] text-pb-text-dim">
+            <span className="font-stat text-[14px] text-[#94A3B8]">{quizTimer}s</span>
+            <span className="text-[12px] text-[#94A3B8]">
               {placements.length} / {bunkers.length} placed
             </span>
           </div>
@@ -897,8 +897,8 @@ function LayoutQuiz({
 
       {bestScore !== null && phase === 'preview' && (
         <div className="text-center">
-          <span className="text-[11px] text-pb-text-dim">Personal Best: </span>
-          <span className="font-stat text-[13px] text-pb-amber">{bestScore}</span>
+          <span className="text-[11px] text-[#94A3B8]">Personal Best: </span>
+          <span className="font-stat text-[13px] text-[#D4A843]">{bestScore}</span>
         </div>
       )}
     </div>
@@ -921,25 +921,25 @@ function FieldDisplay({
   return (
     <div
       className={`card-gaming relative overflow-hidden ${interactive ? 'cursor-crosshair' : ''}`}
-      style={{ height: 300, background: '#0D1117' }}
+      style={{ height: 300, background: '#0A0E1A' }}
       onClick={onTap}
     >
       {/* Field outline */}
-      <div className="absolute inset-4 border border-pb-border rounded-lg opacity-40" />
-      <div className="absolute left-4 right-4 top-1/2 h-px bg-pb-border opacity-30" />
+      <div className="absolute inset-4 border border-white/[0.08] rounded-lg opacity-40" />
+      <div className="absolute left-4 right-4 top-1/2 h-px bg-white/[0.08] opacity-30" />
 
       {/* Start boxes */}
-      <div className="absolute left-4 right-[50%] bottom-4 h-8 border border-pb-border/30 rounded-sm" />
-      <div className="absolute left-[50%] right-4 bottom-4 h-8 border border-pb-border/30 rounded-sm" />
+      <div className="absolute left-4 right-[50%] bottom-4 h-8 border border-white/[0.08]/30 rounded-sm" />
+      <div className="absolute left-[50%] right-4 bottom-4 h-8 border border-white/[0.08]/30 rounded-sm" />
 
       {/* Bunkers */}
       {bunkers.map((b, i) => (
         <div key={i} className="absolute -ml-3 -mt-3" style={{ left: `${b.x}%`, top: `${b.y}%` }}>
-          <div className="w-6 h-6 rounded-full border-2 border-pb-purple bg-pb-purple/20 flex items-center justify-center">
-            <div className="w-2 h-2 rounded-full bg-pb-purple" />
+          <div className="w-6 h-6 rounded-full border-2 border-[#7C5BF0] bg-[#7C5BF0]/20 flex items-center justify-center">
+            <div className="w-2 h-2 rounded-full bg-[#7C5BF0]" />
           </div>
           {showLabels && (
-            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-[8px] text-pb-text-muted font-semibold">
+            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-[8px] text-[#64748B] font-semibold">
               {b.label}
             </div>
           )}
@@ -950,8 +950,8 @@ function FieldDisplay({
       {placements.map((p, i) => (
         <div key={i} className="absolute -ml-2.5 -mt-2.5" style={{ left: `${p.x}%`, top: `${p.y}%` }}>
           <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center"
-            style={{ borderColor: '#39D353', background: 'rgba(57,211,83,0.25)' }}>
-            <div className="w-1.5 h-1.5 rounded-full bg-pb-green" />
+            style={{ borderColor: '#2DD4A8', background: 'rgba(57,211,83,0.25)' }}>
+            <div className="w-1.5 h-1.5 rounded-full bg-[#2DD4A8]" />
           </div>
         </div>
       ))}
@@ -1041,7 +1041,7 @@ function FitnessWorkout({
       {/* Header */}
       <div className="flex items-center justify-between">
         <button type="button" onClick={onBack}
-          className="text-pb-text-dim text-[12px] font-semibold flex items-center gap-1 hover:text-white transition-colors">
+          className="text-[#94A3B8] text-[12px] font-semibold flex items-center gap-1 hover:text-white transition-colors">
           <ChevronLeftIcon /> Back
         </button>
         <span className="tag-pill tag-green">{PPI_LABELS[drill.ppiAxis]}</span>
@@ -1050,7 +1050,7 @@ function FitnessWorkout({
       <div className="text-center">
         <span className="text-3xl">{drill.icon}</span>
         <h2 className="text-xl font-extrabold text-white mt-2">{drill.name}</h2>
-        <p className="text-[12px] text-pb-text-dim mt-1">{drill.description}</p>
+        <p className="text-[12px] text-[#94A3B8] mt-1">{drill.description}</p>
       </div>
 
       {/* Progress + Timer */}
@@ -1058,16 +1058,16 @@ function FitnessWorkout({
         <div className="flex items-center justify-between mb-3">
           <div>
             <span className="font-stat text-lg text-white">{completedCount}/{exercises.length}</span>
-            <span className="text-[11px] text-pb-text-dim ml-2">exercises</span>
+            <span className="text-[11px] text-[#94A3B8] ml-2">exercises</span>
           </div>
-          <span className="font-stat text-[14px] text-pb-text-dim">{formatTimer(totalElapsed)}</span>
+          <span className="font-stat text-[14px] text-[#94A3B8]">{formatTimer(totalElapsed)}</span>
         </div>
         <div className="xp-bar-track h-2.5">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{
               width: `${(completedCount / exercises.length) * 100}%`,
-              background: 'linear-gradient(90deg, #39D353, #2EA043)',
+              background: 'linear-gradient(90deg, #2DD4A8, #1FA882)',
             }}
           />
         </div>
@@ -1076,8 +1076,8 @@ function FitnessWorkout({
       {/* Rest Timer */}
       {isTimerRunning && (
         <div className="card-gaming p-4 text-center glow-amber">
-          <span className="text-[11px] text-pb-text-dim uppercase tracking-wider">Rest Timer</span>
-          <div className="drill-timer mt-1" style={{ color: '#E3B341', fontSize: 42 }}>
+          <span className="text-[11px] text-[#94A3B8] uppercase tracking-wider">Rest Timer</span>
+          <div className="drill-timer mt-1" style={{ color: '#D4A843', fontSize: 42 }}>
             {formatTimer(exerciseTimer)}
           </div>
           <button type="button" onClick={() => { setIsTimerRunning(false); setExerciseTimer(0) }}
@@ -1098,7 +1098,7 @@ function FitnessWorkout({
                 onClick={() => toggleComplete(i)}
                 className="w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 transition-all"
                 style={{
-                  borderColor: completed[i] ? '#39D353' : '#30363D',
+                  borderColor: completed[i] ? '#2DD4A8' : 'rgba(148, 163, 184, 0.08)',
                   background: completed[i] ? 'rgba(57,211,83,0.2)' : 'transparent',
                 }}
               >
@@ -1107,13 +1107,13 @@ function FitnessWorkout({
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="text-lg">{ex.icon}</span>
-                  <h4 className={`text-[14px] font-bold ${completed[i] ? 'line-through text-pb-text-dim' : 'text-white'}`}>
+                  <h4 className={`text-[14px] font-bold ${completed[i] ? 'line-through text-[#94A3B8]' : 'text-white'}`}>
                     {ex.name}
                   </h4>
                 </div>
                 <div className="flex items-center gap-3 mt-1">
-                  <span className="text-[11px] text-pb-text-dim">{ex.sets} x {ex.reps}</span>
-                  <span className="text-[11px] text-pb-text-muted">Rest: {ex.restSeconds}s</span>
+                  <span className="text-[11px] text-[#94A3B8]">{ex.sets} x {ex.reps}</span>
+                  <span className="text-[11px] text-[#64748B]">Rest: {ex.restSeconds}s</span>
                 </div>
               </div>
               <div className="flex flex-col gap-1">
@@ -1124,7 +1124,7 @@ function FitnessWorkout({
                       setActiveExercise(i)
                       startRestTimer(ex.restSeconds)
                     }}
-                    className="text-[10px] font-semibold px-2 py-1 rounded bg-pb-surface text-pb-text-dim hover:text-white transition-colors"
+                    className="text-[10px] font-semibold px-2 py-1 rounded bg-[#111827] text-[#94A3B8] hover:text-white transition-colors"
                   >
                     Rest
                   </button>
@@ -1150,8 +1150,8 @@ function FitnessWorkout({
 
       {bestScore !== null && (
         <div className="text-center">
-          <span className="text-[11px] text-pb-text-dim">Personal Best: </span>
-          <span className="font-stat text-[13px] text-pb-amber">{bestScore}</span>
+          <span className="text-[11px] text-[#94A3B8]">Personal Best: </span>
+          <span className="font-stat text-[13px] text-[#D4A843]">{bestScore}</span>
         </div>
       )}
     </div>
@@ -1250,7 +1250,7 @@ function CommsDrill({
       {/* Header */}
       <div className="flex items-center justify-between">
         <button type="button" onClick={onBack}
-          className="text-pb-text-dim text-[12px] font-semibold flex items-center gap-1 hover:text-white transition-colors">
+          className="text-[#94A3B8] text-[12px] font-semibold flex items-center gap-1 hover:text-white transition-colors">
           <ChevronLeftIcon /> Back
         </button>
         <span className="tag-pill tag-cyan">{PPI_LABELS[drill.ppiAxis]}</span>
@@ -1259,7 +1259,7 @@ function CommsDrill({
       <div className="text-center">
         <span className="text-3xl">{drill.icon}</span>
         <h2 className="text-xl font-extrabold text-white mt-2">{drill.name}</h2>
-        <p className="text-[12px] text-pb-text-dim mt-1">{drill.description}</p>
+        <p className="text-[12px] text-[#94A3B8] mt-1">{drill.description}</p>
       </div>
 
       {/* Progress */}
@@ -1271,10 +1271,10 @@ function CommsDrill({
             style={{
               background:
                 i < currentIndex
-                  ? answers[i] ? '#39D353' : '#F85149'
+                  ? answers[i] ? '#2DD4A8' : '#EF4444'
                   : i === currentIndex
-                    ? '#A371F7'
-                    : '#21262D',
+                    ? '#7C5BF0'
+                    : '#2A3050',
             }}
           />
         ))}
@@ -1283,17 +1283,17 @@ function CommsDrill({
       {/* Ready */}
       {phase === 'ready' && (
         <div className="card-gaming p-8 text-center">
-          <p className="text-[14px] text-pb-text-dim mb-2">
+          <p className="text-[14px] text-[#94A3B8] mb-2">
             You will see a game scenario. Call out what you would say, then check your answer.
           </p>
-          <p className="text-[12px] text-pb-text-muted mb-6">{scenarioCount} scenarios</p>
+          <p className="text-[12px] text-[#64748B] mb-6">{scenarioCount} scenarios</p>
           <button type="button" onClick={handleStart} className="btn-primary text-lg px-12">
             <PlayIcon /> Ready?
           </button>
           {bestScore !== null && (
             <div className="mt-4">
-              <span className="text-[11px] text-pb-text-dim">Personal Best: </span>
-              <span className="font-stat text-[13px] text-pb-amber">{bestScore}</span>
+              <span className="text-[11px] text-[#94A3B8]">Personal Best: </span>
+              <span className="font-stat text-[13px] text-[#D4A843]">{bestScore}</span>
             </div>
           )}
         </div>
@@ -1302,8 +1302,8 @@ function CommsDrill({
       {/* Countdown */}
       {phase === 'countdown' && (
         <div className="card-gaming p-12 text-center" style={{ minHeight: 200 }}>
-          <span className="text-[12px] text-pb-text-muted uppercase tracking-wider">Get Ready</span>
-          <div className="text-6xl font-display mt-4 animate-count-up" style={{ color: '#E3B341' }}>
+          <span className="text-[12px] text-[#64748B] uppercase tracking-wider">Get Ready</span>
+          <div className="text-6xl font-display mt-4 animate-count-up" style={{ color: '#D4A843' }}>
             {countdown}
           </div>
         </div>
@@ -1313,18 +1313,18 @@ function CommsDrill({
       {phase === 'scenario' && current && (
         <div className="space-y-4 animate-slide-up">
           <div className="card-gaming p-5"
-            style={{ background: 'linear-gradient(135deg, #161B22 0%, #1B2430 100%)' }}>
+            style={{ background: 'linear-gradient(135deg, #1A1F35 0%, #1B2430 100%)' }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#56D4DD' }}>
+              <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#2DD4A8' }}>
                 Scenario {currentIndex + 1} of {scenarios.length}
               </span>
-              <span className="font-stat text-[13px] text-pb-text-dim">{scenarioTimer}s</span>
+              <span className="font-stat text-[13px] text-[#94A3B8]">{scenarioTimer}s</span>
             </div>
             <p className="text-[15px] text-white font-semibold leading-relaxed">{current.situation}</p>
-            <p className="text-[11px] text-pb-text-muted mt-3 italic">Hint: {current.hint}</p>
+            <p className="text-[11px] text-[#64748B] mt-3 italic">Hint: {current.hint}</p>
           </div>
 
-          <p className="text-center text-[12px] text-pb-text-dim">
+          <p className="text-center text-[12px] text-[#94A3B8]">
             Say your call-out, then tap reveal to check
           </p>
 
@@ -1339,28 +1339,28 @@ function CommsDrill({
       {phase === 'reveal' && current && (
         <div className="space-y-4 animate-slide-up">
           <div className="card-gaming p-5">
-            <span className="text-[11px] text-pb-text-muted uppercase tracking-wider">Situation</span>
-            <p className="text-[13px] text-pb-text-dim mt-1">{current.situation}</p>
+            <span className="text-[11px] text-[#64748B] uppercase tracking-wider">Situation</span>
+            <p className="text-[13px] text-[#94A3B8] mt-1">{current.situation}</p>
           </div>
 
           <div className="card-gaming p-5 glow-green"
-            style={{ background: 'linear-gradient(135deg, #161B22, #0D2818)' }}>
-            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#39D353' }}>
+            style={{ background: 'linear-gradient(135deg, #1A1F35, #0D2818)' }}>
+            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#2DD4A8' }}>
               Expected Call-Out
             </span>
             <p className="text-[16px] text-white font-bold mt-2 leading-relaxed">{current.expectedCall}</p>
           </div>
 
-          <p className="text-center text-[13px] text-pb-text-dim font-semibold">Did you get it right?</p>
+          <p className="text-center text-[13px] text-[#94A3B8] font-semibold">Did you get it right?</p>
           <div className="flex gap-3">
             <button type="button" onClick={() => handleSelfAssess(false)}
               className="flex-1 py-3 rounded-lg font-bold text-[14px] transition-all"
-              style={{ background: 'rgba(248,81,73,0.15)', color: '#F85149', border: '1px solid rgba(248,81,73,0.3)' }}>
+              style={{ background: 'rgba(248,81,73,0.15)', color: '#EF4444', border: '1px solid rgba(248,81,73,0.3)' }}>
               No
             </button>
             <button type="button" onClick={() => handleSelfAssess(true)}
               className="flex-1 py-3 rounded-lg font-bold text-[14px] transition-all"
-              style={{ background: 'rgba(57,211,83,0.15)', color: '#39D353', border: '1px solid rgba(57,211,83,0.3)' }}>
+              style={{ background: 'rgba(57,211,83,0.15)', color: '#2DD4A8', border: '1px solid rgba(57,211,83,0.3)' }}>
               Yes
             </button>
           </div>
@@ -1422,14 +1422,14 @@ function DrillSummary({
       <div className="text-center space-y-6">
         {/* Drill Complete */}
         <div>
-          <span className="text-[11px] uppercase tracking-widest text-pb-text-muted font-bold">Drill Complete</span>
+          <span className="text-[11px] uppercase tracking-widest text-[#64748B] font-bold">Drill Complete</span>
           <h2 className="text-[16px] font-bold text-white mt-1">{data.drillName}</h2>
         </div>
 
         {/* Score */}
         <div className="relative">
           <div className="font-display text-[80px] leading-none animate-count-up"
-            style={{ color: '#39D353', textShadow: '0 0 40px rgba(57,211,83,0.3)' }}>
+            style={{ color: '#2DD4A8', textShadow: '0 0 40px rgba(57,211,83,0.3)' }}>
             {animatedScore}
           </div>
           <div className={`font-display text-3xl ${gradeClass} mt-1`}
@@ -1443,20 +1443,20 @@ function DrillSummary({
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full animate-slide-up"
             style={{ background: 'rgba(227,179,65,0.15)', border: '1px solid rgba(227,179,65,0.3)' }}>
             <span className="text-lg">🏆</span>
-            <span className="text-[13px] font-bold" style={{ color: '#E3B341' }}>New Personal Best!</span>
+            <span className="text-[13px] font-bold" style={{ color: '#D4A843' }}>New Personal Best!</span>
           </div>
         )}
 
         {/* Stats Row */}
         <div className="flex justify-center gap-4">
           <div className="stat-card px-6">
-            <div className="stat-card-value" style={{ color: '#A371F7' }}>+{data.xpEarned}</div>
+            <div className="stat-card-value" style={{ color: '#7C5BF0' }}>+{data.xpEarned}</div>
             <div className="stat-card-label">XP Earned</div>
           </div>
           <div className="stat-card px-6">
             <div className="stat-card-value flex items-center justify-center gap-1">
               <span className="flame-active">🔥</span>
-              <span style={{ color: '#E3B341' }}>{streak}</span>
+              <span style={{ color: '#D4A843' }}>{streak}</span>
             </div>
             <div className="stat-card-label">Day Streak</div>
           </div>
@@ -1503,7 +1503,7 @@ function PlayIcon() {
 
 function CheckIcon() {
   return (
-    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="#39D353" strokeWidth={3}>
+    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="#2DD4A8" strokeWidth={3}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
     </svg>
   )

@@ -17,7 +17,7 @@ export function PointPill({ number, result, active, onClick }: Props) {
       type="button"
       onClick={onClick}
       className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${bg} ${
-        active ? 'ring-2 ring-pb-amber scale-110' : 'opacity-70 hover:opacity-100'
+        active ? 'ring-2 ring-[#D4A843] scale-110' : 'opacity-70 hover:opacity-100'
       }`}
     >
       PT {number}

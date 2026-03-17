@@ -90,7 +90,7 @@ function pctY(pct: number) {
   return FIELD_PAD + (pct / 100) * (FIELD_H - FIELD_PAD * 2)
 }
 function bunkerFill(selected: boolean) {
-  return selected ? 'fill-[#39D353] stroke-[#39D353]/60 stroke-2' : 'fill-[#30363D] stroke-[#484F58] stroke-[1.5]'
+  return selected ? 'fill-[#2DD4A8] stroke-[#2DD4A8]/60 stroke-2' : 'fill-[rgba(148, 163, 184, 0.08)] stroke-[#64748B] stroke-[1.5]'
 }
 
 // Convert SVG coordinates back to percentage
@@ -182,7 +182,7 @@ function FieldSVG({
   const midY = FIELD_PAD + (FIELD_H - FIELD_PAD * 2) / 2
 
   return (
-    <svg viewBox={`0 0 ${FIELD_W} ${FIELD_H}`} className="w-full h-auto rounded-lg border border-[#30363D] bg-[#0D1117]">
+    <svg viewBox={`0 0 ${FIELD_W} ${FIELD_H}`} className="w-full h-auto rounded-lg border border-[rgba(148, 163, 184, 0.08)] bg-[#0A0E1A]">
       {/* Defs for arrow markers and glow */}
       <defs>
         {PLAYER_COLORS.map((color, i) => (
@@ -246,7 +246,7 @@ function FieldSVG({
         height={36}
         rx={3}
         fill="none"
-        stroke="#39D353"
+        stroke="#2DD4A8"
         strokeWidth={1.5}
         strokeDasharray="6 3"
         opacity={0.35}
@@ -255,7 +255,7 @@ function FieldSVG({
         x={FIELD_W / 2}
         y={FIELD_H - FIELD_PAD - 16}
         textAnchor="middle"
-        fill="#39D353"
+        fill="#2DD4A8"
         fontSize={11}
         fontWeight={700}
         opacity={0.5}
@@ -272,7 +272,7 @@ function FieldSVG({
         height={36}
         rx={3}
         fill="none"
-        stroke="#F85149"
+        stroke="#EF4444"
         strokeWidth={1.5}
         strokeDasharray="6 3"
         opacity={0.25}
@@ -331,7 +331,7 @@ function FieldSVG({
               x={pctX(b.x)}
               y={pctY(b.y) + (b.type === 'tall-cake' ? 24 : b.type === 'temple' ? 22 : 20)}
               textAnchor="middle"
-              fill={isSel ? '#39D353' : '#8B949E'}
+              fill={isSel ? '#2DD4A8' : '#94A3B8'}
               fontSize={9}
               fontWeight={700}
               fontFamily="monospace"
@@ -343,10 +343,10 @@ function FieldSVG({
       })}
 
       {/* Side labels */}
-      <text x={FIELD_PAD + 8} y={midY - 6} fill="#A371F7" fontSize={10} fontWeight={700} opacity={0.5} fontFamily="monospace">
+      <text x={FIELD_PAD + 8} y={midY - 6} fill="#7C5BF0" fontSize={10} fontWeight={700} opacity={0.5} fontFamily="monospace">
         SNAKE SIDE
       </text>
-      <text x={FIELD_W - FIELD_PAD - 8} y={midY - 6} textAnchor="end" fill="#A371F7" fontSize={10} fontWeight={700} opacity={0.5} fontFamily="monospace">
+      <text x={FIELD_W - FIELD_PAD - 8} y={midY - 6} textAnchor="end" fill="#7C5BF0" fontSize={10} fontWeight={700} opacity={0.5} fontFamily="monospace">
         DORITO SIDE
       </text>
     </svg>
@@ -373,7 +373,7 @@ function PlayerSelector({
             className={`
               flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold tracking-wide transition-all
               border
-              ${active ? 'border-current shadow-lg scale-105' : 'border-[#30363D] opacity-60 hover:opacity-90'}
+              ${active ? 'border-current shadow-lg scale-105' : 'border-[rgba(148, 163, 184, 0.08)] opacity-60 hover:opacity-90'}
             `}
             style={{
               color: color,
@@ -415,8 +415,8 @@ function ArrowTypeSelector({
           className={`
             px-2.5 py-1 rounded text-[10px] font-bold tracking-wider transition-all border
             ${arrowType === t.value
-              ? 'border-[#39D353] text-[#39D353] bg-[#39D353]/10'
-              : 'border-[#30363D] text-[#8B949E] hover:text-[#E6EDF3]'}
+              ? 'border-[#2DD4A8] text-[#2DD4A8] bg-[#2DD4A8]/10'
+              : 'border-[rgba(148, 163, 184, 0.08)] text-[#94A3B8] hover:text-[#F1F5F9]'}
           `}
         >
           <span className="block text-sm leading-none">{t.label}</span>
@@ -441,7 +441,7 @@ function PlanLibrary({
 }) {
   if (plans.length === 0) {
     return (
-      <div className="text-center py-8 text-[#484F58]">
+      <div className="text-center py-8 text-[#64748B]">
         <div className="text-3xl mb-2">📋</div>
         <p className="text-xs font-semibold">No saved plans yet</p>
         <p className="text-[10px] mt-1">Draw arrows on the field and save your breakout.</p>
@@ -457,15 +457,15 @@ function PlanLibrary({
           className={`
             p-3 rounded-lg border transition-all cursor-pointer group
             ${activePlanId === plan.id
-              ? 'border-[#39D353]/50 bg-[#39D353]/5'
-              : 'border-[#30363D] bg-[#161B22] hover:border-[#484F58]'}
+              ? 'border-[#2DD4A8]/50 bg-[#2DD4A8]/5'
+              : 'border-[rgba(148, 163, 184, 0.08)] bg-[#1A1F35] hover:border-[#64748B]'}
           `}
           onClick={() => onLoad(plan)}
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-bold text-[#E6EDF3]">{plan.name}</p>
-              <p className="text-[10px] text-[#484F58] mt-0.5">
+              <p className="text-sm font-bold text-[#F1F5F9]">{plan.name}</p>
+              <p className="text-[10px] text-[#64748B] mt-0.5">
                 {plan.arrows.length} arrow{plan.arrows.length !== 1 ? 's' : ''} &middot;{' '}
                 {new Date(plan.createdAt).toLocaleDateString()}
               </p>
@@ -475,7 +475,7 @@ function PlanLibrary({
                 e.stopPropagation()
                 onDelete(plan.id)
               }}
-              className="opacity-0 group-hover:opacity-100 text-[#F85149] hover:text-[#F85149]/80 transition-opacity p-1"
+              className="opacity-0 group-hover:opacity-100 text-[#EF4444] hover:text-[#EF4444]/80 transition-opacity p-1"
               title="Delete plan"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
@@ -484,7 +484,7 @@ function PlanLibrary({
             </button>
           </div>
           {plan.notes && (
-            <p className="text-[10px] text-[#8B949E] mt-1.5 line-clamp-2">{plan.notes}</p>
+            <p className="text-[10px] text-[#94A3B8] mt-1.5 line-clamp-2">{plan.notes}</p>
           )}
         </div>
       ))}
@@ -529,7 +529,7 @@ function ScoutingPanel({
       {/* Input form */}
       <div className="space-y-3">
         <div>
-          <label className="block text-[10px] font-bold text-[#8B949E] uppercase tracking-wider mb-1">
+          <label className="block text-[10px] font-bold text-[#94A3B8] uppercase tracking-wider mb-1">
             Opponent Team
           </label>
           <input
@@ -537,11 +537,11 @@ function ScoutingPanel({
             value={teamName}
             onChange={(e) => setTeamName(e.target.value)}
             placeholder="e.g. Dynasty, Infamous..."
-            className="w-full bg-[#0D1117] border border-[#30363D] rounded-md px-3 py-2 text-sm text-[#E6EDF3] placeholder-[#484F58] focus:border-[#A371F7] focus:outline-none focus:ring-1 focus:ring-[#A371F7]/30 transition-colors"
+            className="w-full bg-[#0A0E1A] border border-[rgba(148, 163, 184, 0.08)] rounded-md px-3 py-2 text-sm text-[#F1F5F9] placeholder-[#64748B] focus:border-[#7C5BF0] focus:outline-none focus:ring-1 focus:ring-[#7C5BF0]/30 transition-colors"
           />
         </div>
         <div>
-          <label className="block text-[10px] font-bold text-[#8B949E] uppercase tracking-wider mb-1">
+          <label className="block text-[10px] font-bold text-[#94A3B8] uppercase tracking-wider mb-1">
             Notes
           </label>
           <textarea
@@ -549,13 +549,13 @@ function ScoutingPanel({
             onChange={(e) => setNoteText(e.target.value)}
             placeholder="Tendencies, breakout patterns, key players, weaknesses..."
             rows={4}
-            className="w-full bg-[#0D1117] border border-[#30363D] rounded-md px-3 py-2 text-sm text-[#E6EDF3] placeholder-[#484F58] focus:border-[#A371F7] focus:outline-none focus:ring-1 focus:ring-[#A371F7]/30 transition-colors resize-none"
+            className="w-full bg-[#0A0E1A] border border-[rgba(148, 163, 184, 0.08)] rounded-md px-3 py-2 text-sm text-[#F1F5F9] placeholder-[#64748B] focus:border-[#7C5BF0] focus:outline-none focus:ring-1 focus:ring-[#7C5BF0]/30 transition-colors resize-none"
           />
         </div>
         <button
           onClick={handleSave}
           disabled={!teamName.trim()}
-          className="w-full py-2 rounded-md text-xs font-bold tracking-wider uppercase transition-all bg-[#A371F7] text-white hover:bg-[#A371F7]/90 disabled:opacity-30 disabled:cursor-not-allowed"
+          className="w-full py-2 rounded-md text-xs font-bold tracking-wider uppercase transition-all bg-[#7C5BF0] text-white hover:bg-[#7C5BF0]/90 disabled:opacity-30 disabled:cursor-not-allowed"
         >
           {editingId ? 'Update Note' : 'Save Note'}
         </button>
@@ -564,20 +564,20 @@ function ScoutingPanel({
       {/* Saved notes */}
       {notes.length > 0 && (
         <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
-          <p className="text-[10px] font-bold text-[#484F58] uppercase tracking-wider">Saved Scouting</p>
+          <p className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider">Saved Scouting</p>
           {notes.map((n) => (
             <div
               key={n.id}
               onClick={() => handleEdit(n)}
-              className="p-3 rounded-lg border border-[#30363D] bg-[#161B22] hover:border-[#A371F7]/40 cursor-pointer transition-all"
+              className="p-3 rounded-lg border border-[rgba(148, 163, 184, 0.08)] bg-[#1A1F35] hover:border-[#7C5BF0]/40 cursor-pointer transition-all"
             >
               <div className="flex items-center justify-between">
-                <p className="text-sm font-bold text-[#A371F7]">{n.teamName}</p>
-                <span className="text-[9px] text-[#484F58]">
+                <p className="text-sm font-bold text-[#7C5BF0]">{n.teamName}</p>
+                <span className="text-[9px] text-[#64748B]">
                   {new Date(n.lastUpdated).toLocaleDateString()}
                 </span>
               </div>
-              <p className="text-[11px] text-[#8B949E] mt-1 line-clamp-2">{n.notes}</p>
+              <p className="text-[11px] text-[#94A3B8] mt-1 line-clamp-2">{n.notes}</p>
             </div>
           ))}
         </div>
@@ -589,22 +589,22 @@ function ScoutingPanel({
 /** Practice drill card */
 function DrillCard({ drill }: { drill: Drill }) {
   return (
-    <div className="flex-shrink-0 w-56 p-4 rounded-xl border border-[#30363D] bg-[#161B22] hover:border-[#39D353]/40 transition-all cursor-pointer group">
+    <div className="flex-shrink-0 w-56 p-4 rounded-xl border border-[rgba(148, 163, 184, 0.08)] bg-[#1A1F35] hover:border-[#2DD4A8]/40 transition-all cursor-pointer group">
       <div className="flex items-center justify-between mb-2">
         <span className="text-xl">{drill.ppiIcon}</span>
-        <span className="text-[9px] font-bold text-[#39D353] bg-[#39D353]/10 px-2 py-0.5 rounded-full">
+        <span className="text-[9px] font-bold text-[#2DD4A8] bg-[#2DD4A8]/10 px-2 py-0.5 rounded-full">
           {drill.duration}
         </span>
       </div>
-      <h4 className="text-sm font-extrabold text-[#E6EDF3] group-hover:text-[#39D353] transition-colors">
+      <h4 className="text-sm font-extrabold text-[#F1F5F9] group-hover:text-[#2DD4A8] transition-colors">
         {drill.name}
       </h4>
-      <p className="text-[10px] text-[#8B949E] mt-1 leading-relaxed line-clamp-2">
+      <p className="text-[10px] text-[#94A3B8] mt-1 leading-relaxed line-clamp-2">
         {drill.description}
       </p>
       <div className="mt-2 flex items-center gap-1">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#A371F7]" />
-        <span className="text-[9px] font-semibold text-[#A371F7]">{drill.ppiAxis}</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-[#7C5BF0]" />
+        <span className="text-[9px] font-semibold text-[#7C5BF0]">{drill.ppiAxis}</span>
       </div>
     </div>
   )
@@ -797,10 +797,10 @@ export function LayoutPlannerSection() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-[#E6EDF3] tracking-tight">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-[#F1F5F9] tracking-tight">
             LAYOUT PLANNER
           </h2>
-          <p className="text-xs text-[#8B949E] mt-0.5 font-semibold">
+          <p className="text-xs text-[#94A3B8] mt-0.5 font-semibold">
             {field.name} &middot; {field.event}
           </p>
         </div>
@@ -810,8 +810,8 @@ export function LayoutPlannerSection() {
             className={`
               px-3 py-1.5 rounded-md text-[10px] font-bold tracking-wider uppercase border transition-all
               ${showScouting
-                ? 'border-[#A371F7] text-[#A371F7] bg-[#A371F7]/10'
-                : 'border-[#30363D] text-[#8B949E] hover:text-[#E6EDF3]'}
+                ? 'border-[#7C5BF0] text-[#7C5BF0] bg-[#7C5BF0]/10'
+                : 'border-[rgba(148, 163, 184, 0.08)] text-[#94A3B8] hover:text-[#F1F5F9]'}
             `}
           >
             Intel
@@ -821,8 +821,8 @@ export function LayoutPlannerSection() {
             className={`
               px-3 py-1.5 rounded-md text-[10px] font-bold tracking-wider uppercase border transition-all
               ${showDrills
-                ? 'border-[#39D353] text-[#39D353] bg-[#39D353]/10'
-                : 'border-[#30363D] text-[#8B949E] hover:text-[#E6EDF3]'}
+                ? 'border-[#2DD4A8] text-[#2DD4A8] bg-[#2DD4A8]/10'
+                : 'border-[rgba(148, 163, 184, 0.08)] text-[#94A3B8] hover:text-[#F1F5F9]'}
             `}
           >
             Drills
@@ -835,16 +835,16 @@ export function LayoutPlannerSection() {
         {/* Field + drawing tools column */}
         <div className="flex-1 min-w-0 space-y-3">
           {/* Drawing toolbar */}
-          <div className="p-3 rounded-xl border border-[#30363D] bg-[#161B22] space-y-3">
+          <div className="p-3 rounded-xl border border-[rgba(148, 163, 184, 0.08)] bg-[#1A1F35] space-y-3">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <PlayerSelector activePlayer={activePlayer} onSelect={setActivePlayer} />
               <ArrowTypeSelector arrowType={arrowType} onSelect={setArrowType} />
             </div>
 
             {drawStart && (
-              <div className="flex items-center gap-2 px-2 py-1.5 rounded-md bg-[#39D353]/10 border border-[#39D353]/30">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#39D353] animate-pulse" />
-                <span className="text-[10px] font-bold text-[#39D353] tracking-wide">
+              <div className="flex items-center gap-2 px-2 py-1.5 rounded-md bg-[#2DD4A8]/10 border border-[#2DD4A8]/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2DD4A8] animate-pulse" />
+                <span className="text-[10px] font-bold text-[#2DD4A8] tracking-wide">
                   CLICK A BUNKER OR FIELD POSITION TO COMPLETE ARROW
                 </span>
               </div>
@@ -852,26 +852,26 @@ export function LayoutPlannerSection() {
           </div>
 
           {/* Interactive field */}
-          <div className="relative rounded-xl border border-[#30363D] bg-[#0D1117] overflow-hidden">
+          <div className="relative rounded-xl border border-[rgba(148, 163, 184, 0.08)] bg-[#0A0E1A] overflow-hidden">
             {/* Zoom controls */}
             <div className="absolute top-3 right-3 z-10 flex flex-col gap-1">
               <button
                 onClick={handleZoomIn}
-                className="w-7 h-7 rounded bg-[#21262D] border border-[#30363D] text-[#8B949E] hover:text-[#E6EDF3] flex items-center justify-center text-sm font-bold transition-colors"
+                className="w-7 h-7 rounded bg-[#2A3050] border border-[rgba(148, 163, 184, 0.08)] text-[#94A3B8] hover:text-[#F1F5F9] flex items-center justify-center text-sm font-bold transition-colors"
                 title="Zoom in"
               >
                 +
               </button>
               <button
                 onClick={handleZoomOut}
-                className="w-7 h-7 rounded bg-[#21262D] border border-[#30363D] text-[#8B949E] hover:text-[#E6EDF3] flex items-center justify-center text-sm font-bold transition-colors"
+                className="w-7 h-7 rounded bg-[#2A3050] border border-[rgba(148, 163, 184, 0.08)] text-[#94A3B8] hover:text-[#F1F5F9] flex items-center justify-center text-sm font-bold transition-colors"
                 title="Zoom out"
               >
                 −
               </button>
               <button
                 onClick={handleResetView}
-                className="w-7 h-7 rounded bg-[#21262D] border border-[#30363D] text-[#8B949E] hover:text-[#E6EDF3] flex items-center justify-center text-[9px] font-bold transition-colors"
+                className="w-7 h-7 rounded bg-[#2A3050] border border-[rgba(148, 163, 184, 0.08)] text-[#94A3B8] hover:text-[#F1F5F9] flex items-center justify-center text-[9px] font-bold transition-colors"
                 title="Reset view"
               >
                 1:1
@@ -880,7 +880,7 @@ export function LayoutPlannerSection() {
 
             {/* Pan hint */}
             <div className="absolute bottom-3 left-3 z-10">
-              <span className="text-[9px] text-[#484F58] font-semibold bg-[#0D1117]/80 px-2 py-1 rounded">
+              <span className="text-[9px] text-[#64748B] font-semibold bg-[#0A0E1A]/80 px-2 py-1 rounded">
                 Alt+drag to pan &middot; Click to draw
               </span>
             </div>
@@ -922,26 +922,26 @@ export function LayoutPlannerSection() {
               value={planName}
               onChange={(e) => setPlanName(e.target.value)}
               placeholder="Plan name..."
-              className="flex-1 min-w-[140px] bg-[#0D1117] border border-[#30363D] rounded-md px-3 py-2 text-sm text-[#E6EDF3] placeholder-[#484F58] focus:border-[#39D353] focus:outline-none focus:ring-1 focus:ring-[#39D353]/30 transition-colors"
+              className="flex-1 min-w-[140px] bg-[#0A0E1A] border border-[rgba(148, 163, 184, 0.08)] rounded-md px-3 py-2 text-sm text-[#F1F5F9] placeholder-[#64748B] focus:border-[#2DD4A8] focus:outline-none focus:ring-1 focus:ring-[#2DD4A8]/30 transition-colors"
             />
             <button
               onClick={handleSavePlan}
               disabled={arrows.length === 0}
-              className="px-4 py-2 rounded-md text-xs font-bold tracking-wider uppercase bg-[#39D353] text-[#0D1117] hover:bg-[#39D353]/90 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="px-4 py-2 rounded-md text-xs font-bold tracking-wider uppercase bg-[#2DD4A8] text-[#0A0E1A] hover:bg-[#2DD4A8]/90 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               Save Plan
             </button>
             <button
               onClick={handleUndo}
               disabled={arrows.length === 0 && !drawStart}
-              className="px-3 py-2 rounded-md text-xs font-bold tracking-wider text-[#8B949E] border border-[#30363D] hover:text-[#E6EDF3] hover:border-[#484F58] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="px-3 py-2 rounded-md text-xs font-bold tracking-wider text-[#94A3B8] border border-[rgba(148, 163, 184, 0.08)] hover:text-[#F1F5F9] hover:border-[#64748B] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               Undo
             </button>
             <button
               onClick={handleClear}
               disabled={arrows.length === 0}
-              className="px-3 py-2 rounded-md text-xs font-bold tracking-wider text-[#F85149] border border-[#30363D] hover:border-[#F85149]/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="px-3 py-2 rounded-md text-xs font-bold tracking-wider text-[#EF4444] border border-[rgba(148, 163, 184, 0.08)] hover:border-[#EF4444]/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               Clear
             </button>
@@ -953,27 +953,27 @@ export function LayoutPlannerSection() {
             onChange={(e) => setPlanNotes(e.target.value)}
             placeholder="Breakout notes — timing, reads, adjustments..."
             rows={2}
-            className="w-full bg-[#0D1117] border border-[#30363D] rounded-lg px-3 py-2 text-xs text-[#E6EDF3] placeholder-[#484F58] focus:border-[#39D353] focus:outline-none focus:ring-1 focus:ring-[#39D353]/30 transition-colors resize-none"
+            className="w-full bg-[#0A0E1A] border border-[rgba(148, 163, 184, 0.08)] rounded-lg px-3 py-2 text-xs text-[#F1F5F9] placeholder-[#64748B] focus:border-[#2DD4A8] focus:outline-none focus:ring-1 focus:ring-[#2DD4A8]/30 transition-colors resize-none"
           />
         </div>
 
         {/* Side panels */}
         <div className="w-full lg:w-72 xl:w-80 flex-shrink-0 space-y-4">
           {/* Breakout Plan Library */}
-          <div className="rounded-xl border border-[#30363D] bg-[#161B22] overflow-hidden">
+          <div className="rounded-xl border border-[rgba(148, 163, 184, 0.08)] bg-[#1A1F35] overflow-hidden">
             <button
               onClick={() => setShowLibrary(!showLibrary)}
               className="w-full flex items-center justify-between p-4 text-left"
             >
               <div className="flex items-center gap-2">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#39D353" strokeWidth={2}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2DD4A8" strokeWidth={2}>
                   <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
                   <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
                 </svg>
-                <span className="text-xs font-extrabold text-[#E6EDF3] uppercase tracking-wider">
+                <span className="text-xs font-extrabold text-[#F1F5F9] uppercase tracking-wider">
                   Playbook
                 </span>
-                <span className="text-[9px] font-bold text-[#484F58] bg-[#21262D] px-1.5 py-0.5 rounded-full">
+                <span className="text-[9px] font-bold text-[#64748B] bg-[#2A3050] px-1.5 py-0.5 rounded-full">
                   {breakoutPlans.length}
                 </span>
               </div>
@@ -982,7 +982,7 @@ export function LayoutPlannerSection() {
                 height="12"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#484F58"
+                stroke="#64748B"
                 strokeWidth={2.5}
                 className={`transition-transform ${showLibrary ? 'rotate-180' : ''}`}
               >
@@ -1008,13 +1008,13 @@ export function LayoutPlannerSection() {
 
           {/* Scouting Notes Panel */}
           {showScouting && (
-            <div className="rounded-xl border border-[#A371F7]/30 bg-[#161B22] overflow-hidden animate-slide-in">
-              <div className="flex items-center gap-2 p-4 border-b border-[#30363D]">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A371F7" strokeWidth={2}>
+            <div className="rounded-xl border border-[#7C5BF0]/30 bg-[#1A1F35] overflow-hidden animate-slide-in">
+              <div className="flex items-center gap-2 p-4 border-b border-[rgba(148, 163, 184, 0.08)]">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C5BF0" strokeWidth={2}>
                   <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
                   <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />
                 </svg>
-                <span className="text-xs font-extrabold text-[#E6EDF3] uppercase tracking-wider">
+                <span className="text-xs font-extrabold text-[#F1F5F9] uppercase tracking-wider">
                   Scouting Intel
                 </span>
               </div>
@@ -1028,29 +1028,29 @@ export function LayoutPlannerSection() {
           )}
 
           {/* Legend */}
-          <div className="rounded-xl border border-[#30363D] bg-[#161B22] p-4">
-            <p className="text-[10px] font-extrabold text-[#484F58] uppercase tracking-wider mb-3">
+          <div className="rounded-xl border border-[rgba(148, 163, 184, 0.08)] bg-[#1A1F35] p-4">
+            <p className="text-[10px] font-extrabold text-[#64748B] uppercase tracking-wider mb-3">
               Arrow Legend
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-0 border-t-2 border-[#58A6FF]" />
-                <span className="text-[10px] text-[#8B949E]">Primary route (solid)</span>
+                <div className="w-8 h-0 border-t-2 border-[#4A7BF7]" />
+                <span className="text-[10px] text-[#94A3B8]">Primary route (solid)</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-8 h-0 border-t-2 border-dashed border-[#39D353]" />
-                <span className="text-[10px] text-[#8B949E]">Secondary route (dashed)</span>
+                <div className="w-8 h-0 border-t-2 border-dashed border-[#2DD4A8]" />
+                <span className="text-[10px] text-[#94A3B8]">Secondary route (dashed)</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-8 h-0 border-t-2 border-dotted border-[#E3B341]" />
-                <span className="text-[10px] text-[#8B949E]">Shooting lane (dotted)</span>
+                <div className="w-8 h-0 border-t-2 border-dotted border-[#D4A843]" />
+                <span className="text-[10px] text-[#94A3B8]">Shooting lane (dotted)</span>
               </div>
             </div>
-            <div className="mt-3 pt-3 border-t border-[#21262D] space-y-1.5">
+            <div className="mt-3 pt-3 border-t border-[#2A3050] space-y-1.5">
               {PLAYER_COLORS.map((c, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: c }} />
-                  <span className="text-[10px] text-[#8B949E]">Player {i + 1}</span>
+                  <span className="text-[10px] text-[#94A3B8]">Player {i + 1}</span>
                 </div>
               ))}
             </div>
@@ -1060,20 +1060,20 @@ export function LayoutPlannerSection() {
 
       {/* Practice Drill Selector — Bottom sheet */}
       {showDrills && (
-        <div className="rounded-xl border border-[#39D353]/30 bg-[#161B22] overflow-hidden animate-slide-in">
-          <div className="flex items-center justify-between p-4 border-b border-[#30363D]">
+        <div className="rounded-xl border border-[#2DD4A8]/30 bg-[#1A1F35] overflow-hidden animate-slide-in">
+          <div className="flex items-center justify-between p-4 border-b border-[rgba(148, 163, 184, 0.08)]">
             <div className="flex items-center gap-2">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#39D353" strokeWidth={2}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2DD4A8" strokeWidth={2}>
                 <circle cx="12" cy="12" r="10" />
-                <polygon points="10 8 16 12 10 16 10 8" fill="#39D353" />
+                <polygon points="10 8 16 12 10 16 10 8" fill="#2DD4A8" />
               </svg>
-              <span className="text-xs font-extrabold text-[#E6EDF3] uppercase tracking-wider">
+              <span className="text-xs font-extrabold text-[#F1F5F9] uppercase tracking-wider">
                 Practice Drills
               </span>
             </div>
             <button
               onClick={() => setShowDrills(false)}
-              className="text-[#484F58] hover:text-[#8B949E] transition-colors"
+              className="text-[#64748B] hover:text-[#94A3B8] transition-colors"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                 <line x1="18" y1="6" x2="6" y2="18" />

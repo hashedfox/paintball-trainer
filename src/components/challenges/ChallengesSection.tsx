@@ -30,8 +30,8 @@ export function ChallengesSection() {
   if (view === 'marketplace') {
     return (
       <div className="animate-fade-in">
-        <div className="p-4 border-b border-pb-border flex items-center justify-between">
-          <button type="button" onClick={() => setView('challenges')} className="text-pb-primary-bright text-[12px] font-semibold flex items-center gap-1">
+        <div className="p-4 border-b border-white/[0.08] flex items-center justify-between">
+          <button type="button" onClick={() => setView('challenges')} className="text-[#9B7CF7] text-[12px] font-semibold flex items-center gap-1">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Challenges
           </button>
@@ -58,20 +58,20 @@ export function ChallengesSection() {
       {/* Level card */}
       <div className="card-gaming p-5 glow-purple">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-xl bg-pb-primary flex items-center justify-center">
+          <div className="w-14 h-14 rounded-xl bg-[#7C5BF0] flex items-center justify-center">
             <span className="text-2xl font-black text-white">{challengesState.level}</span>
           </div>
           <div className="flex-1">
             <div className="flex items-center justify-between mb-1">
               <span className="text-[13px] font-bold text-white">Level {challengesState.level}</span>
-              <span className="text-[11px] text-pb-text-dim">{Math.round(xpInLevel)} / {currentLevelXp} XP</span>
+              <span className="text-[11px] text-[#94A3B8]">{Math.round(xpInLevel)} / {currentLevelXp} XP</span>
             </div>
             <div className="xp-bar-track h-[10px]">
               <div className="xp-bar-fill h-full" style={{ width: `${xpProgress}%` }} />
             </div>
             <div className="flex items-center justify-between mt-1">
-              <span className="text-[9px] text-pb-text-muted">Total: {challengesState.xp} XP</span>
-              <span className="text-[9px] text-pb-text-muted">Streak: {challengesState.loginStreak} days</span>
+              <span className="text-[9px] text-[#64748B]">Total: {challengesState.xp} XP</span>
+              <span className="text-[9px] text-[#64748B]">Streak: {challengesState.loginStreak} days</span>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@ export function ChallengesSection() {
               <span className="text-xl">{challenge.icon}</span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2">
-                  <h4 className={`text-[12px] font-bold ${challenge.completed ? 'text-pb-green line-through' : 'text-white'}`}>
+                  <h4 className={`text-[12px] font-bold ${challenge.completed ? 'text-[#2DD4A8] line-through' : 'text-white'}`}>
                     {challenge.title}
                   </h4>
                   <span className={`tag-pill ${
@@ -105,14 +105,14 @@ export function ChallengesSection() {
                     {challenge.type}
                   </span>
                 </div>
-                <p className="text-[10px] text-pb-text-dim mt-0.5">{challenge.description}</p>
+                <p className="text-[10px] text-[#94A3B8] mt-0.5">{challenge.description}</p>
 
                 <div className="mt-2">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[9px] text-pb-text-muted">{challenge.progress}/{challenge.requirement}</span>
+                    <span className="text-[9px] text-[#64748B]">{challenge.progress}/{challenge.requirement}</span>
                     <div className="flex gap-2">
-                      <span className="text-[9px] text-pb-amber font-bold">+{challenge.xpReward} XP</span>
-                      <span className="text-[9px] text-pb-gold font-bold">+{challenge.coinReward} C</span>
+                      <span className="text-[9px] text-[#D4A843] font-bold">+{challenge.xpReward} XP</span>
+                      <span className="text-[9px] text-[#D4A843] font-bold">+{challenge.coinReward} C</span>
                     </div>
                   </div>
                   <div className="xp-bar-track h-[5px]">
@@ -134,7 +134,7 @@ export function ChallengesSection() {
                 )}
 
                 {challenge.ppiImpact && (
-                  <span className="text-[8px] text-pb-text-muted mt-1 block">Improves: {challenge.ppiImpact}</span>
+                  <span className="text-[8px] text-[#64748B] mt-1 block">Improves: {challenge.ppiImpact}</span>
                 )}
               </div>
             </div>

@@ -35,7 +35,7 @@ export function PersonaSection() {
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
         <h2 className="text-xl font-extrabold text-white">Paintball Persona</h2>
-        <p className="text-xs text-pb-text-dim">Customize your 2D paintball character with earned equipment.</p>
+        <p className="text-xs text-[#94A3B8]">Customize your 2D paintball character with earned equipment.</p>
       </div>
 
       {/* Character + Equipment Grid */}
@@ -93,7 +93,7 @@ export function PersonaSection() {
 
           {/* Color picker */}
           <div className="mt-4">
-            <span className="text-[10px] text-pb-text-muted uppercase tracking-wider block mb-2 text-center">Accent Color</span>
+            <span className="text-[10px] text-[#64748B] uppercase tracking-wider block mb-2 text-center">Accent Color</span>
             <div className="flex gap-2 justify-center">
               {COLORS.map(c => (
                 <button
@@ -111,12 +111,12 @@ export function PersonaSection() {
 
           {/* Number */}
           <div className="mt-3 flex items-center gap-2">
-            <span className="text-[10px] text-pb-text-muted">Number:</span>
+            <span className="text-[10px] text-[#64748B]">Number:</span>
             <input
               type="text"
               value={personaState.teamNumber}
               onChange={(e) => dispatch({ type: 'SET_PERSONA_NUMBER', number: e.target.value.slice(0, 3) })}
-              className="w-12 bg-pb-surface border border-pb-border rounded px-2 py-1 text-center text-sm text-white focus:outline-none focus:border-pb-primary"
+              className="w-12 bg-[#111827] border border-white/[0.08] rounded px-2 py-1 text-center text-sm text-white focus:outline-none focus:border-[#7C5BF0]"
               maxLength={3}
             />
           </div>
@@ -135,9 +135,9 @@ export function PersonaSection() {
                   onClick={() => setSelectedSlot(selectedSlot === slot ? null : slot)}
                   className={`persona-slot p-3 text-left transition-all ${
                     equipped ? 'equipped' : ''
-                  } ${selectedSlot === slot ? 'border-pb-primary bg-pb-primary/10' : ''}`}
+                  } ${selectedSlot === slot ? 'border-[#7C5BF0] bg-[#7C5BF0]/10' : ''}`}
                 >
-                  <span className="text-[9px] text-pb-text-muted uppercase tracking-wider">{label}</span>
+                  <span className="text-[9px] text-[#64748B] uppercase tracking-wider">{label}</span>
                   {equipped ? (
                     <div className="mt-1">
                       <div className="flex items-center gap-1">
@@ -147,7 +147,7 @@ export function PersonaSection() {
                       <span className="text-[9px] capitalize" style={{ color: RARITY_COLORS[equipped.rarity] }}>{equipped.rarity}</span>
                     </div>
                   ) : (
-                    <span className="text-[10px] text-pb-text-muted mt-1 block">Empty</span>
+                    <span className="text-[10px] text-[#64748B] mt-1 block">Empty</span>
                   )}
                 </button>
               )
@@ -163,14 +163,14 @@ export function PersonaSection() {
                   <button
                     type="button"
                     onClick={() => handleUnequip(selectedSlot)}
-                    className="text-[10px] text-pb-red"
+                    className="text-[10px] text-[#EF4444]"
                   >
                     Unequip
                   </button>
                 )}
               </div>
               {slotItems.length === 0 ? (
-                <p className="text-[10px] text-pb-text-muted">No items owned for this slot. Earn coins in Challenges to buy equipment!</p>
+                <p className="text-[10px] text-[#64748B]">No items owned for this slot. Earn coins in Challenges to buy equipment!</p>
               ) : (
                 <div className="space-y-2">
                   {slotItems.map(item => (
@@ -180,8 +180,8 @@ export function PersonaSection() {
                       onClick={() => handleEquip(selectedSlot, item.id)}
                       className={`w-full flex items-center gap-3 p-2 rounded-lg border transition-all ${
                         personaState.equipped[selectedSlot] === item.id
-                          ? 'border-pb-primary bg-pb-primary/10'
-                          : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
+                          ? 'border-[#7C5BF0] bg-[#7C5BF0]/10'
+                          : 'border-white/[0.08] bg-[#111827] hover:border-white/[0.15]'
                       }`}
                     >
                       <div className="w-8 h-8 rounded border flex items-center justify-center" style={{ borderColor: RARITY_COLORS[item.rarity], background: `${RARITY_COLORS[item.rarity]}10` }}>
@@ -200,7 +200,7 @@ export function PersonaSection() {
 
           {/* Inventory count */}
           <div className="panel-inner rounded-lg p-3">
-            <span className="text-[10px] text-pb-text-muted">Inventory: {ownedItems.length} items owned</span>
+            <span className="text-[10px] text-[#64748B]">Inventory: {ownedItems.length} items owned</span>
           </div>
         </div>
       </div>

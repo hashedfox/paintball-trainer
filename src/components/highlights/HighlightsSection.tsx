@@ -52,12 +52,12 @@ export function HighlightsSection() {
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
         <h2 className="text-xl font-extrabold text-white mb-1">Game Highlights</h2>
-        <p className="text-sm text-pb-text-dim">Pro match videos, highlights, and analysis from top competitions.</p>
+        <p className="text-sm text-[#94A3B8]">Pro match videos, highlights, and analysis from top competitions.</p>
       </div>
 
       {/* Search */}
       <div className="relative">
-        <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-pb-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <input
@@ -65,7 +65,7 @@ export function HighlightsSection() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search videos, teams, topics..."
-          className="w-full bg-pb-surface border border-pb-border rounded-lg pl-10 pr-4 py-3 text-sm text-white placeholder-pb-text-muted focus:outline-none focus:border-pb-primary"
+          className="w-full bg-[#111827] border border-white/[0.08] rounded-lg pl-10 pr-4 py-3 text-sm text-white placeholder-[#64748B] focus:outline-none focus:border-[#7C5BF0]"
         />
       </div>
 
@@ -78,8 +78,8 @@ export function HighlightsSection() {
             onClick={() => setCategory(cat.id)}
             className={`px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
               category === cat.id
-                ? 'bg-pb-primary text-pb-darker'
-                : 'bg-pb-surface text-pb-text-dim border border-pb-border hover:border-pb-border-light'
+                ? 'bg-[#7C5BF0] text-[#070B14]'
+                : 'bg-[#111827] text-[#94A3B8] border border-white/[0.08] hover:border-white/[0.15]'
             }`}
           >
             {cat.label}
@@ -95,24 +95,24 @@ export function HighlightsSection() {
             href={video.searchUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="card-gaming p-4 flex gap-4 hover:border-pb-border-light transition-all group block"
+            className="card-gaming p-4 flex gap-4 hover:border-white/[0.15] transition-all group block"
           >
             {/* Thumbnail placeholder */}
-            <div className="w-28 h-20 md:w-40 md:h-24 panel-inner rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-pb-red/10 transition-colors">
-              <svg className="w-8 h-8 text-pb-red/60 group-hover:text-pb-red transition-colors" fill="currentColor" viewBox="0 0 24 24">
+            <div className="w-28 h-20 md:w-40 md:h-24 panel-inner rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-[#EF4444]/10 transition-colors">
+              <svg className="w-8 h-8 text-[#EF4444]/60 group-hover:text-[#EF4444] transition-colors" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z" />
               </svg>
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-bold text-white group-hover:text-pb-primary-bright transition-colors line-clamp-2">{video.title}</h4>
-              <p className="text-[11px] text-pb-text-muted mt-1">{video.channel}</p>
+              <h4 className="text-sm font-bold text-white group-hover:text-[#9B7CF7] transition-colors line-clamp-2">{video.title}</h4>
+              <p className="text-[11px] text-[#64748B] mt-1">{video.channel}</p>
               <div className="flex gap-1.5 mt-2 flex-wrap">
                 {video.competition && (
-                  <span className="px-2 py-0.5 bg-pb-amber/10 text-pb-amber rounded-full text-[9px] font-medium">{video.competition}</span>
+                  <span className="px-2 py-0.5 bg-[#D4A843]/10 text-[#D4A843] rounded-full text-[9px] font-medium">{video.competition}</span>
                 )}
-                <span className="px-2 py-0.5 bg-pb-blue/10 text-pb-blue rounded-full text-[9px] font-medium capitalize">{video.category}</span>
+                <span className="px-2 py-0.5 bg-[#4A7BF7]/10 text-[#4A7BF7] rounded-full text-[9px] font-medium capitalize">{video.category}</span>
                 {video.tags.slice(0, 2).map(tag => (
-                  <span key={tag} className="px-2 py-0.5 bg-pb-surface text-pb-text-muted rounded-full text-[9px]">{tag}</span>
+                  <span key={tag} className="px-2 py-0.5 bg-[#111827] text-[#64748B] rounded-full text-[9px]">{tag}</span>
                 ))}
               </div>
             </div>
@@ -121,7 +121,7 @@ export function HighlightsSection() {
 
         {filtered.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-pb-text-muted text-sm">No videos match your search.</p>
+            <p className="text-[#64748B] text-sm">No videos match your search.</p>
           </div>
         )}
       </div>
@@ -130,13 +130,13 @@ export function HighlightsSection() {
       <div className="card-gaming p-5">
         <span className="section-header mb-3 block">More Resources</span>
         <div className="space-y-2">
-          <a href="https://www.youtube.com/results?search_query=NXL+paintball+2024" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-pb-card-hover transition-colors">
-            <span className="text-pb-red">YouTube</span>
-            <span className="text-xs text-pb-text-dim">NXL Official Matches</span>
+          <a href="https://www.youtube.com/results?search_query=NXL+paintball+2024" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-[#222842] transition-colors">
+            <span className="text-[#EF4444]">YouTube</span>
+            <span className="text-xs text-[#94A3B8]">NXL Official Matches</span>
           </a>
-          <a href="https://www.pbleagues.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-pb-card-hover transition-colors">
-            <span className="text-pb-blue">PBLeagues</span>
-            <span className="text-xs text-pb-text-dim">Live competition updates & scores</span>
+          <a href="https://www.pbleagues.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-[#222842] transition-colors">
+            <span className="text-[#4A7BF7]">PBLeagues</span>
+            <span className="text-xs text-[#94A3B8]">Live competition updates & scores</span>
           </a>
         </div>
       </div>

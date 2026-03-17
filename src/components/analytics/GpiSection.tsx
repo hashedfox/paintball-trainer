@@ -22,7 +22,7 @@ export function GpiSection({ teamStats }: Props) {
   ]
 
   return (
-    <div className="bg-pb-card rounded-xl border border-pb-border p-4">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4">
       <h3 className="text-sm font-bold text-white mb-4">{t('analytics.gpi')}</h3>
       <div className="flex items-center gap-6">
         <CircularGauge value={gpi.overall} grade={gpi.grade} />
@@ -36,7 +36,7 @@ export function GpiSection({ teamStats }: Props) {
               <span className="text-slate-600 w-8 text-right">{b.weight}</span>
               <div className="w-16 h-1.5 bg-slate-700 rounded-full overflow-hidden">
                 <div
-                  className="h-full rounded-full bg-pb-amber"
+                  className="h-full rounded-full bg-[#D4A843]"
                   style={{ width: `${b.value}%` }}
                 />
               </div>

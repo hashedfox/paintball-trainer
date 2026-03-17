@@ -77,12 +77,12 @@ export function OnboardingQuiz({ onComplete }: Props) {
         {/* Progress bar */}
         <div className="flex gap-1 mb-8">
           {steps.map((_, i) => (
-            <div key={i} className={`h-[3px] flex-1 rounded-full transition-colors ${i <= step ? 'bg-pb-green' : 'bg-pb-border'}`} />
+            <div key={i} className={`h-[3px] flex-1 rounded-full transition-colors ${i <= step ? 'bg-[#2DD4A8]' : 'border-white/[0.08] bg-white/[0.08]'}`} />
           ))}
         </div>
 
         <h2 className="text-xl font-extrabold text-white mb-1">{steps[step].title}</h2>
-        <p className="text-[12px] text-pb-text-dim mb-6">{steps[step].subtitle}</p>
+        <p className="text-[12px] text-[#94A3B8] mb-6">{steps[step].subtitle}</p>
 
         <div className="space-y-3 mb-8">
           {step === 0 && (
@@ -91,7 +91,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
               value={onboarding.playerName}
               onChange={(e) => dispatch({ type: 'SET_ONBOARDING', data: { playerName: e.target.value } })}
               placeholder="Enter your player name"
-              className="w-full bg-pb-surface border border-pb-border rounded-lg px-4 py-3 text-white placeholder-pb-text-muted focus:outline-none focus:border-pb-green text-base"
+              className="w-full bg-[#111827] border border-white/[0.08] rounded-lg px-4 py-3 text-white placeholder-[#64748B] focus:outline-none focus:border-[#2DD4A8] text-base"
               autoFocus
             />
           )}
@@ -103,12 +103,12 @@ export function OnboardingQuiz({ onComplete }: Props) {
               onClick={() => dispatch({ type: 'SET_ONBOARDING', data: { currentLevel: level.value as SkillLevel } })}
               className={`w-full text-left p-4 rounded-lg border transition-all ${
                 onboarding.currentLevel === level.value
-                  ? 'border-pb-green bg-pb-green/10'
-                  : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
+                  ? 'border-[#2DD4A8] bg-[#2DD4A8]/10'
+                  : 'border-white/[0.08] bg-[#111827] hover:border-white/[0.15]'
               }`}
             >
               <div className="font-bold text-white text-[13px]">{level.label}</div>
-              <div className="text-[11px] text-pb-text-dim mt-0.5">{level.description}</div>
+              <div className="text-[11px] text-[#94A3B8] mt-0.5">{level.description}</div>
             </button>
           ))}
 
@@ -119,8 +119,8 @@ export function OnboardingQuiz({ onComplete }: Props) {
               onClick={() => dispatch({ type: 'SET_ONBOARDING', data: { primaryPosition: pos as Position } })}
               className={`w-full text-left p-4 rounded-lg border transition-all ${
                 onboarding.primaryPosition === pos
-                  ? 'border-pb-green bg-pb-green/10'
-                  : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
+                  ? 'border-[#2DD4A8] bg-[#2DD4A8]/10'
+                  : 'border-white/[0.08] bg-[#111827] hover:border-white/[0.15]'
               }`}
             >
               <span className="font-bold text-white text-[13px]">{POSITION_LABELS[pos]}</span>
@@ -129,7 +129,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
 
           {step === 3 && (
             <>
-              <p className="text-[10px] text-pb-text-muted">Select all that apply</p>
+              <p className="text-[10px] text-[#64748B]">Select all that apply</p>
               {SKILL_AREAS.map((area) => (
                 <button
                   key={area.value}
@@ -137,8 +137,8 @@ export function OnboardingQuiz({ onComplete }: Props) {
                   onClick={() => toggleSkillArea(area.value)}
                   className={`w-full text-left p-3 rounded-lg border transition-all ${
                     onboarding.skillAreas.includes(area.value)
-                      ? 'border-pb-green bg-pb-green/10'
-                      : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
+                      ? 'border-[#2DD4A8] bg-[#2DD4A8]/10'
+                      : 'border-white/[0.08] bg-[#111827] hover:border-white/[0.15]'
                   }`}
                 >
                   <span className="text-base mr-2">{area.icon}</span>
@@ -150,7 +150,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
 
           {step === 4 && (
             <>
-              <p className="text-[10px] text-pb-text-muted">Pick 1-3 priorities</p>
+              <p className="text-[10px] text-[#64748B]">Pick 1-3 priorities</p>
               <div className="grid grid-cols-2 gap-2">
                 {FOCUS_AREAS.map((area) => (
                   <button
@@ -159,8 +159,8 @@ export function OnboardingQuiz({ onComplete }: Props) {
                     onClick={() => toggleFocusArea(area.value)}
                     className={`text-left p-3 rounded-lg border transition-all ${
                       onboarding.focusAreas.includes(area.value)
-                        ? 'border-pb-green bg-pb-green/10'
-                        : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
+                        ? 'border-[#2DD4A8] bg-[#2DD4A8]/10'
+                        : 'border-white/[0.08] bg-[#111827] hover:border-white/[0.15]'
                     }`}
                   >
                     <span className="font-semibold text-white text-[11px]">{area.label}</span>
@@ -177,8 +177,8 @@ export function OnboardingQuiz({ onComplete }: Props) {
               onClick={() => dispatch({ type: 'SET_ONBOARDING', data: { competition: comp } })}
               className={`w-full text-left p-3 rounded-lg border transition-all ${
                 onboarding.competition === comp
-                  ? 'border-pb-green bg-pb-green/10'
-                  : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
+                  ? 'border-[#2DD4A8] bg-[#2DD4A8]/10'
+                  : 'border-white/[0.08] bg-[#111827] hover:border-white/[0.15]'
               }`}
             >
               <span className="font-medium text-white text-[12px]">{comp}</span>
@@ -188,16 +188,16 @@ export function OnboardingQuiz({ onComplete }: Props) {
           {step === 6 && (
             <div>
               <div className="text-center mb-4">
-                <span className="text-4xl font-black text-pb-green">{onboarding.weeklyTrainingHours}</span>
-                <span className="text-sm text-pb-text-dim ml-2">hours / week</span>
+                <span className="text-4xl font-black text-[#2DD4A8]">{onboarding.weeklyTrainingHours}</span>
+                <span className="text-sm text-[#94A3B8] ml-2">hours / week</span>
               </div>
               <input
                 type="range" min="1" max="20"
                 value={onboarding.weeklyTrainingHours}
                 onChange={(e) => dispatch({ type: 'SET_ONBOARDING', data: { weeklyTrainingHours: parseInt(e.target.value) } })}
-                className="w-full accent-[#39D353]"
+                className="w-full accent-[#2DD4A8]"
               />
-              <div className="flex justify-between text-[9px] text-pb-text-muted mt-1">
+              <div className="flex justify-between text-[9px] text-[#64748B] mt-1">
                 <span>1 hr</span><span>20 hrs</span>
               </div>
             </div>
@@ -214,7 +214,7 @@ export function OnboardingQuiz({ onComplete }: Props) {
             onClick={handleNext}
             disabled={!canAdvance()}
             className={`flex-1 py-3 rounded-lg font-bold text-[13px] transition-all ${
-              canAdvance() ? 'btn-primary' : 'bg-pb-surface text-pb-text-muted cursor-not-allowed'
+              canAdvance() ? 'btn-primary' : 'bg-[#111827] text-[#64748B] cursor-not-allowed'
             }`}
           >
             {step === steps.length - 1 ? 'Start Training' : 'Next'}

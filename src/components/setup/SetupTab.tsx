@@ -24,14 +24,14 @@ export function SetupTab() {
           type="text"
           value={teamName}
           onChange={(e) => dispatch({ type: 'SET_TEAM_NAME', name: e.target.value })}
-          className="w-full bg-slate-700 rounded-lg px-3 py-2 text-white border border-pb-border focus:border-pb-amber outline-none"
+          className="w-full bg-slate-700 rounded-lg px-3 py-2 text-white border border-white/[0.08] focus:border-[#D4A843] outline-none"
         />
         <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">{t('setup.opponent')}</h2>
         <input
           type="text"
           value={opponentName}
           onChange={(e) => dispatch({ type: 'SET_OPPONENT_NAME', name: e.target.value })}
-          className="w-full bg-slate-700 rounded-lg px-3 py-2 text-white border border-pb-border focus:border-pb-amber outline-none"
+          className="w-full bg-slate-700 rounded-lg px-3 py-2 text-white border border-white/[0.08] focus:border-[#D4A843] outline-none"
         />
       </section>
 

@@ -45,7 +45,7 @@ function AppContent() {
   }
 
   return (
-    <div className="flex h-full bg-pb-dark">
+    <div className="flex h-full bg-[#0A0E1A] min-h-screen">
       {/* Sidebar (desktop) */}
       <Sidebar
         activeSection={state.activeSection}

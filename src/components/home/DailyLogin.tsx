@@ -14,12 +14,12 @@ export function DailyLogin() {
   const days = Array.from({ length: 7 }, (_, i) => i + 1)
 
   return (
-    <div className="bg-[#161B22] rounded-xl border border-pb-border p-4">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4">
       <div className="flex items-center justify-between mb-3">
-        <span className="font-display text-sm font-bold text-pb-text uppercase tracking-wider">
+        <span className="font-display text-sm font-bold text-[#F1F5F9] uppercase tracking-wider">
           Daily Streak
         </span>
-        <span className="font-stat text-xs font-bold text-pb-green">
+        <span className="font-stat text-xs font-bold text-[#2DD4A8]">
           {streak} day{streak !== 1 ? 's' : ''}
         </span>
       </div>
@@ -29,8 +29,8 @@ export function DailyLogin() {
             key={day}
             className={`flex-1 aspect-square rounded-md flex items-center justify-center text-[10px] font-bold transition-all ${
               day <= streak
-                ? 'bg-pb-green/15 text-pb-green border border-pb-green/30'
-                : 'bg-[#21262D] text-pb-text-muted border border-pb-border'
+                ? 'bg-[#2DD4A8]/15 text-[#2DD4A8] border border-[#2DD4A8]/30'
+                : 'bg-[#2A3050] text-[#64748B] border border-white/[0.08]'
             }`}
           >
             {day <= streak ? (
@@ -41,7 +41,7 @@ export function DailyLogin() {
           </div>
         ))}
       </div>
-      <p className="text-[9px] text-pb-text-muted mt-2">
+      <p className="text-[9px] text-[#64748B] mt-2">
         Log in daily for bonus XP & coins. {streak >= 7 ? 'Max streak bonus active!' : `${7 - streak} more for max bonus.`}
       </p>
     </div>

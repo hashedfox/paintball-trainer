@@ -33,7 +33,7 @@ export function ProfileTab() {
   return (
     <div className="p-4 space-y-6">
       {/* Edit Profile */}
-      <div className="bg-pb-card rounded-xl border border-pb-border p-4 space-y-3">
+      <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4 space-y-3">
         <h3 className="text-sm font-bold text-white">{t('profile.editProfile')}</h3>
         <div className="grid grid-cols-2 gap-3">
           <div>
@@ -43,7 +43,7 @@ export function ProfileTab() {
               value={profile.name}
               onChange={(e) => updateProfile('name', e.target.value)}
               placeholder="Your name"
-              className="w-full bg-slate-700 rounded-lg px-3 py-2 text-sm text-white border border-pb-border focus:border-pb-amber outline-none"
+              className="w-full bg-slate-700 rounded-lg px-3 py-2 text-sm text-white border border-white/[0.08] focus:border-[#D4A843] outline-none"
             />
           </div>
           <div>
@@ -53,7 +53,7 @@ export function ProfileTab() {
               value={profile.team}
               onChange={(e) => updateProfile('team', e.target.value)}
               placeholder="Team name"
-              className="w-full bg-slate-700 rounded-lg px-3 py-2 text-sm text-white border border-pb-border focus:border-pb-amber outline-none"
+              className="w-full bg-slate-700 rounded-lg px-3 py-2 text-sm text-white border border-white/[0.08] focus:border-[#D4A843] outline-none"
             />
           </div>
           <div>
@@ -61,7 +61,7 @@ export function ProfileTab() {
             <select
               value={profile.position}
               onChange={(e) => updateProfile('position', e.target.value)}
-              className="w-full bg-slate-700 rounded-lg px-3 py-2 text-sm text-white border border-pb-border outline-none"
+              className="w-full bg-slate-700 rounded-lg px-3 py-2 text-sm text-white border border-white/[0.08] outline-none"
             >
               {POSITIONS.map((pos) => (
                 <option key={pos} value={pos}>{POSITION_LABELS[pos]}</option>
@@ -73,7 +73,7 @@ export function ProfileTab() {
             <select
               value={profile.division}
               onChange={(e) => updateProfile('division', e.target.value)}
-              className="w-full bg-slate-700 rounded-lg px-3 py-2 text-sm text-white border border-pb-border outline-none"
+              className="w-full bg-slate-700 rounded-lg px-3 py-2 text-sm text-white border border-white/[0.08] outline-none"
             >
               {['D5', 'D4', 'D3', 'D2', 'D1', 'Semi-Pro', 'Pro'].map((d) => (
                 <option key={d} value={d}>{d}</option>
@@ -84,7 +84,7 @@ export function ProfileTab() {
       </div>
 
       {/* Stats Card */}
-      <div className="bg-pb-card rounded-xl border border-pb-border p-4">
+      <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4">
         <h3 className="text-sm font-bold text-white mb-4">{t('profile.statsCard')}</h3>
         <div className="flex items-center gap-4">
           <CircularGauge value={gpi.overall} grade={gpi.grade} size={100} />
@@ -92,7 +92,7 @@ export function ProfileTab() {
             <div className="text-lg font-bold text-white">{profile.name || 'Player'}</div>
             <div className="text-xs text-slate-400">{profile.team || 'Team'}</div>
             <div className="flex gap-2 mt-1">
-              <span className="text-xs bg-pb-amber/20 text-pb-amber px-2 py-0.5 rounded">
+              <span className="text-xs bg-[#D4A843]/20 text-[#D4A843] px-2 py-0.5 rounded">
                 {POSITION_LABELS[profile.position as keyof typeof POSITION_LABELS] || profile.position}
               </span>
               <span className="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded">
@@ -127,7 +127,7 @@ export function ProfileTab() {
         <button
           type="button"
           onClick={share}
-          className="w-full mt-4 bg-pb-amber text-black font-bold py-3 rounded-lg hover:bg-yellow-400 active:scale-95 transition-all"
+          className="w-full mt-4 bg-[#D4A843] text-black font-bold py-3 rounded-lg hover:bg-yellow-400 active:scale-95 transition-all"
         >
           {copied ? t('profile.copied') : t('profile.share')}
         </button>

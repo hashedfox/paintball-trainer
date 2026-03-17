@@ -21,14 +21,14 @@ export function PlayerLeaderboard({ playerStats }: Props) {
   const dynasty = PRO_TEAMS[0]
 
   return (
-    <div className="bg-pb-card rounded-xl border border-pb-border p-4">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4">
       <h3 className="text-sm font-bold text-white mb-3">{t('analytics.leaderboard')}</h3>
 
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
-            <tr className="text-slate-500 border-b border-pb-border">
+            <tr className="text-slate-500 border-b border-white/[0.08]">
               <th className="text-left py-2 pr-2">Player</th>
               <th className="text-right px-1">SUR%</th>
               <th className="text-right px-1">OTB%</th>
@@ -43,7 +43,7 @@ export function PlayerLeaderboard({ playerStats }: Props) {
                 key={p.playerId}
                 onClick={() => setSelectedPlayer(selectedPlayer === p.playerId ? null : p.playerId)}
                 className={`border-b border-slate-700/50 cursor-pointer hover:bg-slate-700/30 transition-colors ${
-                  selectedPlayer === p.playerId ? 'bg-pb-amber/10' : ''
+                  selectedPlayer === p.playerId ? 'bg-[#D4A843]/10' : ''
                 }`}
               >
                 <td className="py-2 pr-2 text-white font-medium">{p.name}</td>
@@ -65,7 +65,7 @@ export function PlayerLeaderboard({ playerStats }: Props) {
         const player = sorted.find((p) => p.playerId === selectedPlayer)
         if (!player) return null
         return (
-          <div className="mt-4 pt-4 border-t border-pb-border">
+          <div className="mt-4 pt-4 border-t border-white/[0.08]">
             <h4 className="text-xs font-bold text-white mb-2">{player.name} — Skill Map</h4>
             <SpiderChart
               axes={SPIDER_AXES}

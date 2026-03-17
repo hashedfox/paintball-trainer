@@ -39,33 +39,32 @@ const GROUP_LABELS: Record<string, string> = {
 }
 
 export function Sidebar({ activeSection, onNavigate, level, xp, coins, streak }: SidebarProps) {
-  // Group items
   const groups = ['core', 'train', 'progress', 'community']
 
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="sidebar-desktop w-[220px] min-h-full bg-pb-darker border-r border-pb-border flex flex-col">
+      <aside className="sidebar-desktop w-[200px] min-h-full bg-[#111827] border-r border-white/[0.08] flex flex-col">
         {/* Logo */}
-        <div className="px-4 py-4 border-b border-pb-border">
+        <div className="px-4 py-4 border-b border-white/[0.08]">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-pb-green to-pb-green-dim flex items-center justify-center">
-              <span className="text-sm font-black text-[#0D1117]">PPI</span>
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#D4A843] to-[#F0C55E] flex items-center justify-center">
+              <span className="text-sm font-black text-[#0A0E1A]">PPI</span>
             </div>
             <div>
-              <h1 className="text-[14px] font-extrabold text-white tracking-tight leading-none font-display">PAINTBALL</h1>
-              <span className="text-[9px] text-pb-text-muted uppercase tracking-[0.15em]">Performance Index</span>
+              <h1 className="text-[14px] font-bold text-[#F1F5F9] tracking-tight leading-none">PAINTBALL</h1>
+              <span className="text-[9px] text-[#64748B] uppercase tracking-[0.15em]">Performance Index</span>
             </div>
           </div>
         </div>
 
         {/* Player stats bar */}
-        <div className="px-4 py-3 border-b border-pb-border">
+        <div className="px-4 py-3 border-b border-white/[0.08]">
           <div className="flex items-center justify-between mb-2">
             <span className="level-badge text-[12px] px-3 py-1">LVL {level}</span>
             {streak > 0 && (
-              <span className="flex items-center gap-1 text-pb-amber text-xs font-bold">
-                <span className="flame-active inline-block">🔥</span>
+              <span className="flex items-center gap-1 text-[#D4A843] text-xs font-bold">
+                <span className="flame-active inline-block">&#128293;</span>
                 {streak}
               </span>
             )}
@@ -74,7 +73,7 @@ export function Sidebar({ activeSection, onNavigate, level, xp, coins, streak }:
             <div className="xp-bar-fill" style={{ width: `${Math.min((xp % 100), 100)}%` }} />
           </div>
           <div className="flex justify-between mt-1">
-            <span className="text-[9px] text-pb-text-muted">{xp} XP</span>
+            <span className="text-[9px] text-[#64748B]">{xp} XP</span>
             <span className="coin-badge">{coins}</span>
           </div>
         </div>
@@ -84,7 +83,7 @@ export function Sidebar({ activeSection, onNavigate, level, xp, coins, streak }:
           {groups.map((group) => (
             <div key={group} className="mb-1">
               <div className="px-4 pt-3 pb-1">
-                <span className="text-[9px] font-bold text-pb-text-muted tracking-[0.15em]">{GROUP_LABELS[group]}</span>
+                <span className="text-[9px] font-bold text-[#64748B] tracking-[0.15em]">{GROUP_LABELS[group]}</span>
               </div>
               {NAV_ITEMS.filter(item => item.group === group).map((item) => (
                 <button
@@ -93,11 +92,12 @@ export function Sidebar({ activeSection, onNavigate, level, xp, coins, streak }:
                   onClick={() => onNavigate(item.id)}
                   className={`w-full flex items-center gap-2.5 px-4 py-[9px] text-[12px] transition-all ${
                     activeSection === item.id
-                      ? 'text-white bg-pb-green/10 border-r-2 border-pb-green'
-                      : 'text-pb-text-dim hover:text-pb-text hover:bg-white/[0.03]'
+                      ? 'text-[#F1F5F9] border-l-[3px] border-[#4A7BF7]'
+                      : 'text-[#94A3B8] border-l-[3px] border-transparent hover:text-[#F1F5F9] hover:bg-white/[0.03]'
                   }`}
+                  style={activeSection === item.id ? { background: 'linear-gradient(90deg, rgba(74, 123, 247, 0.15) 0%, transparent 100%)' } : undefined}
                 >
-                  <svg className="w-[16px] h-[16px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <svg className={`w-[16px] h-[16px] flex-shrink-0 ${activeSection === item.id ? 'opacity-100' : 'opacity-60'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                   </svg>
                   <span className="font-semibold">{item.label}</span>
@@ -108,13 +108,13 @@ export function Sidebar({ activeSection, onNavigate, level, xp, coins, streak }:
         </nav>
 
         {/* Footer */}
-        <div className="px-4 py-3 border-t border-pb-border">
-          <p className="text-[9px] text-pb-text-muted text-center">PPI v3.0 — Built for Players</p>
+        <div className="px-4 py-3 border-t border-white/[0.08]">
+          <p className="text-[9px] text-[#64748B] text-center">PPI v3.0 — Built for Players</p>
         </div>
       </aside>
 
       {/* Mobile Bottom Nav */}
-      <nav className="nav-mobile fixed bottom-0 left-0 right-0 bg-pb-darker/95 backdrop-blur-md border-t border-pb-border z-50">
+      <nav className="nav-mobile fixed bottom-0 left-0 right-0 bg-[#111827]/95 backdrop-blur-md border-t border-white/[0.08] z-50">
         <div className="flex overflow-x-auto">
           {NAV_ITEMS.slice(0, 7).map((item) => (
             <button
@@ -122,7 +122,7 @@ export function Sidebar({ activeSection, onNavigate, level, xp, coins, streak }:
               type="button"
               onClick={() => onNavigate(item.id)}
               className={`flex-1 min-w-[52px] flex flex-col items-center py-2 px-1 transition-all ${
-                activeSection === item.id ? 'text-pb-green nav-active' : 'text-pb-text-muted'
+                activeSection === item.id ? 'text-[#4A7BF7] nav-active' : 'text-[#64748B]'
               }`}
             >
               <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

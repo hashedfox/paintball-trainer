@@ -76,7 +76,7 @@ export function SpiderChart(props: Props) {
     const simpleProps = props as SimpleProps
     axes = simpleProps.labels
     showIcons = simpleProps.iconLabels ?? true
-    const color = simpleProps.color || '#A371F7'
+    const color = simpleProps.color || '#7C5BF0'
     datasets = [{
       values: simpleProps.values.map(v => v / 100),
       fill: `${color}25`,
@@ -84,7 +84,7 @@ export function SpiderChart(props: Props) {
       label: 'Current',
     }]
     if (simpleProps.compareValues) {
-      const cc = simpleProps.compareColor || '#A371F780'
+      const cc = simpleProps.compareColor || '#7C5BF080'
       datasets.push({
         values: simpleProps.compareValues.map(v => v / 100),
         fill: 'none',
@@ -104,7 +104,7 @@ export function SpiderChart(props: Props) {
             key={scale}
             points={polygonPoints(Array(axes.length).fill(scale), cx, cy, r)}
             fill="none"
-            stroke="#30363D"
+            stroke="rgba(148, 163, 184, 0.08)"
             strokeWidth={scale === 1 ? 1 : 0.5}
             opacity={scale === 1 ? 0.6 : 0.3}
           />
@@ -118,7 +118,7 @@ export function SpiderChart(props: Props) {
               key={i}
               x1={cx} y1={cy}
               x2={end.x} y2={end.y}
-              stroke="#30363D"
+              stroke="rgba(148, 163, 184, 0.08)"
               strokeWidth={0.5}
               opacity={0.4}
             />
@@ -148,7 +148,7 @@ export function SpiderChart(props: Props) {
                 cx={end.x} cy={end.y}
                 r={3.5}
                 fill={ds.stroke}
-                stroke="#0D1117"
+                stroke="#0A0E1A"
                 strokeWidth={1.5}
               />
             )
@@ -172,8 +172,8 @@ export function SpiderChart(props: Props) {
                   cx={iconX + iconSize / 2}
                   cy={iconY + iconSize / 2}
                   r={13}
-                  fill="#161B22"
-                  stroke="#30363D"
+                  fill="#1A1F35"
+                  stroke="rgba(148, 163, 184, 0.08)"
                   strokeWidth={1}
                 />
                 {/* Icon */}
@@ -182,7 +182,7 @@ export function SpiderChart(props: Props) {
                   width={iconSize} height={iconSize}
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#8B949E"
+                  stroke="#94A3B8"
                   strokeWidth={2}
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -194,11 +194,11 @@ export function SpiderChart(props: Props) {
                   x={iconX + iconSize / 2}
                   y={iconY + iconSize + 16}
                   textAnchor="middle"
-                  fill="#8B949E"
+                  fill="#94A3B8"
                   fontSize={9}
                   fontWeight="700"
                   letterSpacing="0.04em"
-                  fontFamily="'Barlow', sans-serif"
+                  fontFamily="'Inter', sans-serif"
                 >
                   {label.toUpperCase()}
                 </text>
@@ -212,11 +212,11 @@ export function SpiderChart(props: Props) {
               x={pos.x} y={pos.y}
               textAnchor={pos.anchor}
               dominantBaseline="middle"
-              fill="#8B949E"
+              fill="#94A3B8"
               fontSize={10}
               fontWeight="700"
               letterSpacing="0.04em"
-              fontFamily="'Barlow', sans-serif"
+              fontFamily="'Inter', sans-serif"
             >
               {label.toUpperCase()}
             </text>

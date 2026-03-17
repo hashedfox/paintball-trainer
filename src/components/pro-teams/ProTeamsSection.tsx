@@ -26,7 +26,7 @@ export function ProTeamsSection() {
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
         <h2 className="text-xl font-extrabold text-white">Pro Teams</h2>
-        <p className="text-xs text-pb-text-dim">Top NXL teams — rosters, strengths, and how you compare.</p>
+        <p className="text-xs text-[#94A3B8]">Top NXL teams — rosters, strengths, and how you compare.</p>
       </div>
 
       {/* Team Cards */}
@@ -47,31 +47,31 @@ export function ProTeamsSection() {
               </div>
               <div className="flex-1 min-w-0">
                 <h4 className="text-sm font-bold text-white">{t.name}</h4>
-                <p className="text-[10px] text-pb-text-dim truncate">{t.description.slice(0, 60)}...</p>
+                <p className="text-[10px] text-[#94A3B8] truncate">{t.description.slice(0, 60)}...</p>
               </div>
               <div className="text-right">
                 <div className="text-sm font-bold" style={{ color: t.color }}>{t.winPct}%</div>
-                <div className="text-[9px] text-pb-text-muted">Win Rate</div>
+                <div className="text-[9px] text-[#64748B]">Win Rate</div>
               </div>
             </div>
 
             {/* Quick stats row */}
             <div className="grid grid-cols-4 gap-2 mt-3">
               <div className="text-center">
-                <div className="text-xs font-bold text-pb-green">{t.survivalPct}%</div>
-                <div className="text-[8px] text-pb-text-muted">SUR</div>
+                <div className="text-xs font-bold text-[#2DD4A8]">{t.survivalPct}%</div>
+                <div className="text-[8px] text-[#64748B]">SUR</div>
               </div>
               <div className="text-center">
-                <div className="text-xs font-bold text-pb-blue">{t.otbPct}%</div>
-                <div className="text-[8px] text-pb-text-muted">OTB</div>
+                <div className="text-xs font-bold text-[#4A7BF7]">{t.otbPct}%</div>
+                <div className="text-[8px] text-[#64748B]">OTB</div>
               </div>
               <div className="text-center">
-                <div className="text-xs font-bold text-pb-amber">{t.killsPP}</div>
-                <div className="text-[8px] text-pb-text-muted">K/Pt</div>
+                <div className="text-xs font-bold text-[#D4A843]">{t.killsPP}</div>
+                <div className="text-[8px] text-[#64748B]">K/Pt</div>
               </div>
               <div className="text-center">
-                <div className="text-xs font-bold text-pb-purple">{t.avgComm}</div>
-                <div className="text-[8px] text-pb-text-muted">COM</div>
+                <div className="text-xs font-bold text-[#7C5BF0]">{t.avgComm}</div>
+                <div className="text-[8px] text-[#64748B]">COM</div>
               </div>
             </div>
           </button>
@@ -87,7 +87,7 @@ export function ProTeamsSection() {
             </div>
             <div>
               <h3 className="text-lg font-extrabold text-white">{team.name}</h3>
-              <p className="text-xs text-pb-text-dim">{team.description}</p>
+              <p className="text-xs text-[#94A3B8]">{team.description}</p>
             </div>
           </div>
 
@@ -95,8 +95,8 @@ export function ProTeamsSection() {
           <div className="space-y-1.5 mb-4">
             {team.facts.map((fact, i) => (
               <div key={i} className="flex gap-2 items-start">
-                <span className="text-pb-primary-bright text-xs mt-0.5">-</span>
-                <span className="text-xs text-pb-text-dim">{fact}</span>
+                <span className="text-[#9B7CF7] text-xs mt-0.5">-</span>
+                <span className="text-xs text-[#94A3B8]">{fact}</span>
               </div>
             ))}
           </div>
@@ -106,7 +106,7 @@ export function ProTeamsSection() {
             <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-2">Roster</h4>
             <div className="flex flex-wrap gap-2">
               {team.roster.map((player) => (
-                <span key={player} className="px-3 py-1 bg-pb-surface rounded-full text-[11px] text-white border border-pb-border">
+                <span key={player} className="px-3 py-1 bg-[#111827] rounded-full text-[11px] text-white border border-white/[0.08]">
                   {player}
                 </span>
               ))}
@@ -135,12 +135,12 @@ export function ProTeamsSection() {
             </div>
             <div className="flex justify-center gap-6 mt-2">
               <div className="flex items-center gap-1.5">
-                <div className="w-3 h-1 rounded bg-pb-primary" />
-                <span className="text-[10px] text-pb-text-dim">You</span>
+                <div className="w-3 h-1 rounded bg-[#7C5BF0]" />
+                <span className="text-[10px] text-[#94A3B8]">You</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-1 rounded" style={{ background: team.color }} />
-                <span className="text-[10px] text-pb-text-dim">{team.name}</span>
+                <span className="text-[10px] text-[#94A3B8]">{team.name}</span>
               </div>
             </div>
           </div>
@@ -152,14 +152,14 @@ export function ProTeamsSection() {
               href={`https://www.youtube.com/results?search_query=${encodeURIComponent(team.name + ' paintball NXL')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-pb-card-hover transition-colors"
+              className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-[#222842] transition-colors"
             >
-              <svg className="w-5 h-5 text-pb-red" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+              <svg className="w-5 h-5 text-[#EF4444]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
               <span className="text-xs text-white">Search {team.name} on YouTube</span>
             </a>
           </div>
 
-          <p className="text-[9px] text-pb-text-muted mt-4 italic">
+          <p className="text-[9px] text-[#64748B] mt-4 italic">
             Pro stat numbers are coaching community estimates — the NXL does not publish official per-point stats.
           </p>
         </div>

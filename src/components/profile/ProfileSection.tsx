@@ -73,14 +73,14 @@ export function ProfileSection() {
           </div>
           <div className="flex-1">
             <h2 className="text-xl font-extrabold text-white font-display">{playerName}</h2>
-            <p className="text-[12px] text-pb-text-dim">{POSITION_LABELS[position as keyof typeof POSITION_LABELS] || position}</p>
+            <p className="text-[12px] text-[#94A3B8]">{POSITION_LABELS[position as keyof typeof POSITION_LABELS] || position}</p>
             <div className="flex items-center gap-2 mt-2 flex-wrap">
               <span className="level-badge">LVL {challengesState.level}</span>
               <span className="division-badge" style={{ background: `${divInfo.color}20`, color: divInfo.color, border: `1px solid ${divInfo.color}40` }}>
                 {division}
               </span>
               {trainingStreak > 0 && (
-                <span className="flex items-center gap-1 text-pb-amber text-xs font-bold">
+                <span className="flex items-center gap-1 text-[#D4A843] text-xs font-bold">
                   <span className="flame-active inline-block">🔥</span>{trainingStreak}
                 </span>
               )}
@@ -91,21 +91,21 @@ export function ProfileSection() {
         {/* Edit fields */}
         <div className="mt-5 grid grid-cols-2 gap-3">
           <div>
-            <label className="text-[9px] text-pb-text-muted uppercase tracking-wider font-bold">Name</label>
+            <label className="text-[9px] text-[#64748B] uppercase tracking-wider font-bold">Name</label>
             <input
               type="text"
               value={onboarding.playerName}
               onChange={(e) => dispatch({ type: 'SET_ONBOARDING', data: { playerName: e.target.value } })}
-              className="w-full bg-pb-surface border border-pb-border rounded-lg px-3 py-2 text-[12px] text-white focus:outline-none focus:border-pb-green mt-1"
+              className="w-full bg-[#111827] border border-white/[0.08] rounded-lg px-3 py-2 text-[12px] text-white focus:outline-none focus:border-[#2DD4A8] mt-1"
             />
           </div>
           <div>
-            <label className="text-[9px] text-pb-text-muted uppercase tracking-wider font-bold">Team</label>
+            <label className="text-[9px] text-[#64748B] uppercase tracking-wider font-bold">Team</label>
             <input
               type="text"
               value={profile.team}
               onChange={(e) => dispatch({ type: 'SET_PROFILE', field: 'team', value: e.target.value })}
-              className="w-full bg-pb-surface border border-pb-border rounded-lg px-3 py-2 text-[12px] text-white focus:outline-none focus:border-pb-green mt-1"
+              className="w-full bg-[#111827] border border-white/[0.08] rounded-lg px-3 py-2 text-[12px] text-white focus:outline-none focus:border-[#2DD4A8] mt-1"
             />
           </div>
         </div>
@@ -120,7 +120,7 @@ export function ProfileSection() {
           </div>
           <div className="text-right">
             <span className="font-display text-3xl font-bold" style={{ color: divInfo.color }}>{composite}</span>
-            <span className="text-[10px] text-pb-text-muted ml-1">/ 100</span>
+            <span className="text-[10px] text-[#64748B] ml-1">/ 100</span>
           </div>
         </div>
 
@@ -129,8 +129,8 @@ export function ProfileSection() {
             labels={ppiLabels}
             values={ppiValues}
             compareValues={compareValues}
-            color="#A371F7"
-            compareColor="#A371F750"
+            color="#7C5BF0"
+            compareColor="#7C5BF050"
             size={280}
             iconLabels={true}
           />
@@ -141,13 +141,13 @@ export function ProfileSection() {
           {PPI_AXES.map((axis) => {
             const value = ppiScores[axis]
             const tier = getSkillTier(value)
-            const tierColor = value >= 70 ? '#39D353' : value >= 40 ? '#58A6FF' : value >= 20 ? '#E3B341' : '#F85149'
+            const tierColor = value >= 70 ? '#2DD4A8' : value >= 40 ? '#4A7BF7' : value >= 20 ? '#D4A843' : '#EF4444'
             return (
               <button
                 key={axis}
                 type="button"
                 onClick={() => dispatch({ type: 'SET_ACTIVE_SECTION', section: 'drills' })}
-                className="w-full flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-pb-elevated transition-colors text-left"
+                className="w-full flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-[#2A3050] transition-colors text-left"
               >
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
@@ -157,11 +157,11 @@ export function ProfileSection() {
                       <span className="font-stat text-sm font-bold text-white">{value}</span>
                     </div>
                   </div>
-                  <div className="mt-1.5 h-[4px] bg-pb-dark rounded-full overflow-hidden">
+                  <div className="mt-1.5 h-[4px] bg-[#0A0E1A] rounded-full overflow-hidden">
                     <div className="h-full rounded-full transition-all duration-500" style={{ width: `${value}%`, background: tierColor }} />
                   </div>
                 </div>
-                <svg className="w-4 h-4 text-pb-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                <svg className="w-4 h-4 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
               </button>
             )
           })}
@@ -172,9 +172,9 @@ export function ProfileSection() {
       <div className="card-gaming p-5">
         <span className="section-header mb-3 block">Season Stats</span>
         <div className="grid grid-cols-3 gap-3">
-          <div className="stat-card"><div className="stat-card-value text-pb-green">{teamStats.totalPoints}</div><div className="stat-card-label">Points</div></div>
-          <div className="stat-card"><div className="stat-card-value text-pb-blue">{teamStats.winPct}%</div><div className="stat-card-label">Win Rate</div></div>
-          <div className="stat-card"><div className="stat-card-value text-pb-amber">{teamStats.killsPP}</div><div className="stat-card-label">Kills/Pt</div></div>
+          <div className="stat-card"><div className="stat-card-value text-[#2DD4A8]">{teamStats.totalPoints}</div><div className="stat-card-label">Points</div></div>
+          <div className="stat-card"><div className="stat-card-value text-[#4A7BF7]">{teamStats.winPct}%</div><div className="stat-card-label">Win Rate</div></div>
+          <div className="stat-card"><div className="stat-card-value text-[#D4A843]">{teamStats.killsPP}</div><div className="stat-card-label">Kills/Pt</div></div>
         </div>
       </div>
 
@@ -184,14 +184,14 @@ export function ProfileSection() {
         <div className="space-y-2">
           {videos.map((video, i) => (
             <a key={i} href={video.searchUrl} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-pb-elevated transition-colors"
+              className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-[#2A3050] transition-colors"
             >
-              <div className="w-10 h-10 bg-pb-red/15 rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-pb-red" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+              <div className="w-10 h-10 bg-[#EF4444]/15 rounded-lg flex items-center justify-center">
+                <svg className="w-4 h-4 text-[#EF4444]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
               </div>
               <div>
                 <span className="text-[11px] font-semibold text-white">{video.title}</span>
-                <span className="text-[9px] text-pb-text-muted block">{video.channel}</span>
+                <span className="text-[9px] text-[#64748B] block">{video.channel}</span>
               </div>
             </a>
           ))}
@@ -204,7 +204,7 @@ export function ProfileSection() {
         <div className="space-y-2">
           {pros.map((pro, i) => (
             <div key={i} className="flex items-center gap-3 p-2.5 panel-inner rounded-lg">
-              <div className="w-7 h-7 rounded-full bg-pb-purple/20 flex items-center justify-center text-[10px] font-bold text-pb-purple">{i + 1}</div>
+              <div className="w-7 h-7 rounded-full bg-[#7C5BF0]/20 flex items-center justify-center text-[10px] font-bold text-[#7C5BF0]">{i + 1}</div>
               <span className="text-[12px] text-white">{pro}</span>
             </div>
           ))}
@@ -215,7 +215,7 @@ export function ProfileSection() {
       <button type="button" onClick={() => {
         const text = `PPI: ${composite} | ${division} | ${playerName} | ${POSITION_LABELS[position as keyof typeof POSITION_LABELS]} | Win Rate: ${teamStats.winPct}%`
         navigator.clipboard.writeText(text)
-      }} className="w-full card-gaming p-3 text-center text-[12px] font-semibold text-pb-green hover:bg-pb-green/5 transition-colors">
+      }} className="w-full card-gaming p-3 text-center text-[12px] font-semibold text-[#2DD4A8] hover:bg-[#2DD4A8]/5 transition-colors">
         Share Profile
       </button>
     </div>

@@ -10,7 +10,7 @@ export function BreakoutPlay({ play }: Props) {
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <div className="bg-pb-card rounded-xl border border-pb-border overflow-hidden">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] overflow-hidden">
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
@@ -20,12 +20,12 @@ export function BreakoutPlay({ play }: Props) {
         <span className="text-slate-500 text-xs">{expanded ? '▲' : '▼'}</span>
       </button>
       {expanded && (
-        <div className="px-4 pb-4 border-t border-pb-border pt-3 space-y-2">
+        <div className="px-4 pb-4 border-t border-white/[0.08] pt-3 space-y-2">
           <p className="text-xs text-slate-400 leading-relaxed">{play.description}</p>
           <div className="space-y-1">
             {(Object.entries(play.positions) as [Position, string][]).map(([pos, bunker]) => (
               <div key={pos} className="flex items-center gap-2 text-xs">
-                <span className="text-pb-amber font-bold w-16">{POSITION_LABELS[pos]}</span>
+                <span className="text-[#D4A843] font-bold w-16">{POSITION_LABELS[pos]}</span>
                 <span className="text-white font-mono">{bunker}</span>
               </div>
             ))}

@@ -30,7 +30,7 @@ export function TeamSpiderChart({ teamStats }: Props) {
   ], [teamStats, pro, t])
 
   return (
-    <div className="bg-pb-card rounded-xl border border-pb-border p-4">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-sm font-bold text-white">{t('analytics.spiderChart')}</h3>
         <select

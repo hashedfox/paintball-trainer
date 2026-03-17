@@ -56,15 +56,15 @@ const FOCUS_REASONS: Record<string, string> = {
 
 /* ─────────────────────── SESSION TYPE COLORS ─────────────────────── */
 const SESSION_TYPE_STYLES: Record<string, string> = {
-  practice: 'bg-pb-green/15 text-pb-green border-pb-green/30',
-  scrimmage: 'bg-pb-purple/15 text-pb-purple border-pb-purple/30',
-  tournament: 'bg-pb-amber/15 text-pb-amber border-pb-amber/30',
+  practice: 'bg-[#2DD4A8]/15 text-[#2DD4A8] border-[#2DD4A8]/30',
+  scrimmage: 'bg-[#7C5BF0]/15 text-[#7C5BF0] border-[#7C5BF0]/30',
+  tournament: 'bg-[#D4A843]/15 text-[#D4A843] border-[#D4A843]/30',
 }
 
 const VERDICT_COLORS: Record<string, string> = {
-  improved: 'bg-pb-green',
-  flat: 'bg-pb-amber',
-  declined: 'bg-pb-red',
+  improved: 'bg-[#2DD4A8]',
+  flat: 'bg-[#D4A843]',
+  declined: 'bg-[#EF4444]',
 }
 
 /* ═══════════════════════════════════════════════════════════════════ */
@@ -82,23 +82,23 @@ export function HomeSection() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0D1117] p-4 md:p-6 space-y-5 animate-fade-in">
-      {/* ── PPI Spider Chart (Hero) ── */}
+    <div className="min-h-screen bg-[#0A0E1A] p-4 md:p-6 space-y-5 animate-fade-in">
+      {/* PPI Spider Chart (Hero) */}
       <PPISpiderHero />
 
-      {/* ── Season Timeline ── */}
+      {/* Season Timeline */}
       <SeasonTimeline />
 
-      {/* ── Today's Focus Card ── */}
+      {/* Today's Focus Card */}
       <TodaysFocusCard />
 
-      {/* ── Practice Streak + XP Bar ── */}
+      {/* Practice Streak + XP Bar */}
       <StreakXPBar />
 
-      {/* ── Recent Sessions Feed ── */}
+      {/* Recent Sessions Feed */}
       <RecentSessionsFeed />
 
-      {/* ── Quick-Start Buttons ── */}
+      {/* Quick-Start Buttons */}
       <QuickStartButtons />
 
       {/* Retake quiz link */}
@@ -109,7 +109,7 @@ export function HomeSection() {
             dispatch({ type: 'SET_ONBOARDING', data: { completed: false } })
             setShowQuiz(true)
           }}
-          className="text-[10px] text-pb-text-muted hover:text-pb-text-dim transition-colors block mx-auto"
+          className="text-[10px] text-[#64748B] hover:text-[#94A3B8] transition-colors block mx-auto"
         >
           Retake onboarding quiz
         </button>
@@ -129,7 +129,6 @@ function PPISpiderHero() {
   const svgRef = useRef<SVGSVGElement>(null)
   const [animProgress, setAnimProgress] = useState(0)
 
-  // On-load animation: polygon draws from center outward
   useEffect(() => {
     let raf: number
     let start: number | null = null
@@ -137,7 +136,6 @@ function PPISpiderHero() {
     const step = (ts: number) => {
       if (!start) start = ts
       const t = Math.min((ts - start) / duration, 1)
-      // easeOutCubic
       const ease = 1 - Math.pow(1 - t, 3)
       setAnimProgress(ease)
       if (t < 1) raf = requestAnimationFrame(step)
@@ -151,10 +149,8 @@ function PPISpiderHero() {
   const r = 120
   const total = PPI_AXES.length
 
-  // Normalize scores 0-1 and apply animation
   const currentValues = PPI_AXES.map(axis => (ppiScores[axis] / 100) * animProgress)
 
-  // 30-day-ago scores
   const thirtyDaysAgo = useMemo(() => {
     const cutoff = new Date()
     cutoff.setDate(cutoff.getDate() - 30)
@@ -170,37 +166,36 @@ function PPISpiderHero() {
 
   const composite = getCompositeScore(ppiScores)
 
-  // Grid rings
   const rings = [0.25, 0.5, 0.75, 1.0]
 
   return (
-    <div className="bg-[#161B22] rounded-xl border border-pb-border overflow-hidden relative">
-      {/* Gradient top edge */}
-      <div className="h-1 bg-gradient-to-r from-pb-purple via-pb-green to-pb-purple" />
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] overflow-hidden relative animate-slide-up">
+      {/* Gradient top accent */}
+      <div className="h-[3px]" style={{ background: 'linear-gradient(135deg, #7C5BF0 0%, #4A7BF7 50%, #2DD4A8 100%)' }} />
 
       <div className="p-4 pb-2 flex items-center justify-between">
         <div>
-          <h2 className="font-display text-xl md:text-2xl font-bold text-pb-text tracking-wide uppercase">
+          <h2 className="text-xl md:text-2xl font-bold text-[#F1F5F9] tracking-wide uppercase">
             {profile.name || 'Player'} PPI
           </h2>
-          <p className="text-pb-text-dim text-xs">
+          <p className="text-[#94A3B8] text-xs">
             {ppiEstimated ? 'Estimated from profile' : 'Based on session data'}
             {' '}&middot;{' '}{profile.division}
           </p>
         </div>
         <div className="text-right">
-          <div className="font-stat text-3xl md:text-4xl font-bold text-pb-green leading-none">{composite}</div>
-          <div className="text-[10px] text-pb-text-muted uppercase tracking-wider">Composite</div>
+          <div className="font-stat text-3xl md:text-4xl font-bold text-[#2DD4A8] leading-none">{composite}</div>
+          <div className="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold mt-1">Composite</div>
         </div>
       </div>
 
-      {/* SVG Spider Chart — fills ~50vh */}
+      {/* SVG Spider Chart */}
       <div className="flex justify-center px-4 pb-4" style={{ minHeight: '50vh' }}>
         <svg
           ref={svgRef}
           viewBox="0 0 320 320"
           className="w-full max-w-[400px]"
-          style={{ filter: 'drop-shadow(0 0 20px rgba(163,113,247,0.15))' }}
+          style={{ filter: 'drop-shadow(0 0 20px rgba(124,91,240,0.15))' }}
         >
           {/* Grid rings */}
           {rings.map(pct => (
@@ -208,7 +203,7 @@ function PPISpiderHero() {
               key={pct}
               points={polygonPoints(Array(total).fill(pct), cx, cy, r)}
               fill="none"
-              stroke="#30363D"
+              stroke="rgba(148,163,184,0.08)"
               strokeWidth={pct === 1 ? 1.2 : 0.6}
               opacity={pct === 1 ? 0.8 : 0.4}
             />
@@ -224,7 +219,7 @@ function PPISpiderHero() {
                 y1={cy}
                 x2={ep.x}
                 y2={ep.y}
-                stroke="#30363D"
+                stroke="rgba(148,163,184,0.08)"
                 strokeWidth={0.6}
                 opacity={0.5}
               />
@@ -236,7 +231,7 @@ function PPISpiderHero() {
             <polygon
               points={polygonPoints(oldValues, cx, cy, r)}
               fill="none"
-              stroke="#484F58"
+              stroke="#64748B"
               strokeWidth={1.5}
               strokeDasharray="4 3"
               opacity={0.6}
@@ -246,14 +241,14 @@ function PPISpiderHero() {
           {/* Current polygon (filled purple) */}
           <polygon
             points={polygonPoints(currentValues, cx, cy, r)}
-            fill="rgba(163,113,247,0.18)"
-            stroke="#A371F7"
+            fill="rgba(124,91,240,0.18)"
+            stroke="#7C5BF0"
             strokeWidth={2}
             strokeLinejoin="round"
             className="transition-all duration-300"
           />
 
-          {/* Data points on current polygon */}
+          {/* Data points */}
           {PPI_AXES.map((axis, i) => {
             const val = currentValues[i]
             const angle = (Math.PI * 2 * i) / total - Math.PI / 2
@@ -265,15 +260,15 @@ function PPISpiderHero() {
                 cx={px}
                 cy={py}
                 r={4}
-                fill="#A371F7"
-                stroke="#161B22"
+                fill="#7C5BF0"
+                stroke="#1A1F35"
                 strokeWidth={2}
                 className="cursor-pointer"
               />
             )
           })}
 
-          {/* Axis labels + icons (tappable) */}
+          {/* Axis labels + icons */}
           {PPI_AXES.map((axis, i) => {
             const lp = labelPosition(i, total, cx, cy, r)
             const ep = axisEndpoint(i, total, cx, cy, r)
@@ -283,28 +278,25 @@ function PPISpiderHero() {
                 className="cursor-pointer"
                 onClick={() => dispatch({ type: 'SET_ACTIVE_SECTION', section: 'drills' })}
               >
-                {/* Icon at axis endpoint */}
-                <g transform={`translate(${ep.x - 8}, ${ep.y - 8})`} className="text-pb-text-dim" opacity={0.7}>
+                <g transform={`translate(${ep.x - 8}, ${ep.y - 8})`} className="text-[#94A3B8]" opacity={0.7}>
                   <svg width="16" height="16" viewBox="0 0 16 16">
                     {AXIS_ICONS[axis]}
                   </svg>
                 </g>
-                {/* Label */}
                 <text
                   x={lp.x}
                   y={lp.y + 12}
                   textAnchor={lp.anchor}
-                  className="fill-pb-text-dim text-[9px] font-display uppercase tracking-wider"
-                  style={{ fontSize: '9px' }}
+                  className="fill-[#94A3B8] uppercase tracking-wider"
+                  style={{ fontSize: '9px', fontWeight: 600 }}
                 >
                   {PPI_LABELS[axis]}
                 </text>
-                {/* Score value */}
                 <text
                   x={lp.x}
                   y={lp.y + 23}
                   textAnchor={lp.anchor}
-                  className="fill-pb-text font-stat text-[11px] font-bold"
+                  className="fill-[#F1F5F9] font-stat font-bold"
                   style={{ fontSize: '11px' }}
                 >
                   {ppiScores[axis]}
@@ -327,7 +319,6 @@ function SeasonTimeline() {
   const { sessionSummaries, ppiHistory } = state
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  // Build last 60 days of entries
   const days = useMemo(() => {
     const now = new Date()
     const result: { date: string; sessions: typeof sessionSummaries; ppi: number | null }[] = []
@@ -346,7 +337,6 @@ function SeasonTimeline() {
     return result
   }, [sessionSummaries, ppiHistory])
 
-  // Auto-scroll to end
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft = scrollRef.current.scrollWidth
@@ -354,13 +344,13 @@ function SeasonTimeline() {
   }, [])
 
   return (
-    <div className="bg-[#161B22] rounded-xl border border-pb-border p-4">
-      <h3 className="font-display text-sm font-bold text-pb-text uppercase tracking-wider mb-3">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4 animate-slide-up stagger-2">
+      <h3 className="text-sm font-bold text-[#F1F5F9] uppercase tracking-wider mb-3">
         Season Timeline
       </h3>
       <div
         ref={scrollRef}
-        className="flex gap-1 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-pb-border scrollbar-track-transparent"
+        className="flex gap-1 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
       >
         {days.map(day => {
           const hasTournament = day.sessions.some(s => s.type === 'tournament')
@@ -369,11 +359,11 @@ function SeasonTimeline() {
             ? day.sessions.reduce((a, s) => a + s.winRate, 0) / day.sessions.length
             : -1
 
-          let dotColor = 'bg-[#21262D]'
-          if (hasTournament) dotColor = 'bg-pb-amber'
-          else if (avgWr >= 0.6) dotColor = 'bg-pb-green'
-          else if (avgWr >= 0.4) dotColor = 'bg-pb-amber'
-          else if (avgWr >= 0) dotColor = 'bg-pb-red'
+          let dotColor = 'bg-[#2A3050]'
+          if (hasTournament) dotColor = 'bg-[#D4A843]'
+          else if (avgWr >= 0.6) dotColor = 'bg-[#2DD4A8]'
+          else if (avgWr >= 0.4) dotColor = 'bg-[#D4A843]'
+          else if (avgWr >= 0) dotColor = 'bg-[#EF4444]'
 
           const isToday = day.date === new Date().toISOString().split('T')[0]
 
@@ -383,19 +373,16 @@ function SeasonTimeline() {
               className="flex flex-col items-center gap-1 min-w-[12px]"
               title={`${day.date}${hasPractice ? ` - ${day.sessions.length} session(s)` : ''}`}
             >
-              {/* Tournament flag */}
               {hasTournament && (
-                <div className="text-pb-amber text-[8px] leading-none">&#9873;</div>
+                <div className="text-[#D4A843] text-[8px] leading-none">&#9873;</div>
               )}
-              {/* Dot */}
               <div
                 className={`w-2.5 h-2.5 rounded-full ${dotColor} ${
-                  isToday ? 'ring-2 ring-pb-green ring-offset-1 ring-offset-[#161B22]' : ''
+                  isToday ? 'ring-2 ring-[#4A7BF7] ring-offset-1 ring-offset-[#1A1F35]' : ''
                 }`}
               />
-              {/* Date label every 7 days */}
               {new Date(day.date).getDay() === 0 && (
-                <span className="text-[7px] text-pb-text-muted">
+                <span className="text-[7px] text-[#64748B]">
                   {new Date(day.date).toLocaleDateString('en', { month: 'short', day: 'numeric' })}
                 </span>
               )}
@@ -403,14 +390,13 @@ function SeasonTimeline() {
           )
         })}
       </div>
-      {/* PPI trend line (simplified) */}
       {ppiHistory.length > 1 && (
         <div className="mt-2 flex items-center gap-2">
-          <span className="text-[9px] text-pb-text-muted uppercase tracking-wider">PPI Trend</span>
-          <div className="flex-1 h-px bg-pb-border relative">
-            <div className="absolute left-0 top-0 h-px bg-pb-purple" style={{ width: '100%' }} />
+          <span className="text-[9px] text-[#64748B] uppercase tracking-wider font-semibold">PPI Trend</span>
+          <div className="flex-1 h-px bg-white/[0.08] relative">
+            <div className="absolute left-0 top-0 h-px bg-[#7C5BF0]" style={{ width: '100%' }} />
           </div>
-          <span className="font-stat text-xs text-pb-purple font-bold">
+          <span className="font-stat text-xs text-[#7C5BF0] font-bold">
             {ppiHistory.length > 0 ? getCompositeScore(ppiHistory[ppiHistory.length - 1].scores) : '--'}
           </span>
         </div>
@@ -433,31 +419,31 @@ function TodaysFocusCard() {
   const reason = FOCUS_REASONS[focusAxis] || 'Focus on your weakest skill to level up fastest.'
 
   return (
-    <div className="bg-[#161B22] rounded-xl border border-pb-border overflow-hidden">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] overflow-hidden animate-slide-up stagger-3">
       {/* Gradient top accent */}
-      <div className="h-1 bg-gradient-to-r from-pb-green via-pb-blue to-pb-green" />
+      <div className="h-[3px]" style={{ background: 'linear-gradient(135deg, #7C5BF0 0%, #4A7BF7 50%, #2DD4A8 100%)' }} />
 
       <div className="p-5">
         <div className="flex items-start gap-4">
-          {/* Icon */}
-          <div className="w-12 h-12 rounded-lg bg-pb-green/10 border border-pb-green/20 flex items-center justify-center text-pb-green shrink-0">
+          {/* Icon circle */}
+          <div className="w-12 h-12 rounded-full bg-[#4A7BF7]/12 flex items-center justify-center text-[#4A7BF7] shrink-0">
             <svg width="24" height="24" viewBox="0 0 16 16">
               {AXIS_ICONS[focusAxis] || AXIS_ICONS.snapShooting}
             </svg>
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-display text-base font-bold text-pb-text uppercase tracking-wide">
+              <h3 className="text-base font-bold text-[#F1F5F9] uppercase tracking-wide">
                 Today&apos;s Focus
               </h3>
-              <span className="font-stat text-xs text-pb-green font-bold bg-pb-green/10 px-2 py-0.5 rounded">
+              <span className="tag-pill tag-blue">
                 {PPI_LABELS[focusAxis]}
               </span>
             </div>
-            <p className="text-pb-text-dim text-xs leading-relaxed">{reason}</p>
+            <p className="text-[#94A3B8] text-sm leading-relaxed">{reason}</p>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-[10px] text-pb-text-muted">Current score:</span>
-              <span className="font-stat text-sm font-bold text-pb-purple">{ppiScores[focusAxis]}</span>
+              <span className="text-[10px] text-[#64748B] uppercase font-semibold tracking-wider">Current score:</span>
+              <span className="font-stat text-sm font-bold text-[#7C5BF0]">{ppiScores[focusAxis]}</span>
             </div>
           </div>
         </div>
@@ -465,7 +451,7 @@ function TodaysFocusCard() {
         <button
           type="button"
           onClick={() => dispatch({ type: 'SET_ACTIVE_SECTION', section: 'drills' })}
-          className="quick-start-btn w-full mt-4 py-3 bg-pb-green text-[#0D1117] font-display font-bold text-sm uppercase tracking-widest rounded-lg hover:brightness-110 active:scale-[0.98] transition-all shadow-lg shadow-pb-green/20"
+          className="btn-primary w-full mt-4"
         >
           Start Drill
         </button>
@@ -484,7 +470,6 @@ function StreakXPBar() {
   const { xp, level, activeChallenges } = challengesState
 
   const xpNeeded = xpForLevel(level)
-  // xp within current level
   let totalForLevel = 0
   for (let l = 1; l < level; l++) totalForLevel += xpForLevel(l)
   const xpInLevel = xp - totalForLevel
@@ -495,7 +480,7 @@ function StreakXPBar() {
   const isStreakActive = trainingStreak > 0
 
   return (
-    <div className="bg-[#161B22] rounded-xl border border-pb-border p-4">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4 animate-slide-up stagger-4">
       <div className="flex items-center gap-4">
         {/* Streak */}
         <div className="flex items-center gap-2 shrink-0">
@@ -503,27 +488,27 @@ function StreakXPBar() {
             &#128293;
           </span>
           <div>
-            <div className="font-stat text-xl font-bold text-pb-text leading-none">{trainingStreak}</div>
-            <div className="text-[9px] text-pb-text-muted uppercase tracking-wider">day streak</div>
+            <div className="font-stat text-xl font-bold text-[#F1F5F9] leading-none">{trainingStreak}</div>
+            <div className="text-[9px] text-[#64748B] uppercase tracking-wider font-semibold">day streak</div>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="w-px h-10 bg-pb-border" />
+        <div className="w-px h-10 bg-white/[0.08]" />
 
         {/* XP Bar */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-display text-xs font-bold text-pb-text uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#F1F5F9] uppercase tracking-wider">
               Level {level}
             </span>
-            <span className="font-stat text-[10px] text-pb-text-dim">
+            <span className="font-stat text-[10px] text-[#94A3B8]">
               {xpInLevel}/{xpNeeded} XP
             </span>
           </div>
-          <div className="w-full h-2.5 bg-[#21262D] rounded-full overflow-hidden">
+          <div className="xp-bar-track">
             <div
-              className="h-full bg-gradient-to-r from-pb-green to-pb-blue rounded-full transition-all duration-500"
+              className="xp-bar-fill"
               style={{ width: `${pct}%` }}
             />
           </div>
@@ -532,10 +517,10 @@ function StreakXPBar() {
 
       {/* Daily challenge text */}
       {dailyChallenge && (
-        <div className="mt-3 flex items-center gap-2 bg-[#21262D] rounded-lg px-3 py-2">
+        <div className="mt-3 flex items-center gap-2 bg-[#2A3050] rounded-lg px-3 py-2">
           <span className="text-sm">{dailyChallenge.icon}</span>
-          <span className="text-[11px] text-pb-text-dim flex-1">{dailyChallenge.title}</span>
-          <span className="font-stat text-[10px] text-pb-amber font-bold">+{dailyChallenge.xpReward} XP</span>
+          <span className="text-[11px] text-[#94A3B8] flex-1">{dailyChallenge.title}</span>
+          <span className="font-stat text-[10px] text-[#D4A843] font-bold">+{dailyChallenge.xpReward} XP</span>
         </div>
       )}
     </div>
@@ -557,44 +542,45 @@ function RecentSessionsFeed() {
 
   if (recent.length === 0) {
     return (
-      <div className="bg-[#161B22] rounded-xl border border-pb-border p-5 text-center">
-        <p className="text-pb-text-muted text-xs">No sessions yet. Log your first game to see data here.</p>
+      <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-5 text-center animate-slide-up stagger-5">
+        <p className="text-[#64748B] text-sm">No sessions yet. Log your first game to see data here.</p>
+        <p className="text-[#94A3B8] text-xs mt-2">Use the session logger to track your games and unlock analytics.</p>
       </div>
     )
   }
 
   return (
-    <div className="bg-[#161B22] rounded-xl border border-pb-border p-4">
-      <h3 className="font-display text-sm font-bold text-pb-text uppercase tracking-wider mb-3">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4 animate-slide-up stagger-5">
+      <h3 className="text-sm font-bold text-[#F1F5F9] uppercase tracking-wider mb-3">
         Recent Sessions
       </h3>
-      <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-pb-border scrollbar-track-transparent">
+      <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
         {recent.map(session => (
           <div
             key={session.id}
-            className="min-w-[200px] bg-[#21262D] rounded-lg border border-pb-border p-3 shrink-0"
+            className="min-w-[200px] bg-[#2A3050] rounded-xl border border-white/[0.08] p-3 shrink-0 hover:bg-[#222842] hover:border-[#4A7BF7]/50 transition-all"
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="font-stat text-[11px] text-pb-text-dim">{session.date}</span>
-              <span className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded-full border ${SESSION_TYPE_STYLES[session.type]}`}>
+              <span className="font-stat text-[11px] text-[#94A3B8]">{session.date}</span>
+              <span className={`tag-pill ${SESSION_TYPE_STYLES[session.type]}`}>
                 {session.type}
               </span>
             </div>
             <div className="flex items-center gap-3 mb-1">
               <div>
-                <span className="font-stat text-lg font-bold text-pb-text">{session.totalPoints}</span>
-                <span className="text-[9px] text-pb-text-muted ml-1">pts</span>
+                <span className="font-stat text-lg font-bold text-[#F1F5F9]">{session.totalPoints}</span>
+                <span className="text-[9px] text-[#64748B] ml-1 uppercase font-semibold">pts</span>
               </div>
               <div>
-                <span className="font-stat text-lg font-bold text-pb-text">
+                <span className="font-stat text-lg font-bold text-[#F1F5F9]">
                   {Math.round(session.winRate * 100)}%
                 </span>
-                <span className="text-[9px] text-pb-text-muted ml-1">W/L</span>
+                <span className="text-[9px] text-[#64748B] ml-1 uppercase font-semibold">W/L</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${VERDICT_COLORS[session.focusVerdict] || 'bg-pb-text-muted'}`} />
-              <span className="text-[10px] text-pb-text-dim">
+              <div className={`w-2 h-2 rounded-full ${VERDICT_COLORS[session.focusVerdict] || 'bg-[#64748B]'}`} />
+              <span className="text-[10px] text-[#94A3B8]">
                 {PPI_LABELS[session.focusArea as PPIAxis] || session.focusArea}
               </span>
             </div>
@@ -621,8 +607,9 @@ function QuickStartButtons() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
       ),
-      accent: 'from-pb-blue/20 to-pb-blue/5 border-pb-blue/30 hover:border-pb-blue/60',
-      textColor: 'text-pb-blue',
+      accent: 'border-[#4A7BF7]/20 hover:border-[#4A7BF7]/50',
+      textColor: 'text-[#4A7BF7]',
+      bgHover: 'hover:bg-[#4A7BF7]/10',
     },
     {
       label: 'Start Drill',
@@ -632,8 +619,9 @@ function QuickStartButtons() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
       ),
-      accent: 'from-pb-green/20 to-pb-green/5 border-pb-green/30 hover:border-pb-green/60',
-      textColor: 'text-pb-green',
+      accent: 'border-[#2DD4A8]/20 hover:border-[#2DD4A8]/50',
+      textColor: 'text-[#2DD4A8]',
+      bgHover: 'hover:bg-[#2DD4A8]/10',
     },
     {
       label: 'Plan Breakout',
@@ -643,22 +631,23 @@ function QuickStartButtons() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
         </svg>
       ),
-      accent: 'from-pb-purple/20 to-pb-purple/5 border-pb-purple/30 hover:border-pb-purple/60',
-      textColor: 'text-pb-purple',
+      accent: 'border-[#7C5BF0]/20 hover:border-[#7C5BF0]/50',
+      textColor: 'text-[#7C5BF0]',
+      bgHover: 'hover:bg-[#7C5BF0]/10',
     },
   ]
 
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="grid grid-cols-3 gap-3 animate-slide-up stagger-6">
       {buttons.map(btn => (
         <button
           key={btn.section}
           type="button"
           onClick={() => dispatch({ type: 'SET_ACTIVE_SECTION', section: btn.section })}
-          className={`quick-start-btn bg-gradient-to-br ${btn.accent} border rounded-xl p-4 flex flex-col items-center gap-2 hover:scale-[1.03] active:scale-[0.97] transition-all`}
+          className={`bg-[#1A1F35] ${btn.accent} ${btn.bgHover} border rounded-xl p-4 flex flex-col items-center gap-2 hover:translate-y-[-2px] active:scale-[0.97] transition-all`}
         >
           <div className={btn.textColor}>{btn.icon}</div>
-          <span className={`font-display text-[11px] font-bold uppercase tracking-wider ${btn.textColor}`}>
+          <span className={`text-[11px] font-bold uppercase tracking-wider ${btn.textColor}`}>
             {btn.label}
           </span>
         </button>

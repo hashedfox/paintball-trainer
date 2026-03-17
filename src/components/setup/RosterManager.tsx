@@ -57,12 +57,12 @@ export function RosterManager() {
           onChange={(e) => setNewName(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && addPlayer()}
           placeholder={t('setup.playerName')}
-          className="flex-1 bg-slate-700 rounded-lg px-3 py-2 text-white border border-pb-border focus:border-pb-amber outline-none"
+          className="flex-1 bg-slate-700 rounded-lg px-3 py-2 text-white border border-white/[0.08] focus:border-[#D4A843] outline-none"
         />
         <button
           type="button"
           onClick={addPlayer}
-          className="bg-pb-amber text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-400"
+          className="bg-[#D4A843] text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-400"
         >
           +
         </button>

@@ -21,14 +21,14 @@ interface Props {
 export function TabBar({ activeTab, onTabChange }: Props) {
   const t = useTranslation()
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-pb-card border-t border-pb-border flex z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-[#1A1F35] border-t border-white/[0.08] flex z-50">
       {TABS.map(({ id, icon, labelKey }) => (
         <button
           key={id}
           type="button"
           onClick={() => onTabChange(id)}
           className={`flex-1 flex flex-col items-center py-2 text-xs transition-colors ${
-            activeTab === id ? 'text-pb-amber' : 'text-slate-400 hover:text-slate-200'
+            activeTab === id ? 'text-[#D4A843]' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
           <span className="text-lg mb-0.5">{icon}</span>

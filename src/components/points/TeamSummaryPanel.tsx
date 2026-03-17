@@ -19,7 +19,7 @@ export function TeamSummaryPanel({ point }: Props) {
   }
 
   return (
-    <div className="bg-pb-card rounded-xl border border-pb-border p-4 space-y-3">
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4 space-y-3">
       <h3 className="text-sm font-bold text-white flex items-center gap-2">
         {t('points.teamStats')}
         <InfoBubble kpi={TEAM_KPIS.result} />
@@ -88,7 +88,7 @@ export function TeamSummaryPanel({ point }: Props) {
           value={ts.playUsed}
           onChange={(e) => update('playUsed', e.target.value)}
           placeholder="e.g. Stack Left"
-          className="w-full bg-slate-700 rounded-lg px-3 py-2 text-sm text-white border border-pb-border focus:border-pb-amber outline-none"
+          className="w-full bg-slate-700 rounded-lg px-3 py-2 text-sm text-white border border-white/[0.08] focus:border-[#D4A843] outline-none"
         />
       </div>
 
@@ -125,7 +125,7 @@ function NumField({
           value={value}
           min={min}
           onChange={(e) => onChange(Number(e.target.value) || 0)}
-          className="w-full bg-slate-700 rounded-lg px-3 py-1.5 text-sm text-white border border-pb-border focus:border-pb-amber outline-none"
+          className="w-full bg-slate-700 rounded-lg px-3 py-1.5 text-sm text-white border border-white/[0.08] focus:border-[#D4A843] outline-none"
         />
         {suffix && <span className="text-xs text-slate-500">{suffix}</span>}
       </div>
