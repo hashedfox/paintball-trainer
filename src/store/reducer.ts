@@ -136,6 +136,7 @@ export function appReducer(state: AppState, action: Action): AppState {
           ...state.profile,
           name: state.onboarding.playerName || state.profile.name,
           position: state.onboarding.primaryPosition || state.profile.position,
+          secondaryPositions: state.onboarding.secondaryPositions || [],
         },
       }
 
@@ -212,12 +213,60 @@ export function appReducer(state: AppState, action: Action): AppState {
         ),
       }
 
+    case 'SET_SESSION_QUALITY':
+      return {
+        ...state,
+        sessions: state.sessions.map((s) =>
+          s.id === action.sessionId ? { ...s, quality: action.quality } : s
+        ),
+        sessionSummaries: state.sessionSummaries.map((s) =>
+          s.id === action.sessionId ? { ...s, qualityRating: action.quality.overallRating } : s
+        ),
+      }
+
+    case 'SET_SESSION_VISUALIZATION':
+      return {
+        ...state,
+        sessions: state.sessions.map((s) =>
+          s.id === action.sessionId ? { ...s, visualizationCompleted: true } : s
+        ),
+      }
+
     // ─── Drills ───
     case 'COMPLETE_DRILL':
       return {
         ...state,
         drillResults: [...state.drillResults, action.result],
         completedDrillIds: [...new Set([...state.completedDrillIds, action.result.drillId])],
+      }
+
+    // ─── Skill tree ───
+    case 'COMPLETE_SKILL_NODE':
+      return {
+        ...state,
+        completedSkillNodeIds: [...new Set([...state.completedSkillNodeIds, action.nodeId])],
+      }
+
+    // ─── Readiness & Recovery ───
+    case 'LOG_READINESS':
+      return {
+        ...state,
+        readinessHistory: [
+          ...state.readinessHistory.filter(r => r.date !== action.entry.date),
+          action.entry,
+        ],
+      }
+
+    case 'ADD_TOURNAMENT':
+      return {
+        ...state,
+        upcomingTournaments: [...state.upcomingTournaments, action.event],
+      }
+
+    case 'REMOVE_TOURNAMENT':
+      return {
+        ...state,
+        upcomingTournaments: state.upcomingTournaments.filter(t => t.id !== action.eventId),
       }
 
     // ─── Achievements ───

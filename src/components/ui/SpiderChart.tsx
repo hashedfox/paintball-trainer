@@ -50,6 +50,8 @@ const PPI_ICONS: Record<string, string> = {
   'Gun Skills': 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
   // Fitness — heart-rate
   'Fitness': 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z',
+  // Mental Game — meditation/mind icon
+  'Mental Game': 'M12 2a7 7 0 017 7c0 2.5-1.3 4.7-3.3 6L12 22l-3.7-7A7 7 0 0112 2zm0 3a2.5 2.5 0 100 5 2.5 2.5 0 000-5z',
   // Legacy
   Survival: 'M12 21C6.5 21 2 16.5 2 11V3l4 2 4-2 4 2 4-2v8c0 5.5-4.5 10-10 10z',
   OTB: 'M13 10V3L4 14h7v7l9-11h-7z',

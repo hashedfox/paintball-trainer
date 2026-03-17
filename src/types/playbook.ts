@@ -5,12 +5,12 @@ export type FieldArchetype = 'standard-212' | 'long-linear-snake' | 'diagonal-sy
 export interface BreakoutPlay {
   name: string
   description: string
-  positions: Record<Position, string>
+  positions: Partial<Record<Position, string>>
 }
 
 export interface Formation {
   name: string
-  positions: Record<Position, { bunker: string; role: string }>
+  positions: Partial<Record<Position, { bunker: string; role: string }>>
 }
 
 export interface SwotData {

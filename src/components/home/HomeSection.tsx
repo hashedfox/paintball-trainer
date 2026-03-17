@@ -2,11 +2,13 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { useAppState, useDispatch } from '../../store/context'
 import { OnboardingQuiz } from './OnboardingQuiz'
 import { polygonPoints, axisEndpoint, labelPosition } from '../../lib/spider'
-import { PPI_AXES, PPI_LABELS, type PPIAxis, getCompositeScore, getWeakestAxis } from '../../types/ppi'
+import { PPI_AXES, PPI_LABELS, type PPIAxis, getCompositeScore, getIdealShape, getWeightedCompositeScore, getDivisionFromPPI, getPositionWeakestAxis, getDivisionPercentile } from '../../types/ppi'
+import { getPositionRole, type PositionRole } from '../../types/player'
 import { xpForLevel } from '../../types/challenges'
+import { getReadinessLabel, getReadinessColor, isInTaperWindow, getDaysUntilEvent } from '../../types/readiness'
 
 /* ─────────────────────── AXIS SVG ICON PATHS ─────────────────────── */
-const AXIS_ICONS: Record<string, JSX.Element> = {
+const AXIS_ICONS: Record<string, React.ReactNode> = {
   snapShooting: ( // crosshair
     <g stroke="currentColor" strokeWidth="1.5" fill="none">
       <circle cx="8" cy="8" r="5" /><circle cx="8" cy="8" r="2" />
@@ -52,7 +54,17 @@ const FOCUS_REASONS: Record<string, string> = {
   communication: 'Communication is holding you back -- calling out positions will elevate your whole team.',
   gunSkills: 'Gun skills need a boost -- tighter lanes and off-hand reps will lock down more kills.',
   fitness: 'Your fitness score is low -- better conditioning means faster recovery between points.',
+  mentalGame: 'Mental game is your biggest gap -- composure under pressure separates good from great players.',
 }
+
+/* ─────────────────────── MENTAL GAME ICON ─────────────────────── */
+const MENTAL_GAME_ICON = (
+  <g stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round">
+    <circle cx="8" cy="6" r="4" />
+    <path d="M4 14c0-2.2 1.8-4 4-4s4 1.8 4 4" />
+    <path d="M6 4.5l4 3M10 4.5l-4 3" />
+  </g>
+)
 
 /* ─────────────────────── SESSION TYPE COLORS ─────────────────────── */
 const SESSION_TYPE_STYLES: Record<string, string> = {
@@ -83,6 +95,12 @@ export function HomeSection() {
 
   return (
     <div className="min-h-screen bg-[#0A0E1A] p-4 md:p-6 space-y-5 animate-fade-in">
+      {/* Tournament Countdown (if applicable) */}
+      <TournamentCountdown />
+
+      {/* Readiness Score Widget */}
+      <ReadinessWidget />
+
       {/* PPI Spider Chart (Hero) */}
       <PPISpiderHero />
 
@@ -125,9 +143,10 @@ export function HomeSection() {
 function PPISpiderHero() {
   const state = useAppState()
   const dispatch = useDispatch()
-  const { ppiScores, ppiHistory, ppiEstimated, profile } = state
+  const { ppiScores, ppiHistory, ppiEstimated, profile, onboarding } = state
   const svgRef = useRef<SVGSVGElement>(null)
   const [animProgress, setAnimProgress] = useState(0)
+  const [viewAsRole, setViewAsRole] = useState<PositionRole | null>(null)
 
   useEffect(() => {
     let raf: number
@@ -146,8 +165,17 @@ function PPISpiderHero() {
 
   const cx = 160
   const cy = 160
-  const r = 120
+  const r = 110
   const total = PPI_AXES.length
+
+  // Position role for weighting
+  const primaryRole = getPositionRole(onboarding.primaryPosition || (profile.position as any) || 'centre')
+  const activeRole = viewAsRole || primaryRole
+  const division = profile.division || getDivisionFromPPI(getCompositeScore(ppiScores))
+
+  // Ideal shape for the current position
+  const idealShape = useMemo(() => getIdealShape(activeRole, division), [activeRole, division])
+  const idealValues = PPI_AXES.map(axis => (idealShape[axis] / 100) * animProgress)
 
   const currentValues = PPI_AXES.map(axis => (ppiScores[axis] / 100) * animProgress)
 
@@ -164,7 +192,11 @@ function PPISpiderHero() {
     ? PPI_AXES.map(axis => (thirtyDaysAgo[axis] / 100) * animProgress)
     : null
 
-  const composite = getCompositeScore(ppiScores)
+  const weightedComposite = getWeightedCompositeScore(ppiScores, activeRole)
+
+  // Secondary positions for toggle
+  const secondaryPositions = (onboarding.secondaryPositions || profile.secondaryPositions || []) as any[]
+  const hasMultiplePositions = secondaryPositions.length > 0
 
   const rings = [0.25, 0.5, 0.75, 1.0]
 
@@ -180,14 +212,48 @@ function PPISpiderHero() {
           </h2>
           <p className="text-[#94A3B8] text-xs">
             {ppiEstimated ? 'Estimated from profile' : 'Based on session data'}
-            {' '}&middot;{' '}{profile.division}
+            {' '}&middot;{' '}{division}
           </p>
         </div>
         <div className="text-right">
-          <div className="font-stat text-3xl md:text-4xl font-bold text-[#2DD4A8] leading-none">{composite}</div>
-          <div className="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold mt-1">Composite</div>
+          <div className="font-stat text-3xl md:text-4xl font-bold text-[#2DD4A8] leading-none">{weightedComposite}</div>
+          <div className="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold mt-1">
+            {activeRole.charAt(0).toUpperCase() + activeRole.slice(1)} Weighted
+          </div>
         </div>
       </div>
+
+      {/* Position toggle (multi-position support) */}
+      {hasMultiplePositions && (
+        <div className="px-4 pb-2 flex gap-2 overflow-x-auto">
+          <button
+            onClick={() => setViewAsRole(null)}
+            className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all ${
+              !viewAsRole
+                ? 'bg-[#7C5BF0]/20 text-[#7C5BF0] border border-[#7C5BF0]/40'
+                : 'bg-[#2A3050] text-[#94A3B8] border border-transparent'
+            }`}
+          >
+            {primaryRole}
+          </button>
+          {secondaryPositions.map((pos: any) => {
+            const role = getPositionRole(pos)
+            return (
+              <button
+                key={pos}
+                onClick={() => setViewAsRole(role)}
+                className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all ${
+                  viewAsRole === role
+                    ? 'bg-[#4A7BF7]/20 text-[#4A7BF7] border border-[#4A7BF7]/40'
+                    : 'bg-[#2A3050] text-[#94A3B8] border border-transparent'
+                }`}
+              >
+                {role}
+              </button>
+            )
+          })}
+        </div>
+      )}
 
       {/* SVG Spider Chart */}
       <div className="flex justify-center px-4 pb-4" style={{ minHeight: '50vh' }}>
@@ -226,6 +292,17 @@ function PPISpiderHero() {
             )
           })}
 
+          {/* Ideal shape (faded target zone) — position-specific */}
+          <polygon
+            points={polygonPoints(idealValues, cx, cy, r)}
+            fill="rgba(45,212,168,0.06)"
+            stroke="#2DD4A8"
+            strokeWidth={1.2}
+            strokeDasharray="4 3"
+            opacity={0.4}
+            strokeLinejoin="round"
+          />
+
           {/* 30-day-ago polygon (dashed, behind) */}
           {oldValues && (
             <polygon
@@ -254,13 +331,16 @@ function PPISpiderHero() {
             const angle = (Math.PI * 2 * i) / total - Math.PI / 2
             const px = cx + r * val * Math.cos(angle)
             const py = cy + r * val * Math.sin(angle)
+            // Highlight axes with gap vs ideal
+            const gap = idealShape[axis] - ppiScores[axis]
+            const hasGap = gap > 10
             return (
               <circle
                 key={axis}
                 cx={px}
                 cy={py}
-                r={4}
-                fill="#7C5BF0"
+                r={hasGap ? 5 : 4}
+                fill={hasGap ? '#EF4444' : '#7C5BF0'}
                 stroke="#1A1F35"
                 strokeWidth={2}
                 className="cursor-pointer"
@@ -268,10 +348,12 @@ function PPISpiderHero() {
             )
           })}
 
-          {/* Axis labels + icons */}
+          {/* Axis labels + icons + percentile badges */}
           {PPI_AXES.map((axis, i) => {
             const lp = labelPosition(i, total, cx, cy, r)
             const ep = axisEndpoint(i, total, cx, cy, r)
+            const percentile = onboarding.benchmarkOptIn ? getDivisionPercentile(ppiScores[axis], division, axis) : null
+            const icon = axis === 'mentalGame' ? MENTAL_GAME_ICON : AXIS_ICONS[axis]
             return (
               <g
                 key={axis}
@@ -280,7 +362,7 @@ function PPISpiderHero() {
               >
                 <g transform={`translate(${ep.x - 8}, ${ep.y - 8})`} className="text-[#94A3B8]" opacity={0.7}>
                   <svg width="16" height="16" viewBox="0 0 16 16">
-                    {AXIS_ICONS[axis]}
+                    {icon}
                   </svg>
                 </g>
                 <text
@@ -288,7 +370,7 @@ function PPISpiderHero() {
                   y={lp.y + 12}
                   textAnchor={lp.anchor}
                   className="fill-[#94A3B8] uppercase tracking-wider"
-                  style={{ fontSize: '9px', fontWeight: 600 }}
+                  style={{ fontSize: '8px', fontWeight: 600 }}
                 >
                   {PPI_LABELS[axis]}
                 </text>
@@ -301,10 +383,40 @@ function PPISpiderHero() {
                 >
                   {ppiScores[axis]}
                 </text>
+                {/* Percentile badge */}
+                {percentile !== null && (
+                  <text
+                    x={lp.x}
+                    y={lp.y + 33}
+                    textAnchor={lp.anchor}
+                    fill="#4A7BF7"
+                    style={{ fontSize: '7px', fontWeight: 700 }}
+                  >
+                    Top {100 - percentile}%
+                  </text>
+                )}
               </g>
             )
           })}
         </svg>
+      </div>
+
+      {/* Legend */}
+      <div className="px-4 pb-3 flex items-center gap-4 justify-center flex-wrap">
+        <div className="flex items-center gap-1.5">
+          <div className="w-4 h-[2px] rounded bg-[#7C5BF0]" />
+          <span className="text-[9px] text-[#94A3B8]">Your PPI</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-4 h-[2px] rounded border-t border-dashed border-[#2DD4A8]" />
+          <span className="text-[9px] text-[#94A3B8]">Ideal ({activeRole})</span>
+        </div>
+        {oldValues && (
+          <div className="flex items-center gap-1.5">
+            <div className="w-4 h-[2px] rounded border-t border-dashed border-[#64748B]" />
+            <span className="text-[9px] text-[#94A3B8]">30 days ago</span>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -412,9 +524,10 @@ function SeasonTimeline() {
 function TodaysFocusCard() {
   const state = useAppState()
   const dispatch = useDispatch()
-  const { ppiScores, todaysFocusAxis } = state
+  const { ppiScores, todaysFocusAxis, onboarding, profile } = state
 
-  const weakest = getWeakestAxis(ppiScores)
+  const role = getPositionRole(onboarding.primaryPosition || (profile.position as any) || 'centre')
+  const weakest = getPositionWeakestAxis(ppiScores, role)
   const focusAxis = (todaysFocusAxis || weakest) as PPIAxis
   const reason = FOCUS_REASONS[focusAxis] || 'Focus on your weakest skill to level up fastest.'
 
@@ -583,6 +696,12 @@ function RecentSessionsFeed() {
               <span className="text-[10px] text-[#94A3B8]">
                 {PPI_LABELS[session.focusArea as PPIAxis] || session.focusArea}
               </span>
+              {/* Quality rating badge */}
+              {session.qualityRating && session.qualityRating > 0 && (
+                <span className="text-[10px] text-[#D4A843]">
+                  {'★'.repeat(session.qualityRating)}
+                </span>
+              )}
             </div>
           </div>
         ))}
@@ -592,7 +711,180 @@ function RecentSessionsFeed() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════ */
-/*  6. QUICK-START BUTTONS                                           */
+/*  6a. READINESS SCORE WIDGET                                       */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+function ReadinessWidget() {
+  const state = useAppState()
+  const dispatch = useDispatch()
+  const today = new Date().toISOString().split('T')[0]
+  const todayEntry = state.readinessHistory.find(r => r.date === today)
+  const [sliderValue, setSliderValue] = useState(todayEntry?.score || 0)
+  const [submitted, setSubmitted] = useState(!!todayEntry)
+
+  const handleSubmit = () => {
+    if (sliderValue === 0) return
+    dispatch({
+      type: 'LOG_READINESS',
+      entry: { date: today, score: sliderValue, timestamp: Date.now() },
+    })
+    setSubmitted(true)
+  }
+
+  // Show recent trend
+  const recentReadiness = state.readinessHistory.slice(-7)
+  const avgReadiness = recentReadiness.length > 0
+    ? Math.round(recentReadiness.reduce((s, r) => s + r.score, 0) / recentReadiness.length)
+    : 0
+
+  if (submitted && todayEntry) {
+    const score = todayEntry.score
+    return (
+      <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4 animate-slide-up">
+        <div className="flex items-center gap-4">
+          <div
+            className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold font-stat"
+            style={{
+              background: `${getReadinessColor(score)}15`,
+              color: getReadinessColor(score),
+              border: `2px solid ${getReadinessColor(score)}40`,
+            }}
+          >
+            {score}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold">
+              Today&apos;s Readiness
+            </div>
+            <div className="text-sm font-bold" style={{ color: getReadinessColor(score) }}>
+              {getReadinessLabel(score)}
+            </div>
+          </div>
+          {recentReadiness.length > 2 && (
+            <div className="text-right">
+              <div className="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold">7-Day Avg</div>
+              <div className="font-stat text-sm font-bold" style={{ color: getReadinessColor(avgReadiness) }}>
+                {avgReadiness}/10
+              </div>
+            </div>
+          )}
+        </div>
+        {/* Mini trend bars */}
+        {recentReadiness.length > 2 && (
+          <div className="flex gap-1 mt-3 items-end h-6">
+            {recentReadiness.map((r, i) => (
+              <div
+                key={i}
+                className="flex-1 rounded-t transition-all"
+                style={{
+                  height: `${(r.score / 10) * 100}%`,
+                  background: getReadinessColor(r.score),
+                  opacity: i === recentReadiness.length - 1 ? 1 : 0.4,
+                }}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  return (
+    <div className="bg-[#1A1F35] rounded-xl border border-white/[0.08] p-4 animate-slide-up">
+      <div className="flex items-center justify-between mb-3">
+        <div>
+          <div className="text-sm font-bold text-[#F1F5F9]">How does your body feel today?</div>
+          <div className="text-[10px] text-[#64748B]">Quick daily check-in (2 seconds)</div>
+        </div>
+        {sliderValue > 0 && (
+          <div className="font-stat text-2xl font-bold" style={{ color: getReadinessColor(sliderValue) }}>
+            {sliderValue}
+          </div>
+        )}
+      </div>
+      <div className="flex items-center gap-3">
+        <span className="text-[9px] text-[#EF4444] font-semibold">Wrecked</span>
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={sliderValue || 5}
+          onChange={e => setSliderValue(parseInt(e.target.value))}
+          className="flex-1 accent-[#2DD4A8]"
+        />
+        <span className="text-[9px] text-[#2DD4A8] font-semibold">Explosive</span>
+      </div>
+      <button
+        onClick={handleSubmit}
+        className="btn-primary w-full mt-3 !py-2 text-xs"
+        disabled={sliderValue === 0}
+      >
+        Log Readiness
+      </button>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/*  6b. TOURNAMENT COUNTDOWN                                         */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+function TournamentCountdown() {
+  const state = useAppState()
+
+  // Find the nearest upcoming tournament
+  const nextTournament = useMemo(() => {
+    const now = new Date().toISOString().split('T')[0]
+    return state.upcomingTournaments
+      .filter(t => t.date >= now)
+      .sort((a, b) => a.date.localeCompare(b.date))[0] || null
+  }, [state.upcomingTournaments])
+
+  if (!nextTournament) return null
+
+  const daysUntil = getDaysUntilEvent(nextTournament.date)
+  const inTaper = isInTaperWindow(nextTournament.date)
+
+  if (daysUntil > 30) return null
+
+  return (
+    <div className={`rounded-xl border p-4 animate-slide-up ${
+      inTaper
+        ? 'bg-[#D4A843]/10 border-[#D4A843]/30'
+        : 'bg-[#1A1F35] border-white/[0.08]'
+    }`}>
+      <div className="flex items-center gap-3">
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg ${
+          inTaper ? 'bg-[#D4A843]/20' : 'bg-[#4A7BF7]/15'
+        }`}>
+          {inTaper ? '\u23F3' : '\uD83C\uDFC6'}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-bold text-[#F1F5F9]">{nextTournament.name}</div>
+          <div className="text-[10px] text-[#94A3B8]">
+            {nextTournament.league} &middot; {nextTournament.date}
+          </div>
+        </div>
+        <div className="text-right">
+          <div className="font-stat text-xl font-bold" style={{ color: inTaper ? '#D4A843' : '#4A7BF7' }}>
+            {daysUntil}
+          </div>
+          <div className="text-[9px] text-[#64748B] uppercase font-semibold">days</div>
+        </div>
+      </div>
+      {inTaper && (
+        <div className="mt-2 px-3 py-2 rounded-lg bg-[#D4A843]/10 border border-[#D4A843]/20">
+          <span className="text-[10px] text-[#D4A843] font-semibold">
+            Taper Mode — Focus on rest, visualization, and layout study. Reduce intensity.
+          </span>
+        </div>
+      )}
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/*  7. QUICK-START BUTTONS                                           */
 /* ═══════════════════════════════════════════════════════════════════ */
 
 function QuickStartButtons() {

@@ -9,6 +9,7 @@ import type { SessionData, SessionSummary } from '../types/session'
 import type { DrillResult } from '../types/drill'
 import type { Achievement } from '../types/achievement'
 import type { BreakoutPlan, ScoutingNote } from '../types/layout'
+import type { ReadinessEntry, TournamentEvent } from '../types/readiness'
 import type { Action } from './actions'
 import { appReducer } from './reducer'
 import { saveState, loadState } from './storage'
@@ -23,6 +24,7 @@ export interface ProfileData {
   name: string
   team: string
   position: string
+  secondaryPositions: string[]
   division: string
   gameFormat: string
   yearsPlaying: number
@@ -79,6 +81,9 @@ export interface AppState {
   breakoutPlans: BreakoutPlan[]
   scoutingNotes: ScoutingNote[]
 
+  // Skill tree
+  completedSkillNodeIds: string[]
+
   // Gamification (existing)
   challengesState: ChallengesState
   personaState: PersonaState
@@ -91,17 +96,34 @@ export interface AppState {
   trainingStreak: number
   lastActivityDate: string
   streakFreezeAvailable: boolean
+
+  // Readiness & Recovery
+  readinessHistory: ReadinessEntry[]
+  upcomingTournaments: TournamentEvent[]
 }
 
 function createInitialState(): AppState {
   const saved = loadState()
   if (saved) {
     // Ensure new fields exist on loaded state
+    const fresh = createFreshState()
+    // Ensure mentalGame exists on old PPI scores
+    const ppiScores = saved.ppiScores || createDefaultPPI()
+    if (ppiScores.mentalGame === undefined) ppiScores.mentalGame = 0
+    // Ensure secondaryPositions in profile
+    const profile = saved.profile || fresh.profile
+    if (!profile.secondaryPositions) profile.secondaryPositions = []
+    // Ensure secondaryPositions in onboarding
+    const onboarding = saved.onboarding || fresh.onboarding
+    if (onboarding.secondaryPositions === undefined) onboarding.secondaryPositions = []
+    if (onboarding.benchmarkOptIn === undefined) onboarding.benchmarkOptIn = false
     return {
-      ...createFreshState(),
+      ...fresh,
       ...saved,
+      profile,
+      onboarding,
       // Ensure these always exist even if old save doesn't have them
-      ppiScores: saved.ppiScores || createDefaultPPI(),
+      ppiScores,
       ppiHistory: saved.ppiHistory || [],
       ppiEstimated: saved.ppiEstimated ?? true,
       sessions: saved.sessions || [],
@@ -109,6 +131,7 @@ function createInitialState(): AppState {
       sessionSummaries: saved.sessionSummaries || [],
       drillResults: saved.drillResults || [],
       completedDrillIds: saved.completedDrillIds || [],
+      completedSkillNodeIds: saved.completedSkillNodeIds || [],
       achievements: saved.achievements || DEFAULT_ACHIEVEMENTS,
       breakoutPlans: saved.breakoutPlans || [],
       scoutingNotes: saved.scoutingNotes || [],
@@ -117,6 +140,8 @@ function createInitialState(): AppState {
       trainingStreak: saved.trainingStreak || 0,
       lastActivityDate: saved.lastActivityDate || '',
       streakFreezeAvailable: saved.streakFreezeAvailable ?? true,
+      readinessHistory: saved.readinessHistory || [],
+      upcomingTournaments: saved.upcomingTournaments || [],
     }
   }
   return createFreshState()
@@ -137,6 +162,7 @@ function createFreshState(): AppState {
       name: '',
       team: '',
       position: 'centre',
+      secondaryPositions: [],
       division: 'D4',
       gameFormat: 'Speedball',
       yearsPlaying: 1,
@@ -151,6 +177,7 @@ function createFreshState(): AppState {
     sessionSummaries: [],
     drillResults: [],
     completedDrillIds: [],
+    completedSkillNodeIds: [],
     achievements: DEFAULT_ACHIEVEMENTS,
     breakoutPlans: [],
     scoutingNotes: [],
@@ -161,6 +188,8 @@ function createFreshState(): AppState {
     trainingStreak: 0,
     lastActivityDate: '',
     streakFreezeAvailable: true,
+    readinessHistory: [],
+    upcomingTournaments: [],
   }
 }
 

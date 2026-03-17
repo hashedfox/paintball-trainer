@@ -1,11 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useAppState, useDispatch } from '../../store/context'
 import { DEFAULT_FIELD_LAYOUT } from '../../types/layout'
-import { PPI_LABELS, PPI_AXES, type PPIAxis, type PPIScores } from '../../types/ppi'
+import { PPI_LABELS, PPI_AXES, type PPIAxis, type PPIScores, EMOTION_LABELS, type EmotionState } from '../../types/ppi'
 import { DRILL_LIBRARY, getDrillsForAxis } from '../../types/drill'
 import type { SessionData, SessionSummary } from '../../types/session'
 import { SpiderChart } from '../ui/SpiderChart'
-import { polygonPoints, axisEndpoint, labelPosition } from '../../lib/spider'
 
 // ─── Helpers ────────────────────────────────────────────────
 
@@ -737,7 +736,7 @@ export function SessionReportSection() {
   }, [latestSession, focusAxis, verdict])
 
   // Handle "Start Drill" by navigating to drills section
-  const handleStartDrill = (drillId: string) => {
+  const handleStartDrill = (_drillId: string) => {
     dispatch({ type: 'SET_ACTIVE_SECTION', section: 'drills' })
   }
 
@@ -782,6 +781,112 @@ export function SessionReportSection() {
         session={latestSession}
         summaries={state.sessionSummaries}
       />
+
+      {/* 2b. Emotion & Mental Game Summary */}
+      {latestSession.points.some(p => p.emotion) && (
+        <div className="card-gaming p-5 animate-fade-in">
+          <span className="section-header">Mental Game Summary</span>
+          <div className="mt-4 grid grid-cols-3 gap-3">
+            {(['frustrated', 'neutral', 'locked-in'] as EmotionState[]).map(emotion => {
+              const count = latestSession.points.filter(p => p.emotion === emotion).length
+              const total = latestSession.points.filter(p => p.emotion).length
+              const pct = total > 0 ? Math.round((count / total) * 100) : 0
+              const wins = latestSession.points.filter(p => p.emotion === emotion && p.result === 'win').length
+              const winRate = count > 0 ? Math.round((wins / count) * 100) : 0
+              const colors: Record<EmotionState, string> = {
+                frustrated: '#EF4444',
+                neutral: '#D4A843',
+                'locked-in': '#2DD4A8',
+              }
+              const emojis: Record<EmotionState, string> = {
+                frustrated: '\uD83D\uDE24',
+                neutral: '\uD83D\uDE10',
+                'locked-in': '\uD83D\uDD25',
+              }
+              return (
+                <div key={emotion} className="stat-card text-center">
+                  <div className="text-2xl mb-1">{emojis[emotion]}</div>
+                  <div className="font-stat text-lg font-bold" style={{ color: colors[emotion] }}>
+                    {pct}%
+                  </div>
+                  <div className="stat-card-label">{EMOTION_LABELS[emotion]}</div>
+                  {count > 0 && (
+                    <div className="mt-1 text-[10px] font-semibold" style={{ color: winRate >= 50 ? '#2DD4A8' : '#EF4444' }}>
+                      {winRate}% WR
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+          {/* Insight */}
+          {(() => {
+            const lockedInCount = latestSession.points.filter(p => p.emotion === 'locked-in').length
+            const frustratedCount = latestSession.points.filter(p => p.emotion === 'frustrated').length
+            const total = latestSession.points.filter(p => p.emotion).length
+            if (total < 3) return null
+            const lockedInPct = (lockedInCount / total) * 100
+            const frustratedPct = (frustratedCount / total) * 100
+
+            let insight = ''
+            let insightColor = '#94A3B8'
+            if (lockedInPct > 60) {
+              insight = 'Strong mental game today. You stayed locked in for most of the session.'
+              insightColor = '#2DD4A8'
+            } else if (frustratedPct > 40) {
+              insight = 'Frustration may be hurting your performance. Practice mental resets between points.'
+              insightColor = '#EF4444'
+            } else {
+              insight = 'Steady mental state. Track this over time to see your composure trend.'
+              insightColor = '#D4A843'
+            }
+            return (
+              <div className="mt-3 panel-inner p-3 border-l-2" style={{ borderColor: insightColor }}>
+                <p className="text-[11px] leading-relaxed" style={{ color: insightColor }}>{insight}</p>
+              </div>
+            )
+          })()}
+        </div>
+      )}
+
+      {/* 2c. Session Quality Badge */}
+      {latestSession.quality && (
+        <div className="card-gaming p-5 animate-fade-in">
+          <span className="section-header">Session Self-Assessment</span>
+          <div className="mt-3 flex items-center gap-4">
+            <div className="flex gap-0.5">
+              {[1, 2, 3, 4, 5].map(star => (
+                <svg
+                  key={star}
+                  width="20" height="20" viewBox="0 0 24 24"
+                  fill={star <= latestSession.quality!.overallRating ? '#D4A843' : 'none'}
+                  stroke={star <= latestSession.quality!.overallRating ? '#D4A843' : '#64748B'}
+                  strokeWidth="1.5"
+                >
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+              ))}
+            </div>
+            <div className={`px-2 py-1 rounded text-[10px] font-bold ${
+              latestSession.quality.focusExecution === 'yes'
+                ? 'bg-[#2DD4A8]/15 text-[#2DD4A8]'
+                : latestSession.quality.focusExecution === 'somewhat'
+                  ? 'bg-[#D4A843]/15 text-[#D4A843]'
+                  : 'bg-[#EF4444]/15 text-[#EF4444]'
+            }`}>
+              Focus: {latestSession.quality.focusExecution}
+            </div>
+          </div>
+          {latestSession.quality.lessonLearned && (
+            <div className="mt-3 panel-inner p-3">
+              <div className="text-[9px] text-[#64748B] uppercase tracking-wider font-semibold mb-1">Lesson Learned</div>
+              <p className="text-[12px] text-[#F1F5F9] italic leading-relaxed">
+                &ldquo;{latestSession.quality.lessonLearned}&rdquo;
+              </p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* 3. Elimination Heatmap */}
       <EliminationHeatmap

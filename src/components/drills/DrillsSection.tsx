@@ -24,6 +24,7 @@ const AXIS_COLORS: Record<PPIAxis, string> = {
   communication: '#2DD4A8',
   gunSkills: '#F59E0B',
   fitness: '#2DD4A8',
+  mentalGame: '#D4A843',
 }
 
 const DIFFICULTY_COLORS: Record<string, { bg: string; text: string }> = {

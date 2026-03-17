@@ -1,5 +1,7 @@
 /** Session & Point logging — built around the 2-tap rule */
 
+import type { EmotionState } from './ppi'
+
 export type SessionType = 'practice' | 'scrimmage' | 'tournament'
 export type PointResult = 'win' | 'loss'
 export type EliminationType = 'shot-out' | 'bunkered' | 'run-through' | 'trade' | 'survived'
@@ -13,7 +15,15 @@ export interface PointLog {
   voiceNoteUrl?: string
   voiceNoteText?: string
   focusRating?: number  // 1-5 self-rate on today's focus area
+  emotion?: EmotionState  // post-point emotion tracker
   timestamp: number
+}
+
+/** Session quality self-assessment (filled at end of session) */
+export interface SessionQuality {
+  overallRating: number  // 1-5 stars
+  focusExecution: 'yes' | 'somewhat' | 'no'
+  lessonLearned: string  // optional free-text
 }
 
 export interface SessionData {
@@ -26,6 +36,8 @@ export interface SessionData {
   isComplete: boolean
   notes: string
   videoUrls: string[]
+  quality?: SessionQuality
+  visualizationCompleted?: boolean  // pre-point visualization prompt
   // Computed after session
   totalPoints: number
   wins: number
@@ -46,6 +58,7 @@ export interface SessionSummary {
   focusArea: string
   focusVerdict: 'improved' | 'flat' | 'declined'
   xpEarned: number
+  qualityRating?: number  // 1-5 from SessionQuality
 }
 
 export function createNewSession(type: SessionType, layoutId: string, focusArea: string): SessionData {

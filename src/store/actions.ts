@@ -3,10 +3,10 @@ import type { TeamPointStats } from '../types/point'
 import type { OnboardingData } from '../types/onboarding'
 import type { Challenge } from '../types/challenges'
 import type { PPIScores, PPIAxis } from '../types/ppi'
-import type { SessionData, PointLog } from '../types/session'
+import type { SessionData, PointLog, SessionQuality } from '../types/session'
 import type { DrillResult } from '../types/drill'
-import type { Achievement } from '../types/achievement'
 import type { BreakoutPlan, ScoutingNote } from '../types/layout'
+import type { ReadinessEntry, TournamentEvent } from '../types/readiness'
 
 export type Action =
   // Team management
@@ -45,9 +45,14 @@ export type Action =
   | { type: 'LOG_POINT'; sessionId: string; point: PointLog }
   | { type: 'END_SESSION'; sessionId: string }
   | { type: 'UPDATE_SESSION_NOTES'; sessionId: string; notes: string }
+  | { type: 'SET_SESSION_QUALITY'; sessionId: string; quality: SessionQuality }
+  | { type: 'SET_SESSION_VISUALIZATION'; sessionId: string }
 
   // Drills
   | { type: 'COMPLETE_DRILL'; result: DrillResult }
+
+  // Skill tree
+  | { type: 'COMPLETE_SKILL_NODE'; nodeId: string }
 
   // Achievements
   | { type: 'UNLOCK_ACHIEVEMENT'; achievementId: string }
@@ -65,6 +70,11 @@ export type Action =
   // Streak
   | { type: 'RECORD_ACTIVITY' }
   | { type: 'USE_STREAK_FREEZE' }
+
+  // Readiness & Recovery
+  | { type: 'LOG_READINESS'; entry: ReadinessEntry }
+  | { type: 'ADD_TOURNAMENT'; event: TournamentEvent }
+  | { type: 'REMOVE_TOURNAMENT'; eventId: string }
 
   // Challenges & Gamification
   | { type: 'UPDATE_CHALLENGE_PROGRESS'; challengeId: string; progress: number }
