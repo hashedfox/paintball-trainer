@@ -1,7 +1,10 @@
 import type { AppState } from './context'
+import { createDefaultOnboarding } from '../types/onboarding'
+import { createDefaultChallengesState } from '../types/challenges'
+import { createDefaultPersona } from '../types/persona'
 
 const STORAGE_KEY = 'ppi-paintball-trainer'
-const SCHEMA_VERSION = 1
+const SCHEMA_VERSION = 2
 
 interface StorageSchema {
   version: number
@@ -27,8 +30,18 @@ export function loadState(): AppState | null {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return null
     const data: StorageSchema = JSON.parse(raw)
+    if (data.version === 1) {
+      // Migrate v1 -> v2: add new fields
+      const migrated: AppState = {
+        ...data.state,
+        activeSection: 'home',
+        onboarding: createDefaultOnboarding(),
+        challengesState: createDefaultChallengesState(),
+        personaState: createDefaultPersona(),
+      }
+      return migrated
+    }
     if (data.version !== SCHEMA_VERSION) {
-      // Future: add migration logic here
       localStorage.removeItem(STORAGE_KEY)
       return null
     }

@@ -1,5 +1,9 @@
-import type { TabId } from '../../App'
+// Legacy TabBar — replaced by Sidebar navigation in v2
+// Kept for reference
+
 import { useTranslation } from '../../i18n/useTranslation'
+
+type TabId = 'setup' | 'points' | 'analytics' | 'playbook' | 'profile'
 
 const TABS: { id: TabId; icon: string; labelKey: string }[] = [
   { id: 'setup', icon: '⚙', labelKey: 'tab.setup' },

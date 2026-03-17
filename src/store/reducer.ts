@@ -3,6 +3,7 @@ import type { AppState } from './context'
 import type { Action } from './actions'
 import { createEmptyPlayerStats } from '../types/player'
 import { createEmptyTeamStats, type PointData } from '../types/point'
+import { getLevelFromXp } from '../types/challenges'
 
 export function appReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -60,7 +61,6 @@ export function appReducer(state: AppState, action: Action): AppState {
       return { ...state, activePointIndex: action.index }
 
     case 'UPDATE_TEAM_STAT': {
-      // If this is the first real result entry and we have dummy data, clear it
       if (
         action.field === 'result' &&
         action.value !== null &&
@@ -116,6 +116,164 @@ export function appReducer(state: AppState, action: Action): AppState {
 
     case 'SET_PROFILE':
       return { ...state, profile: { ...state.profile, [action.field]: action.value } }
+
+    case 'SET_ACTIVE_SECTION':
+      return { ...state, activeSection: action.section as AppState['activeSection'] }
+
+    // Onboarding
+    case 'SET_ONBOARDING':
+      return { ...state, onboarding: { ...state.onboarding, ...action.data } }
+
+    case 'COMPLETE_ONBOARDING':
+      return {
+        ...state,
+        onboarding: { ...state.onboarding, completed: true },
+        profile: {
+          ...state.profile,
+          name: state.onboarding.playerName || state.profile.name,
+          position: state.onboarding.primaryPosition || state.profile.position,
+        },
+      }
+
+    // Challenges
+    case 'UPDATE_CHALLENGE_PROGRESS':
+      return {
+        ...state,
+        challengesState: {
+          ...state.challengesState,
+          activeChallenges: state.challengesState.activeChallenges.map((c) =>
+            c.id === action.challengeId ? { ...c, progress: Math.min(action.progress, c.requirement) } : c
+          ),
+        },
+      }
+
+    case 'COMPLETE_CHALLENGE': {
+      const challenge = state.challengesState.activeChallenges.find((c) => c.id === action.challengeId)
+      if (!challenge || challenge.completed) return state
+      const newXp = state.challengesState.xp + challenge.xpReward
+      return {
+        ...state,
+        challengesState: {
+          ...state.challengesState,
+          activeChallenges: state.challengesState.activeChallenges.map((c) =>
+            c.id === action.challengeId ? { ...c, completed: true, progress: c.requirement } : c
+          ),
+          completedChallenges: [...state.challengesState.completedChallenges, action.challengeId],
+          xp: newXp,
+          level: getLevelFromXp(newXp),
+          coins: state.challengesState.coins + challenge.coinReward,
+        },
+      }
+    }
+
+    case 'ADD_XP': {
+      const newXp = state.challengesState.xp + action.amount
+      return {
+        ...state,
+        challengesState: {
+          ...state.challengesState,
+          xp: newXp,
+          level: getLevelFromXp(newXp),
+        },
+      }
+    }
+
+    case 'ADD_COINS':
+      return {
+        ...state,
+        challengesState: {
+          ...state.challengesState,
+          coins: state.challengesState.coins + action.amount,
+        },
+      }
+
+    case 'PURCHASE_ITEM':
+      if (state.challengesState.coins < action.cost) return state
+      return {
+        ...state,
+        challengesState: {
+          ...state.challengesState,
+          coins: state.challengesState.coins - action.cost,
+          ownedItems: [...state.challengesState.ownedItems, action.itemId],
+        },
+        personaState: {
+          ...state.personaState,
+          inventory: [...state.personaState.inventory, action.itemId],
+        },
+      }
+
+    case 'RECORD_LOGIN': {
+      const today = new Date().toISOString().split('T')[0]
+      if (state.challengesState.lastLoginDate === today) return state
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
+      const isConsecutive = state.challengesState.lastLoginDate === yesterday
+      const newStreak = isConsecutive ? state.challengesState.loginStreak + 1 : 1
+      const loginXp = 10 * newStreak
+      const newXp = state.challengesState.xp + loginXp
+      return {
+        ...state,
+        challengesState: {
+          ...state.challengesState,
+          lastLoginDate: today,
+          loginStreak: newStreak,
+          xp: newXp,
+          level: getLevelFromXp(newXp),
+          coins: state.challengesState.coins + 5 * newStreak,
+        },
+      }
+    }
+
+    case 'REFRESH_DAILY_CHALLENGES':
+      return {
+        ...state,
+        challengesState: {
+          ...state.challengesState,
+          activeChallenges: [
+            ...action.challenges,
+            ...state.challengesState.activeChallenges.filter((c) => c.type !== 'daily'),
+          ],
+        },
+      }
+
+    // Persona
+    case 'EQUIP_ITEM':
+      return {
+        ...state,
+        personaState: {
+          ...state.personaState,
+          equipped: { ...state.personaState.equipped, [action.slot]: action.itemId },
+        },
+      }
+
+    case 'UNEQUIP_ITEM': {
+      const newEquipped = { ...state.personaState.equipped }
+      delete newEquipped[action.slot as keyof typeof newEquipped]
+      return {
+        ...state,
+        personaState: { ...state.personaState, equipped: newEquipped },
+      }
+    }
+
+    case 'ADD_TO_INVENTORY':
+      return {
+        ...state,
+        personaState: {
+          ...state.personaState,
+          inventory: [...state.personaState.inventory, action.itemId],
+        },
+      }
+
+    case 'SET_PERSONA_COLOR':
+      return {
+        ...state,
+        personaState: { ...state.personaState, activeColor: action.color },
+      }
+
+    case 'SET_PERSONA_NUMBER':
+      return {
+        ...state,
+        personaState: { ...state.personaState, teamNumber: action.number },
+      }
 
     default:
       return state

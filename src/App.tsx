@@ -1,42 +1,63 @@
-import { useState } from 'react'
 import { LanguageProvider } from './i18n/context'
-import { AppStateProvider } from './store/context'
-import { TabBar } from './components/ui/TabBar'
-import { SetupTab } from './components/setup/SetupTab'
-import { PointsTab } from './components/points/PointsTab'
-import { AnalyticsTab } from './components/analytics/AnalyticsTab'
-import { PlaybookTab } from './components/playbook/PlaybookTab'
-import { ProfileTab } from './components/profile/ProfileTab'
+import { AppStateProvider, useAppState, useDispatch, type SectionId } from './store/context'
+import { Sidebar } from './components/ui/Sidebar'
+import { HomeSection } from './components/home/HomeSection'
+import { ProfileSection } from './components/profile/ProfileSection'
+import { HighlightsSection } from './components/highlights/HighlightsSection'
+import { PpiHubSection } from './components/ppi/PpiHubSection'
+import { ChallengesSection } from './components/challenges/ChallengesSection'
+import { PersonaSection } from './components/persona/PersonaSection'
+import { ProTeamsSection } from './components/pro-teams/ProTeamsSection'
+import { TierListSection } from './components/tier-list/TierListSection'
+import { GuidesSection } from './components/guides/GuidesSection'
 
-export type TabId = 'setup' | 'points' | 'analytics' | 'playbook' | 'profile'
+function AppContent() {
+  const state = useAppState()
+  const dispatch = useDispatch()
+
+  const handleNavigate = (section: SectionId) => {
+    dispatch({ type: 'SET_ACTIVE_SECTION', section })
+  }
+
+  const renderSection = () => {
+    switch (state.activeSection) {
+      case 'home': return <HomeSection />
+      case 'profile': return <ProfileSection />
+      case 'highlights': return <HighlightsSection />
+      case 'ppi': return <PpiHubSection />
+      case 'challenges': return <ChallengesSection />
+      case 'persona': return <PersonaSection />
+      case 'pro-teams': return <ProTeamsSection />
+      case 'tier-list': return <TierListSection />
+      case 'guides': return <GuidesSection />
+      default: return <HomeSection />
+    }
+  }
+
+  return (
+    <div className="flex h-full bg-pb-dark">
+      {/* Sidebar (desktop) */}
+      <Sidebar
+        activeSection={state.activeSection}
+        onNavigate={handleNavigate}
+        level={state.challengesState.level}
+        xp={state.challengesState.xp}
+        coins={state.challengesState.coins}
+      />
+
+      {/* Main content */}
+      <main className="flex-1 overflow-y-auto pb-20 md:pb-4">
+        {renderSection()}
+      </main>
+    </div>
+  )
+}
 
 function App() {
-  const [activeTab, setActiveTab] = useState<TabId>('analytics')
-
   return (
     <AppStateProvider>
       <LanguageProvider>
-        <div className="flex flex-col h-full bg-pb-dark">
-          {/* Header */}
-          <header className="flex items-center justify-between px-4 py-3 border-b border-pb-border bg-pb-card">
-            <h1 className="text-lg font-bold text-white tracking-tight">
-              PPI <span className="text-pb-amber">Paintball</span>
-            </h1>
-            <span className="text-xs text-slate-400">Player Index</span>
-          </header>
-
-          {/* Content */}
-          <main className="flex-1 overflow-y-auto pb-20">
-            {activeTab === 'setup' && <SetupTab />}
-            {activeTab === 'points' && <PointsTab />}
-            {activeTab === 'analytics' && <AnalyticsTab />}
-            {activeTab === 'playbook' && <PlaybookTab />}
-            {activeTab === 'profile' && <ProfileTab />}
-          </main>
-
-          {/* Tab Bar */}
-          <TabBar activeTab={activeTab} onTabChange={setActiveTab} />
-        </div>
+        <AppContent />
       </LanguageProvider>
     </AppStateProvider>
   )

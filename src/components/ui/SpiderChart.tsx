@@ -7,16 +7,65 @@ interface Dataset {
   label: string
 }
 
-interface Props {
+// Legacy multi-dataset interface
+interface MultiDatasetProps {
   axes: string[]
   datasets: Dataset[]
   size?: number
+  labels?: never
+  values?: never
+  color?: never
+  compareValues?: never
+  compareColor?: never
 }
 
-export function SpiderChart({ axes, datasets, size = 240 }: Props) {
+// Simple single/comparison interface
+interface SimpleProps {
+  labels: string[]
+  values: number[] // 0-100
+  color?: string
+  compareValues?: number[] // 0-100
+  compareColor?: string
+  size?: number
+  axes?: never
+  datasets?: never
+}
+
+type Props = MultiDatasetProps | SimpleProps
+
+export function SpiderChart(props: Props) {
+  const size = props.size || 240
   const cx = size / 2
   const cy = size / 2
   const r = size / 2 - 30
+
+  // Normalize to simple interface
+  let axes: string[]
+  let datasets: Dataset[]
+
+  if ('axes' in props && props.axes) {
+    axes = props.axes
+    datasets = props.datasets
+  } else {
+    const simpleProps = props as SimpleProps
+    axes = simpleProps.labels
+    const color = simpleProps.color || '#00ff88'
+    datasets = [{
+      values: simpleProps.values.map(v => v / 100),
+      fill: `${color}15`,
+      stroke: color,
+      label: 'You',
+    }]
+    if (simpleProps.compareValues) {
+      const cc = simpleProps.compareColor || '#3b82f6'
+      datasets.push({
+        values: simpleProps.compareValues.map(v => v / 100),
+        fill: `${cc}10`,
+        stroke: cc,
+        label: 'Compare',
+      })
+    }
+  }
 
   return (
     <div className="flex flex-col items-center">
@@ -27,7 +76,7 @@ export function SpiderChart({ axes, datasets, size = 240 }: Props) {
             key={scale}
             points={polygonPoints(Array(axes.length).fill(scale), cx, cy, r)}
             fill="none"
-            stroke="#334155"
+            stroke="#1e293b"
             strokeWidth={0.5}
           />
         ))}
@@ -42,14 +91,14 @@ export function SpiderChart({ axes, datasets, size = 240 }: Props) {
               y1={cy}
               x2={end.x}
               y2={end.y}
-              stroke="#334155"
+              stroke="#1e293b"
               strokeWidth={0.5}
             />
           )
         })}
 
-        {/* Data polygons */}
-        {datasets.map((ds, di) => (
+        {/* Data polygons — comparison first (behind) */}
+        {[...datasets].reverse().map((ds, di) => (
           <polygon
             key={di}
             points={polygonPoints(ds.values, cx, cy, r)}
@@ -94,16 +143,6 @@ export function SpiderChart({ axes, datasets, size = 240 }: Props) {
           )
         })}
       </svg>
-
-      {/* Legend */}
-      <div className="flex gap-4 mt-2">
-        {datasets.map((ds, i) => (
-          <div key={i} className="flex items-center gap-1.5 text-xs text-slate-400">
-            <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: ds.stroke }} />
-            {ds.label}
-          </div>
-        ))}
-      </div>
     </div>
   )
 }

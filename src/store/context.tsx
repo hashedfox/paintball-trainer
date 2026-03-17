@@ -1,10 +1,16 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react'
 import type { Player } from '../types/player'
 import type { PointData } from '../types/point'
+import type { OnboardingData } from '../types/onboarding'
+import type { ChallengesState } from '../types/challenges'
+import type { PersonaState } from '../types/persona'
 import type { Action } from './actions'
 import { appReducer } from './reducer'
 import { saveState, loadState } from './storage'
 import { createDefaultRoster, createDummyPoints, DEFAULT_TEAM_NAME, DEFAULT_OPPONENT_NAME } from '../constants/defaults'
+import { createDefaultOnboarding } from '../types/onboarding'
+import { createDefaultChallengesState } from '../types/challenges'
+import { createDefaultPersona } from '../types/persona'
 
 export interface ProfileData {
   name: string
@@ -12,6 +18,8 @@ export interface ProfileData {
   position: string
   division: string
 }
+
+export type SectionId = 'home' | 'profile' | 'highlights' | 'ppi' | 'challenges' | 'persona' | 'pro-teams' | 'tier-list' | 'guides'
 
 export interface AppState {
   teamName: string
@@ -21,6 +29,10 @@ export interface AppState {
   activePointIndex: number
   language: 'en' | 'pt' | 'es'
   profile: ProfileData
+  activeSection: SectionId
+  onboarding: OnboardingData
+  challengesState: ChallengesState
+  personaState: PersonaState
 }
 
 function createInitialState(): AppState {
@@ -43,6 +55,10 @@ function createInitialState(): AppState {
       position: 'centre',
       division: 'D4',
     },
+    activeSection: 'home',
+    onboarding: createDefaultOnboarding(),
+    challengesState: createDefaultChallengesState(),
+    personaState: createDefaultPersona(),
   }
 }
 
@@ -52,7 +68,6 @@ const DispatchCtx = createContext<React.Dispatch<Action> | null>(null)
 export function AppStateProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(appReducer, null, createInitialState)
 
-  // Persist to localStorage on every state change
   useEffect(() => {
     saveState(state)
   }, [state])
