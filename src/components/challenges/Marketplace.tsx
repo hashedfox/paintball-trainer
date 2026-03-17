@@ -45,7 +45,7 @@ export function Marketplace() {
   return (
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
-        <h2 className="text-xl font-black text-white mb-1">Equipment Shop</h2>
+        <h2 className="text-xl font-extrabold text-white mb-1">Equipment Shop</h2>
         <p className="text-xs text-pb-text-dim">Spend your earned coins on equipment for your persona.</p>
       </div>
 
@@ -58,7 +58,7 @@ export function Marketplace() {
             onClick={() => setFilter(f.id)}
             className={`px-3 py-1 rounded-full text-[10px] font-medium whitespace-nowrap transition-all ${
               filter === f.id
-                ? 'bg-pb-neon text-pb-darker'
+                ? 'bg-pb-primary text-pb-darker'
                 : 'bg-pb-surface text-pb-text-dim border border-pb-border'
             }`}
           >
@@ -74,7 +74,7 @@ export function Marketplace() {
           const canAfford = state.challengesState.coins >= price
 
           return (
-            <div key={item.id} className="card-gaming p-4 relative overflow-hidden">
+            <div key={item.id} className="card-gaming p-4 relative overflow-hidden rounded-lg">
               {/* Rarity glow */}
               <div className="absolute top-0 right-0 w-16 h-16 rounded-bl-full" style={{ background: `${RARITY_COLORS[item.rarity]}10` }} />
 

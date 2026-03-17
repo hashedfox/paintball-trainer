@@ -24,56 +24,56 @@ export function Sidebar({ activeSection, onNavigate, level, xp, coins }: Sidebar
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="sidebar-desktop w-[220px] min-h-full bg-pb-darker border-r border-pb-border flex flex-col">
+      <aside className="sidebar-desktop w-[200px] min-h-full bg-pb-darker border-r border-pb-border flex flex-col">
         {/* Logo */}
-        <div className="px-5 py-5 border-b border-pb-border">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-pb-neon to-pb-blue flex items-center justify-center">
-              <span className="text-sm font-black text-pb-darker">P</span>
+        <div className="px-4 py-4 border-b border-pb-border">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-pb-primary flex items-center justify-center">
+              <span className="text-sm font-black text-white">P</span>
             </div>
             <div>
-              <h1 className="text-sm font-bold text-white tracking-tight leading-none">PPI</h1>
-              <span className="text-[10px] text-pb-text-muted uppercase tracking-widest">Paintball Index</span>
+              <h1 className="text-[13px] font-extrabold text-white tracking-tight leading-none">PPI</h1>
+              <span className="text-[9px] text-pb-text-muted uppercase tracking-[0.15em]">Paintball Index</span>
             </div>
           </div>
         </div>
 
         {/* Player stats bar */}
         <div className="px-4 py-3 border-b border-pb-border">
-          <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center justify-between mb-1.5">
             <span className="level-badge">LVL {level}</span>
-            <span className="coin-badge">{coins} C</span>
+            <span className="coin-badge">{coins}</span>
           </div>
           <div className="xp-bar-track mt-2">
-            <div className="xp-bar-fill" style={{ width: `${Math.min((xp % 100) * 100 / 100, 100)}%` }} />
+            <div className="xp-bar-fill" style={{ width: `${Math.min((xp % 100), 100)}%` }} />
           </div>
-          <span className="text-[10px] text-pb-text-muted mt-1 block">{xp} XP</span>
+          <span className="text-[9px] text-pb-text-muted mt-1 block">{xp} XP</span>
         </div>
 
         {/* Nav items */}
-        <nav className="flex-1 py-2 overflow-y-auto">
+        <nav className="flex-1 py-1.5 overflow-y-auto">
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
               type="button"
               onClick={() => onNavigate(item.id)}
-              className={`w-full flex items-center gap-3 px-5 py-2.5 text-sm transition-all ${
+              className={`w-full flex items-center gap-2.5 px-4 py-[9px] text-[12px] transition-all ${
                 activeSection === item.id
-                  ? 'text-pb-neon bg-pb-neon/5 border-r-2 border-pb-neon'
-                  : 'text-pb-text-dim hover:text-white hover:bg-white/3'
+                  ? 'text-white bg-pb-primary/15 border-r-2 border-pb-primary'
+                  : 'text-pb-text-dim hover:text-pb-text hover:bg-white/[0.02]'
               }`}
             >
-              <svg className="w-4.5 h-4.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg className="w-[16px] h-[16px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
               </svg>
-              <span className="font-medium">{item.label}</span>
+              <span className="font-semibold">{item.label}</span>
             </button>
           ))}
         </nav>
 
         {/* Footer */}
-        <div className="px-5 py-3 border-t border-pb-border">
-          <p className="text-[10px] text-pb-text-muted text-center">PPI v2.0 — Built for competitors</p>
+        <div className="px-4 py-3 border-t border-pb-border">
+          <p className="text-[9px] text-pb-text-muted text-center">PPI v2.0</p>
         </div>
       </aside>
 
@@ -85,14 +85,14 @@ export function Sidebar({ activeSection, onNavigate, level, xp, coins }: Sidebar
               key={item.id}
               type="button"
               onClick={() => onNavigate(item.id)}
-              className={`flex-1 min-w-[60px] flex flex-col items-center py-2 px-1 transition-all ${
-                activeSection === item.id ? 'text-pb-neon nav-active' : 'text-pb-text-muted'
+              className={`flex-1 min-w-[56px] flex flex-col items-center py-2 px-1 transition-all ${
+                activeSection === item.id ? 'text-pb-primary-bright nav-active' : 'text-pb-text-muted'
               }`}
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
               </svg>
-              <span className="text-[9px] mt-0.5 truncate">{item.label}</span>
+              <span className="text-[8px] mt-0.5 truncate font-medium">{item.label}</span>
             </button>
           ))}
         </div>

@@ -51,7 +51,7 @@ export function HighlightsSection() {
   return (
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
-        <h2 className="text-xl font-black text-white mb-1">Game Highlights</h2>
+        <h2 className="text-xl font-extrabold text-white mb-1">Game Highlights</h2>
         <p className="text-sm text-pb-text-dim">Pro match videos, highlights, and analysis from top competitions.</p>
       </div>
 
@@ -65,7 +65,7 @@ export function HighlightsSection() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search videos, teams, topics..."
-          className="w-full bg-pb-surface border border-pb-border rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-pb-text-muted focus:outline-none focus:border-pb-neon"
+          className="w-full bg-pb-surface border border-pb-border rounded-lg pl-10 pr-4 py-3 text-sm text-white placeholder-pb-text-muted focus:outline-none focus:border-pb-primary"
         />
       </div>
 
@@ -78,7 +78,7 @@ export function HighlightsSection() {
             onClick={() => setCategory(cat.id)}
             className={`px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
               category === cat.id
-                ? 'bg-pb-neon text-pb-darker'
+                ? 'bg-pb-primary text-pb-darker'
                 : 'bg-pb-surface text-pb-text-dim border border-pb-border hover:border-pb-border-light'
             }`}
           >
@@ -98,13 +98,13 @@ export function HighlightsSection() {
             className="card-gaming p-4 flex gap-4 hover:border-pb-border-light transition-all group block"
           >
             {/* Thumbnail placeholder */}
-            <div className="w-28 h-20 md:w-40 md:h-24 bg-pb-surface rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-pb-red/10 transition-colors">
+            <div className="w-28 h-20 md:w-40 md:h-24 panel-inner rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-pb-red/10 transition-colors">
               <svg className="w-8 h-8 text-pb-red/60 group-hover:text-pb-red transition-colors" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z" />
               </svg>
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-bold text-white group-hover:text-pb-neon transition-colors line-clamp-2">{video.title}</h4>
+              <h4 className="text-sm font-bold text-white group-hover:text-pb-primary-bright transition-colors line-clamp-2">{video.title}</h4>
               <p className="text-[11px] text-pb-text-muted mt-1">{video.channel}</p>
               <div className="flex gap-1.5 mt-2 flex-wrap">
                 {video.competition && (
@@ -128,13 +128,13 @@ export function HighlightsSection() {
 
       {/* External links */}
       <div className="card-gaming p-5">
-        <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-3">More Resources</h3>
+        <span className="section-header mb-3 block">More Resources</span>
         <div className="space-y-2">
-          <a href="https://www.youtube.com/results?search_query=NXL+paintball+2024" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-pb-surface rounded-lg hover:bg-pb-card-hover transition-colors">
+          <a href="https://www.youtube.com/results?search_query=NXL+paintball+2024" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-pb-card-hover transition-colors">
             <span className="text-pb-red">YouTube</span>
             <span className="text-xs text-pb-text-dim">NXL Official Matches</span>
           </a>
-          <a href="https://www.pbleagues.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-pb-surface rounded-lg hover:bg-pb-card-hover transition-colors">
+          <a href="https://www.pbleagues.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-pb-card-hover transition-colors">
             <span className="text-pb-blue">PBLeagues</span>
             <span className="text-xs text-pb-text-dim">Live competition updates & scores</span>
           </a>

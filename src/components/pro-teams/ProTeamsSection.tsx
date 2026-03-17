@@ -25,7 +25,7 @@ export function ProTeamsSection() {
   return (
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
-        <h2 className="text-xl font-black text-white">Pro Teams</h2>
+        <h2 className="text-xl font-extrabold text-white">Pro Teams</h2>
         <p className="text-xs text-pb-text-dim">Top NXL teams — rosters, strengths, and how you compare.</p>
       </div>
 
@@ -42,7 +42,7 @@ export function ProTeamsSection() {
             style={selectedTeam === t.id ? { borderLeftColor: t.color } : {}}
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center text-sm font-black" style={{ background: `${t.color}20`, color: t.color }}>
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center text-sm font-extrabold" style={{ background: `${t.color}20`, color: t.color }}>
                 {t.tier}
               </div>
               <div className="flex-1 min-w-0">
@@ -82,11 +82,11 @@ export function ProTeamsSection() {
       {team && (
         <div className="card-gaming p-5 animate-fade-in">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center text-lg font-black" style={{ background: `${team.color}20`, color: team.color }}>
+            <div className="w-12 h-12 rounded-lg flex items-center justify-center text-lg font-extrabold" style={{ background: `${team.color}20`, color: team.color }}>
               {team.tier}
             </div>
             <div>
-              <h3 className="text-lg font-black text-white">{team.name}</h3>
+              <h3 className="text-lg font-extrabold text-white">{team.name}</h3>
               <p className="text-xs text-pb-text-dim">{team.description}</p>
             </div>
           </div>
@@ -95,7 +95,7 @@ export function ProTeamsSection() {
           <div className="space-y-1.5 mb-4">
             {team.facts.map((fact, i) => (
               <div key={i} className="flex gap-2 items-start">
-                <span className="text-pb-neon text-xs mt-0.5">-</span>
+                <span className="text-pb-primary-bright text-xs mt-0.5">-</span>
                 <span className="text-xs text-pb-text-dim">{fact}</span>
               </div>
             ))}
@@ -135,7 +135,7 @@ export function ProTeamsSection() {
             </div>
             <div className="flex justify-center gap-6 mt-2">
               <div className="flex items-center gap-1.5">
-                <div className="w-3 h-1 rounded bg-pb-neon" />
+                <div className="w-3 h-1 rounded bg-pb-primary" />
                 <span className="text-[10px] text-pb-text-dim">You</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -152,7 +152,7 @@ export function ProTeamsSection() {
               href={`https://www.youtube.com/results?search_query=${encodeURIComponent(team.name + ' paintball NXL')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 bg-pb-surface rounded-lg hover:bg-pb-card-hover transition-colors"
+              className="flex items-center gap-3 p-3 panel-inner rounded-lg hover:bg-pb-card-hover transition-colors"
             >
               <svg className="w-5 h-5 text-pb-red" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
               <span className="text-xs text-white">Search {team.name} on YouTube</span>

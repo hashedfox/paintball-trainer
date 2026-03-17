@@ -55,7 +55,7 @@ export function GuidesSection() {
         <button
           type="button"
           onClick={() => setSelectedGuide(null)}
-          className="text-pb-neon text-sm font-medium flex items-center gap-1"
+          className="text-pb-primary-bright text-sm font-medium flex items-center gap-1"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           All Guides
@@ -78,7 +78,7 @@ export function GuidesSection() {
             <span className="text-[9px] text-pb-text-muted">{guide.estimatedMinutes} min read</span>
           </div>
 
-          <h2 className="text-xl font-black text-white mb-2">{guide.title}</h2>
+          <h2 className="text-xl font-extrabold text-white mb-2">{guide.title}</h2>
           <p className="text-sm text-pb-text-dim mb-6">{guide.summary}</p>
 
           {guide.positions && (
@@ -99,8 +99,8 @@ export function GuidesSection() {
                 {section.tips && (
                   <div className="mt-3 space-y-1.5">
                     {section.tips.map((tip, j) => (
-                      <div key={j} className="flex gap-2 items-start p-2 bg-pb-neon/5 rounded-lg border border-pb-neon/10">
-                        <span className="text-pb-neon text-[10px] font-bold mt-0.5">TIP</span>
+                      <div key={j} className="flex gap-2 items-start p-2 bg-pb-primary/10 rounded-lg border border-pb-primary/10">
+                        <span className="text-pb-primary-bright text-[10px] font-bold mt-0.5">TIP</span>
                         <span className="text-[11px] text-pb-text-dim">{tip}</span>
                       </div>
                     ))}
@@ -136,7 +136,7 @@ export function GuidesSection() {
   return (
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
-        <h2 className="text-xl font-black text-white">Guides</h2>
+        <h2 className="text-xl font-extrabold text-white">Guides</h2>
         <p className="text-xs text-pb-text-dim">Deep dives into every aspect of competitive paintball.</p>
       </div>
 
@@ -150,7 +150,7 @@ export function GuidesSection() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search guides..."
-          className="w-full bg-pb-surface border border-pb-border rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-pb-text-muted focus:outline-none focus:border-pb-neon"
+          className="w-full bg-pb-surface border border-pb-border rounded-lg pl-10 pr-4 py-3 text-sm text-white placeholder-pb-text-muted focus:outline-none focus:border-pb-primary"
         />
       </div>
 
@@ -160,7 +160,7 @@ export function GuidesSection() {
           type="button"
           onClick={() => setFilterCategory('all')}
           className={`px-3 py-1 rounded-full text-[10px] font-medium whitespace-nowrap transition-all ${
-            filterCategory === 'all' ? 'bg-pb-neon text-pb-darker' : 'bg-pb-surface text-pb-text-dim border border-pb-border'
+            filterCategory === 'all' ? 'bg-pb-primary text-pb-darker' : 'bg-pb-surface text-pb-text-dim border border-pb-border'
           }`}
         >
           All
@@ -222,7 +222,7 @@ export function GuidesSection() {
                 <div className="w-4 h-4 rounded" style={{ background: CATEGORY_COLORS[g.category] }} />
               </div>
               <div className="flex-1 min-w-0">
-                <h4 className="text-sm font-bold text-white group-hover:text-pb-neon transition-colors">{g.title}</h4>
+                <h4 className="text-sm font-bold text-white group-hover:text-pb-primary-bright transition-colors">{g.title}</h4>
                 <p className="text-[10px] text-pb-text-dim mt-1 line-clamp-2">{g.summary}</p>
                 <div className="flex items-center gap-2 mt-2">
                   <span
@@ -237,7 +237,7 @@ export function GuidesSection() {
                   ))}
                 </div>
               </div>
-              <svg className="w-4 h-4 text-pb-text-muted group-hover:text-pb-neon transition-colors flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-4 h-4 text-pb-text-muted group-hover:text-pb-primary-bright transition-colors flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </div>

@@ -144,7 +144,7 @@ export function TierListSection() {
   return (
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
-        <h2 className="text-xl font-black text-white">Field Tier List</h2>
+        <h2 className="text-xl font-extrabold text-white">Field Tier List</h2>
         <p className="text-xs text-pb-text-dim">Recent competition field layouts ranked and analyzed.</p>
       </div>
 
@@ -170,7 +170,7 @@ export function TierListSection() {
         <select
           value={filterYear}
           onChange={(e) => setFilterYear(e.target.value)}
-          className="bg-pb-surface border border-pb-border rounded-lg px-3 py-1 text-[10px] text-white focus:outline-none focus:border-pb-neon"
+          className="bg-pb-surface border border-pb-border rounded-lg px-3 py-1 text-[10px] text-white focus:outline-none focus:border-pb-primary"
         >
           <option value="all">All Years</option>
           <option value="2025">2025</option>
@@ -191,7 +191,7 @@ export function TierListSection() {
           >
             <div className="flex items-start gap-3">
               <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center text-sm font-black flex-shrink-0"
+                className="w-10 h-10 rounded-lg flex items-center justify-center text-sm font-extrabold flex-shrink-0"
                 style={{ background: `${TIER_COLORS[l.tier]}15`, color: TIER_COLORS[l.tier] }}
               >
                 {l.tier}
@@ -225,33 +225,33 @@ export function TierListSection() {
           <h3 className="text-sm font-bold text-white mb-3">{layout.name} — Analysis</h3>
 
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <div className="bg-pb-surface rounded-lg p-3">
+            <div className="panel-inner rounded-lg p-3">
               <span className="text-[9px] text-pb-text-muted uppercase tracking-wider">Bunkers</span>
               <div className="text-lg font-bold text-white">{layout.bunkerCount}</div>
             </div>
-            <div className="bg-pb-surface rounded-lg p-3">
+            <div className="panel-inner rounded-lg p-3">
               <span className="text-[9px] text-pb-text-muted uppercase tracking-wider">Year</span>
               <div className="text-lg font-bold text-white">{layout.year}</div>
             </div>
           </div>
 
-          <div className="bg-pb-surface rounded-lg p-3 mb-4">
+          <div className="panel-inner rounded-lg p-3 mb-4">
             <span className="text-[9px] text-pb-text-muted uppercase tracking-wider">Notable Feature</span>
-            <p className="text-xs text-pb-neon mt-1">{layout.notableFeature}</p>
+            <p className="text-xs text-pb-primary-bright mt-1">{layout.notableFeature}</p>
           </div>
 
           {/* Position breakdown */}
           <div className="space-y-2">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">Position Analysis</h4>
-            <div className="flex items-center justify-between p-2 bg-pb-surface rounded-lg">
+            <div className="flex items-center justify-between p-2 panel-inner rounded-lg">
               <span className="text-[10px] text-pb-text-dim">Snake Side</span>
               <span className={`text-[10px] font-bold ${advantageColor(layout.snakeAdvantage)}`}>{layout.snakeAdvantage}</span>
             </div>
-            <div className="flex items-center justify-between p-2 bg-pb-surface rounded-lg">
+            <div className="flex items-center justify-between p-2 panel-inner rounded-lg">
               <span className="text-[10px] text-pb-text-dim">Doritto Side</span>
               <span className={`text-[10px] font-bold ${advantageColor(layout.dorittoAdvantage)}`}>{layout.dorittoAdvantage}</span>
             </div>
-            <div className="flex items-center justify-between p-2 bg-pb-surface rounded-lg">
+            <div className="flex items-center justify-between p-2 panel-inner rounded-lg">
               <span className="text-[10px] text-pb-text-dim">Centre Play Style</span>
               <span className="text-[10px] font-bold text-pb-blue">{layout.centrePlay}</span>
             </div>
@@ -262,7 +262,7 @@ export function TierListSection() {
               href="https://www.gunzup.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[10px] text-pb-neon hover:text-pb-neon-dim transition-colors"
+              className="text-[10px] text-pb-primary-bright hover:text-pb-primary-dim transition-colors"
             >
               View more field designs on GunzUp.com →
             </a>
@@ -278,8 +278,8 @@ export function TierListSection() {
           rel="noopener noreferrer"
           className="flex items-center gap-3"
         >
-          <div className="w-10 h-10 bg-pb-neon/10 rounded-lg flex items-center justify-center">
-            <svg className="w-5 h-5 text-pb-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="w-10 h-10 bg-pb-primary/10 rounded-lg flex items-center justify-center">
+            <svg className="w-5 h-5 text-pb-primary-bright" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </div>

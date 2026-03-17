@@ -34,7 +34,7 @@ export function PersonaSection() {
   return (
     <div className="p-4 md:p-6 space-y-5 animate-fade-in">
       <div>
-        <h2 className="text-xl font-black text-white">Paintball Persona</h2>
+        <h2 className="text-xl font-extrabold text-white">Paintball Persona</h2>
         <p className="text-xs text-pb-text-dim">Customize your 2D paintball character with earned equipment.</p>
       </div>
 
@@ -116,7 +116,7 @@ export function PersonaSection() {
               type="text"
               value={personaState.teamNumber}
               onChange={(e) => dispatch({ type: 'SET_PERSONA_NUMBER', number: e.target.value.slice(0, 3) })}
-              className="w-12 bg-pb-surface border border-pb-border rounded px-2 py-1 text-center text-sm text-white focus:outline-none focus:border-pb-neon"
+              className="w-12 bg-pb-surface border border-pb-border rounded px-2 py-1 text-center text-sm text-white focus:outline-none focus:border-pb-primary"
               maxLength={3}
             />
           </div>
@@ -135,7 +135,7 @@ export function PersonaSection() {
                   onClick={() => setSelectedSlot(selectedSlot === slot ? null : slot)}
                   className={`persona-slot p-3 text-left transition-all ${
                     equipped ? 'equipped' : ''
-                  } ${selectedSlot === slot ? 'border-pb-neon bg-pb-neon/5' : ''}`}
+                  } ${selectedSlot === slot ? 'border-pb-primary bg-pb-primary/10' : ''}`}
                 >
                   <span className="text-[9px] text-pb-text-muted uppercase tracking-wider">{label}</span>
                   {equipped ? (
@@ -180,7 +180,7 @@ export function PersonaSection() {
                       onClick={() => handleEquip(selectedSlot, item.id)}
                       className={`w-full flex items-center gap-3 p-2 rounded-lg border transition-all ${
                         personaState.equipped[selectedSlot] === item.id
-                          ? 'border-pb-neon bg-pb-neon/5'
+                          ? 'border-pb-primary bg-pb-primary/10'
                           : 'border-pb-border bg-pb-surface hover:border-pb-border-light'
                       }`}
                     >
@@ -199,7 +199,7 @@ export function PersonaSection() {
           )}
 
           {/* Inventory count */}
-          <div className="bg-pb-surface rounded-lg p-3">
+          <div className="panel-inner rounded-lg p-3">
             <span className="text-[10px] text-pb-text-muted">Inventory: {ownedItems.length} items owned</span>
           </div>
         </div>
